@@ -10,6 +10,7 @@ const APP_CONFIG = {
         FAQ_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1434563192&single=true&output=csv'
     },
     PROXY: 'https://api.allorigins.win/raw?url=',
+    PROXY_BACKUP: 'https://corsproxy.io/?',
     PASSWORD: "MH2024",
     SELECTORS: {
         PRICES_BODY: '#catalogBody',
@@ -31,12 +32,29 @@ const APP_STATE = {
 
 // 3. DATA SERVICE (Peticiones)
 const DataService = {
-    async fetchCSV(url) {
+    async fetchCSV(url, retries = 2) {
         const fullUrl = APP_CONFIG.PROXY + encodeURIComponent(url);
-        const response = await fetch(fullUrl);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const csvText = await response.text();
-        return this.parseCSV(csvText);
+        try {
+            const response = await fetch(fullUrl, { signal: AbortSignal.timeout(10000) });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const csvText = await response.text();
+            return this.parseCSV(csvText);
+        } catch (error) {
+            if (retries > 0) {
+                console.warn(`Reintentando carga (${retries} restantes)...`);
+                // En el último reintento probamos el proxy de respaldo
+                if (retries === 1) {
+                    console.info("⚡ Cambiando a proxy de respaldo (CORSProxy)...");
+                    const backupUrl = APP_CONFIG.PROXY_BACKUP + encodeURIComponent(url);
+                    try {
+                        const resp = await fetch(backupUrl);
+                        if (resp.ok) return this.parseCSV(await resp.text());
+                    } catch (e) { console.error("Proxy de respaldo falló", e); }
+                }
+                return this.fetchCSV(url, retries - 1);
+            }
+            throw error;
+        }
     },
 
     parseCSV(csv) {
@@ -246,13 +264,10 @@ const UIHandlers = {
         } catch (error) {
             console.error(`❌ Fallo en ${stateKey}:`, error);
             Renderers.showLoading(container, false);
+
+            // Si no hay datos (primera carga), mostramos error real
             if (APP_STATE[stateKey].length === 0) {
-                if (stateKey === 'faq') {
-                    const el = document.querySelector(container);
-                    if (el) el.innerHTML = '<p class="text-center text-slate-500 py-8">Cargando preguntas frecuentes...</p>';
-                } else {
-                    this.handleError(container, `No se pudo conectar con el servidor de ${stateKey}.`);
-                }
+                this.handleError(container, `No se pudieron cargar las ${stateKey === 'faq' ? 'preguntas' : 'precios'}. Por favor, reintenta.`);
             }
         }
     },
@@ -489,14 +504,29 @@ const UIHandlers = {
 
     loadYouTubeVideo(element) {
         const videoId = element.getAttribute('data-video-id');
+
+        // Loader temporal dentro del contenedor
+        element.innerHTML = `
+            <div class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 text-white animate-pulse">
+                <div class="w-10 h-10 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-3"></div>
+                <span class="text-xs font-medium tracking-widest uppercase">Cargando Video...</span>
+            </div>
+        `;
+
         const iframe = document.createElement('iframe');
-        iframe.className = 'w-full h-full';
+        iframe.className = 'w-full h-full relative z-10';
         iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
         iframe.title = 'Mundo Homeopático - Proceso';
         iframe.frameBorder = '0';
         iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
         iframe.allowFullscreen = true;
-        element.innerHTML = '';
+
+        // Cuando cargue, eliminamos el loader
+        iframe.onload = () => {
+            const loader = element.querySelector('.animate-pulse');
+            if (loader) loader.remove();
+        };
+
         element.appendChild(iframe);
         element.onclick = null;
     }
