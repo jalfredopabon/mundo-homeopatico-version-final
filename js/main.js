@@ -283,15 +283,20 @@ const UIHandlers = {
 
     async loadPasswords() {
         try {
+            console.log("🔐 Sincronizando lista de acceso...");
             const freshData = await DataService.fetchCSV(APP_CONFIG.SHEETS.PASSWORDS_URL);
             if (freshData && freshData.length > 0) {
-                // Mapeamos el encabezado 'contraseñas'
+                // Tomamos el primer valor de cada fila, sin confiar en el nombre exacto del encabezado (evita líos con tildes/eñes)
                 APP_STATE.validPasswords = freshData
-                    .map(row => row.contraseñas?.trim())
+                    .map(row => {
+                        const values = Object.values(row);
+                        return values.length > 0 ? values[0].trim() : null;
+                    })
                     .filter(p => p);
+                console.log("✅ Accesos autorizados cargados exitosamente.");
             }
         } catch (error) {
-            console.warn("Fallo al cargar contraseñas extra:", error);
+            console.error("❌ Error cargando lista de acceso:", error);
         }
     },
 
