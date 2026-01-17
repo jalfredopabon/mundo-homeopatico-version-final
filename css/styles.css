@@ -2,18 +2,35 @@
    VARIABLES CSS - SISTEMA DE DISEÑO
    ============================================ */
 :root {
-    /* Colores */
+    /* Paleta Principal */
     --color-farmacia: #10b981;
+    --color-farmacia-light: #ecfdf5;
+    --color-farmacia-hover: #059669;
+
     --color-publico: #2563eb;
+    --color-publico-light: #eff6ff;
+
+    --color-danger: #ef4444;
+    --color-danger-light: #fef2f2;
+
+    /* Neutros */
+    --slate-50: #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1e293b;
 
     /* Tipografía */
     --font-base: 'Inter', system-ui, -apple-system, sans-serif;
 
-    /* Espaciado */
-    --spacing-4: 1rem;
-
-    /* Bordes */
+    /* Bordes y Sombras */
+    --radius-lg: 0.75rem;
     --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 }
 
 /* ============================================
@@ -35,46 +52,49 @@ table {
    ============================================ */
 
 /* Fuente base */
+/* Fuente base */
 body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: #f8fafc;
+    font-family: var(--font-base);
+    background-color: var(--slate-50);
     scroll-behavior: smooth;
+    color: var(--slate-800);
 }
 
-/* Colores personalizados */
+/* Clases de Utilidad Temáticas */
 .text-farmacia {
-    color: #10b981;
+    color: var(--color-farmacia);
 }
 
 .text-publico {
-    color: #2563eb;
+    color: var(--color-publico);
 }
 
 .bg-farmacia {
-    background-color: #10b981;
+    background-color: var(--color-farmacia);
 }
 
 .border-farmacia {
-    border-color: #10b981;
+    border-color: var(--color-farmacia);
 }
 
 /* Navegación lateral activa */
 .sidebar-active {
-    background-color: #f1f5f9;
-    color: #0f172a;
-    border-left: 4px solid #10b981;
+    background-color: var(--slate-100);
+    color: var(--slate-800);
+    border-left: 4px solid var(--color-farmacia);
 }
 
 /* Hover en filas de tabla */
 .hover-row {
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid transparent;
 }
 
 .hover-row:hover {
-    background-color: #f1f5f9 !important;
-    border-color: #e2e8f0;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+    background-color: var(--slate-100) !important;
+    border-color: var(--slate-200);
+    transform: scale(1.002);
+    box-shadow: var(--shadow-sm);
 }
 
 /* Scrollbar personalizado */
@@ -115,13 +135,14 @@ body {
 
 /* Cards de distribuidores con hover */
 .distributor-card {
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--slate-200);
 }
 
 .distributor-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    border-color: #10b981;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    border-color: var(--color-farmacia);
 }
 
 /* Sistema de Acceso Profesional */

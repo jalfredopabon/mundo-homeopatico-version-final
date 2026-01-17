@@ -1,10 +1,9 @@
 /**
  * MUNDO HOMEOPÁTICO - Configuración y Lógica Centralizada
- * 2026 - Refactorización Senior
+ * 2026 - Refactorización Senior (High Performance & Clean Code)
  */
 
 // 1. CONFIGURACIÓN GLOBAL
-// Centralizamos IDs y URLs para fácil mantenimiento
 const APP_CONFIG = {
     SHEETS: {
         PRICES_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1411473006&single=true&output=csv',
@@ -22,13 +21,15 @@ const APP_CONFIG = {
 const APP_STATE = {
     prices: [],
     faq: [],
-    isLoading: false,
-    error: null,
-    professionalMode: localStorage.getItem('professionalMode') === 'true'
+    professionalMode: localStorage.getItem('professionalMode') === 'true',
+    search: {
+        timeout: null,
+        rows: [],
+        sections: []
+    }
 };
 
 // 3. DATA SERVICE (Peticiones)
-// Función core para fetch centralizada
 const DataService = {
     async fetchCSV(url) {
         const fullUrl = APP_CONFIG.PROXY + encodeURIComponent(url);
@@ -38,7 +39,6 @@ const DataService = {
         return this.parseCSV(csvText);
     },
 
-    // Parser robusto que maneja comas dentro de comillas y campos vacíos
     parseCSV(csv) {
         const lines = csv.split(/\r?\n/);
         if (lines.length < 2) return [];
@@ -78,14 +78,12 @@ const DataService = {
 
 // 4. RENDERING ENGINE (UI)
 const Renderers = {
-    // Formatear precios
     formatPrice(price) {
         if (!price || price === '-') return '-';
         const numPrice = parseInt(price.replace(/\D/g, ''));
         return isNaN(numPrice) ? '-' : numPrice.toLocaleString('es-CO');
     },
 
-    // Indicador de carga inteligente (Subtle & Non-intrusive)
     showLoading(containerSelector, show = true) {
         const container = document.querySelector(containerSelector);
         if (!container) return;
@@ -93,9 +91,7 @@ const Renderers = {
         let loader = container.querySelector('.loading-state');
 
         if (show) {
-            // Solo mostrar el mensaje grande si el contenedor está casi vacío (ej: solo el título)
             const hasData = container.querySelectorAll('.item-row, .faq-content').length > 0;
-
             if (!loader) {
                 loader = document.createElement('div');
                 loader.className = 'loading-state flex items-center justify-center gap-3 p-4 bg-emerald-50/50 rounded-xl mb-6 text-emerald-700 border border-emerald-100 transition-all duration-300';
@@ -103,13 +99,10 @@ const Renderers = {
                     <div class="w-4 h-4 border-2 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
                     <span class="text-xs font-semibold tracking-tight">Sincronizando con Google Sheets...</span>
                 `;
-
-                // Si ya hay datos, lo ponemos de forma muy sutil arriba
                 if (hasData) {
                     loader.classList.add('opacity-80', 'mx-auto', 'max-w-xs');
                     container.prepend(loader);
                 } else {
-                    // Si no hay nada, centramos el loader de forma elegante
                     loader.className = 'loading-state flex flex-col items-center justify-center p-20 text-slate-400 animate-pulse';
                     loader.innerHTML = `
                         <div class="w-10 h-10 border-4 border-emerald-100 border-t-farmacia rounded-full animate-spin mb-4"></div>
@@ -126,7 +119,6 @@ const Renderers = {
         }
     },
 
-    // Renderizar Tablas de Precios
     renderPrices(data) {
         const tableData = {};
         data.forEach(row => {
@@ -165,15 +157,11 @@ const Renderers = {
                 const tr = document.createElement('tr');
                 tr.className = 'item-row hover-row';
 
-                // Construcción eficiente de celdas
                 const isSpecial = (tableName === 'Homeopaticos_Especiales' || tableName === 'Aceites_Esenciales');
                 const productText = isSpecial ? row.Producto : (row.Presentacion ? `${row.Producto} - ${row.Presentacion}` : row.Producto);
 
                 let cellsHTML = `<td class="px-6 py-4 font-bold" data-label="Producto">${productText}</td>`;
-
-                if (isSpecial) {
-                    cellsHTML += `<td class="px-6 py-4" data-label="Presentación">${row.Presentacion || ''}</td>`;
-                }
+                if (isSpecial) cellsHTML += `<td class="px-6 py-4" data-label="Presentación">${row.Presentacion || ''}</td>`;
 
                 cellsHTML += `
                     <td class="px-6 py-4 text-right text-farmacia professional-only" data-label="Precio Farmacia">${this.formatPrice(row.Precio_Farmacia)}</td>
@@ -189,9 +177,9 @@ const Renderers = {
         });
 
         if (typeof lucide !== 'undefined') lucide.createIcons();
+        UIHandlers.cacheSearchElements();
     },
 
-    // Renderizar FAQ
     renderFAQ(data) {
         const container = document.querySelector(APP_CONFIG.SELECTORS.FAQ_CONTAINER);
         if (!container) return;
@@ -224,95 +212,69 @@ const Renderers = {
 
 // 5. EVENT HANDLERS & LOGIC
 const UIHandlers = {
-    // Inicializar la App
     async init() {
         this.setupEventListeners();
         this.checkAuth();
 
-        // Cargar Precios si estamos en el catálogo
-        if (document.querySelector(APP_CONFIG.SELECTORS.PRICES_BODY)) {
-            await this.loadPrices();
-        }
+        const tasks = [];
+        if (document.querySelector(APP_CONFIG.SELECTORS.PRICES_BODY)) tasks.push(this.loadPrices());
+        if (document.querySelector(APP_CONFIG.SELECTORS.FAQ_CONTAINER)) tasks.push(this.loadFAQ());
 
-        // Cargar FAQ si estamos en contacto (o si existe el contenedor)
-        if (document.querySelector(APP_CONFIG.SELECTORS.FAQ_CONTAINER)) {
-            await this.loadFAQ();
+        await Promise.all(tasks);
+    },
+
+    async _sync({ key, url, container, stateKey, renderFn }) {
+        try {
+            const cached = localStorage.getItem(key);
+            if (cached) {
+                try {
+                    APP_STATE[stateKey] = JSON.parse(cached);
+                    renderFn(APP_STATE[stateKey]);
+                } catch (e) { console.error(`Caché corrupto: ${key}`); }
+            }
+
+            Renderers.showLoading(container, true);
+            const freshData = await DataService.fetchCSV(url);
+
+            if (freshData && freshData.length > 0) {
+                APP_STATE[stateKey] = freshData;
+                localStorage.setItem(key, JSON.stringify(freshData));
+                renderFn(freshData);
+            }
+
+            Renderers.showLoading(container, false);
+        } catch (error) {
+            console.error(`❌ Fallo en ${stateKey}:`, error);
+            Renderers.showLoading(container, false);
+            if (APP_STATE[stateKey].length === 0) {
+                if (stateKey === 'faq') {
+                    const el = document.querySelector(container);
+                    if (el) el.innerHTML = '<p class="text-center text-slate-500 py-8">Cargando preguntas frecuentes...</p>';
+                } else {
+                    this.handleError(container, `No se pudo conectar con el servidor de ${stateKey}.`);
+                }
+            }
         }
     },
 
     async loadPrices() {
-        try {
-            // 1. Cargar desde caché para inmediatez absoluta
-            const cached = localStorage.getItem('mh_prices_cache');
-            if (cached) {
-                try {
-                    APP_STATE.prices = JSON.parse(cached);
-                    Renderers.renderPrices(APP_STATE.prices);
-                } catch (e) { console.error('Error parseando caché precios'); }
-            }
-
-            // 2. Mostrar indicador sutil
-            Renderers.showLoading(APP_CONFIG.SELECTORS.PRICES_BODY, true);
-
-            // 3. Fetch real
-            const freshData = await DataService.fetchCSV(APP_CONFIG.SHEETS.PRICES_URL);
-
-            // 4. Solo actualizar si obtuvimos datos válidos
-            if (freshData && freshData.length > 0) {
-                APP_STATE.prices = freshData;
-                localStorage.setItem('mh_prices_cache', JSON.stringify(APP_STATE.prices));
-                Renderers.renderPrices(APP_STATE.prices);
-                console.log(`✅ ${APP_STATE.prices.length} precios sincronizados`);
-            }
-
-            Renderers.showLoading(APP_CONFIG.SELECTORS.PRICES_BODY, false);
-        } catch (error) {
-            console.error('❌ Error Sincronización Precios:', error);
-            Renderers.showLoading(APP_CONFIG.SELECTORS.PRICES_BODY, false);
-
-            // SOLO mostramos el mensaje de error "rojo" si la página está TOTALMENTE VACÍA
-            if (APP_STATE.prices.length === 0) {
-                this.handleError(APP_CONFIG.SELECTORS.PRICES_BODY, 'No se pudo conectar con el servidor de precios.');
-            }
-        }
+        await this._sync({
+            key: 'mh_prices_cache',
+            url: APP_CONFIG.SHEETS.PRICES_URL,
+            container: APP_CONFIG.SELECTORS.PRICES_BODY,
+            stateKey: 'prices',
+            renderFn: (data) => Renderers.renderPrices(data)
+        });
     },
 
     async loadFAQ() {
-        try {
-            // 1. Cargar desde caché para inmediatez absoluta
-            const cached = localStorage.getItem('mh_faq_cache');
-            if (cached) {
-                try {
-                    APP_STATE.faq = JSON.parse(cached);
-                    Renderers.renderFAQ(APP_STATE.faq);
-                } catch (e) { console.error('Cache FAQ corrupto'); }
-            }
-
-            // 2. Mostrar indicador sutil
-            Renderers.showLoading(APP_CONFIG.SELECTORS.FAQ_CONTAINER, true);
-
-            // 3. Fetch real
-            const freshFAQ = await DataService.fetchCSV(APP_CONFIG.SHEETS.FAQ_URL);
-
-            // 4. Solo actualizar si obtuvimos datos válidos
-            if (freshFAQ && freshFAQ.length > 0) {
-                APP_STATE.faq = freshFAQ;
-                localStorage.setItem('mh_faq_cache', JSON.stringify(APP_STATE.faq));
-                Renderers.renderFAQ(APP_STATE.faq);
-                console.log(`✅ ${APP_STATE.faq.length} FAQ sincronizadas`);
-            }
-
-            Renderers.showLoading(APP_CONFIG.SELECTORS.FAQ_CONTAINER, false);
-        } catch (error) {
-            console.error('❌ Error Sincronización FAQ:', error);
-            Renderers.showLoading(APP_CONFIG.SELECTORS.FAQ_CONTAINER, false);
-
-            // SOLO mostramos mensaje si no hay nada en absoluto
-            if (APP_STATE.faq.length === 0) {
-                const container = document.querySelector(APP_CONFIG.SELECTORS.FAQ_CONTAINER);
-                if (container) container.innerHTML = '<p class="text-center text-slate-500 py-8">Cargando preguntas frecuentes...</p>';
-            }
-        }
+        await this._sync({
+            key: 'mh_faq_cache',
+            url: APP_CONFIG.SHEETS.FAQ_URL,
+            container: APP_CONFIG.SELECTORS.FAQ_CONTAINER,
+            stateKey: 'faq',
+            renderFn: (data) => Renderers.renderFAQ(data)
+        });
     },
 
     handleError(selector, message) {
@@ -329,24 +291,19 @@ const UIHandlers = {
     },
 
     setupEventListeners() {
-        // Lucide inicial
         if (typeof lucide !== 'undefined') lucide.createIcons();
 
-        // Búsqueda
         const searchInput = document.getElementById('mainSearch');
         if (searchInput) {
-            searchInput.addEventListener('keyup', () => this.filterItems());
-            searchInput.addEventListener('focus', () => this.filterItems());
+            searchInput.addEventListener('input', () => this.filterItems());
         }
 
-        // Acceso Profesional
         document.getElementById('submitPassword')?.addEventListener('click', () => this.validatePassword());
         document.getElementById('cancelPassword')?.addEventListener('click', () => this.closePasswordModal());
         document.getElementById('professionalPassword')?.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') this.validatePassword();
         });
 
-        // Cerrar dropdown al clickear fuera
         document.addEventListener('click', (e) => {
             const dropdown = document.getElementById('searchDropdown');
             const searchContainer = searchInput?.parentElement;
@@ -366,19 +323,31 @@ const UIHandlers = {
         }
     },
 
-    // Búsqueda (Lógica refactorizada)
+    cacheSearchElements() {
+        APP_STATE.search.rows = Array.from(document.querySelectorAll('.item-row'));
+        APP_STATE.search.sections = Array.from(document.querySelectorAll('.section-group'));
+    },
+
     filterItems() {
+        clearTimeout(APP_STATE.search.timeout);
+        APP_STATE.search.timeout = setTimeout(() => this._performSearch(), 100);
+    },
+
+    _performSearch() {
         const searchInput = document.getElementById('mainSearch');
         if (!searchInput) return;
 
-        const query = searchInput.value.toLowerCase();
-        const rows = document.querySelectorAll('.item-row');
-        const sectionGroups = document.querySelectorAll('.section-group');
+        const query = searchInput.value.toLowerCase().trim();
         const feedback = document.getElementById('searchFeedback');
         const feedbackText = document.getElementById('feedbackText');
         const dropdown = document.getElementById('searchDropdown');
         const dropdownResults = document.getElementById('dropdownResults');
         const clearButton = document.getElementById('clearSearch');
+
+        if (APP_STATE.search.rows.length === 0) this.cacheSearchElements();
+
+        const rows = APP_STATE.search.rows;
+        const sections = APP_STATE.search.sections;
 
         if (clearButton) {
             query === "" ? clearButton.classList.add('hidden') : clearButton.classList.remove('hidden');
@@ -397,12 +366,11 @@ const UIHandlers = {
             }
         });
 
-        sectionGroups.forEach(section => {
-            const visible = section.querySelectorAll('.item-row:not([style*="display: none"])').length;
-            section.style.display = (visible > 0 || query === "") ? "" : "none";
+        sections.forEach(section => {
+            const hasVisible = section.querySelectorAll('.item-row:not([style*="display: none"])').length > 0;
+            section.style.display = (hasVisible || query === "") ? "" : "none";
         });
 
-        // Dropdown y Feedback
         if (query === "") {
             dropdown?.classList.add('hidden');
             feedback?.classList.add('opacity-0', 'hidden');
@@ -411,13 +379,13 @@ const UIHandlers = {
             if (feedback) {
                 feedback.classList.remove('opacity-0', 'hidden');
                 feedback.querySelector('div').className = 'flex items-center gap-2 px-4 py-2 rounded-lg bg-red-50 text-red-700';
-                feedbackText.innerHTML = `<strong>No se encontraron resultados</strong> para "${query}"`;
+                feedbackText.innerHTML = `No se encontraron resultados para <strong>"${query}"</strong>`;
             }
         } else {
             feedback?.classList.remove('opacity-0', 'hidden');
             if (feedback) {
                 feedback.querySelector('div').className = 'flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-50 text-farmacia';
-                feedbackText.innerHTML = `Se ${visibleCount === 1 ? 'encontró <strong>1 resultado</strong>' : `encontraron <strong>${visibleCount} resultados</strong>`}`;
+                feedbackText.innerHTML = visibleCount === 1 ? '¡Encontrado! <strong>1 producto</strong>' : `Se encontraron <strong>${visibleCount} productos</strong>`;
             }
 
             if (dropdownResults) {
@@ -427,10 +395,10 @@ const UIHandlers = {
                     const sectionTitle = row.closest('.section-group')?.querySelector('h3, h4, h5')?.innerText || 'Sección';
 
                     const item = document.createElement('div');
-                    item.className = 'px-4 py-3 hover:bg-slate-50 cursor-pointer transition-colors';
+                    item.className = 'px-4 py-3 hover:bg-slate-50 cursor-pointer transition-colors border-b border-slate-50 last:border-0';
                     item.innerHTML = `
-                        <div class="font-medium text-slate-800 text-sm">${productName}</div>
-                        <div class="text-xs text-slate-500 mt-0.5">${sectionTitle}</div>
+                        <div class="font-bold text-slate-800 text-[13px]">${productName}</div>
+                        <div class="text-[10px] text-slate-400 font-medium uppercase tracking-tighter">${sectionTitle}</div>
                     `;
                     item.onclick = () => {
                         row.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -455,7 +423,6 @@ const UIHandlers = {
         }
     },
 
-    // UI Modals
     showPasswordModal() {
         const modal = document.getElementById('passwordModal');
         if (modal) {
@@ -490,13 +457,11 @@ const UIHandlers = {
         }
     },
 
-    // Acordeones y FAQs
     toggleFaq(button) {
         const content = button.nextElementSibling;
         const icon = button.querySelector('[data-lucide="chevron-down"]');
         const isHidden = content.classList.contains('hidden');
 
-        // Cerrar otros
         document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
         document.querySelectorAll('.faq-container i').forEach(i => i.style.transform = '');
 
@@ -513,10 +478,8 @@ const UIHandlers = {
 
         content.classList.toggle('active');
         const isActive = content.classList.contains('active');
-
         if (icon) icon.style.transform = isActive ? 'rotate(180deg)' : '';
 
-        // Animación suave si se prefiere vía JS o CSS
         if (isActive) {
             content.style.maxHeight = content.scrollHeight + "px";
         } else {
@@ -532,14 +495,11 @@ const UIHandlers = {
         iframe.title = 'Mundo Homeopático - Proceso';
         iframe.frameBorder = '0';
         iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
         iframe.allowFullscreen = true;
-
         element.innerHTML = '';
         element.appendChild(iframe);
         element.onclick = null;
     }
 };
 
-// 6. LANZAMIENTO
 window.addEventListener('DOMContentLoaded', () => UIHandlers.init());
