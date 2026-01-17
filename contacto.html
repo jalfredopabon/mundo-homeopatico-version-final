@@ -66,6 +66,7 @@
         </a>
     </div>
 </header>
+<div id="topProgressBar" class="top-progress-bar"></div>
 
 <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
@@ -77,8 +78,10 @@
 
     <!-- Vídeo Corporativo -->
     <div class="mb-16">
-        <h1 class="text-3xl font-black text-slate-800 tracking-tight mb-6">Procesos de elaboración certificados y
-            rigor farmacéutico</h1>
+        <h2 class="text-3xl font-black text-slate-800 tracking-tight mb-6 flex items-center gap-3">
+            <i data-lucide="sparkles" class="w-8 h-8 text-farmacia flex-shrink-0"></i>
+            <span>Procesos de elaboración certificados y rigor farmacéutico</span>
+        </h2>
         <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-100 bg-slate-100 relative cursor-pointer youtube-facade max-w-3xl mx-auto"
             data-video-id="ZCkVmauoVVo" onclick="UIHandlers.loadYouTubeVideo(this)">
             <img src="https://img.youtube.com/vi/ZCkVmauoVVo/hqdefault.jpg" alt="Video presentación Mundo Homeopático"
@@ -93,10 +96,26 @@
         </div>
     </div>
 
-    <!-- Título -->
     <div class="mb-12">
-        <h2 class="text-2xl font-black text-slate-800 tracking-tight">Puntos de Distribución</h2>
+        <h2 class="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-3">
+            <i data-lucide="map" class="w-6 h-6 text-farmacia flex-shrink-0"></i>
+            <span>Puntos de Distribución</span>
+        </h2>
         <p class="text-slate-500 mt-2">Encuéntranos en todo el país</p>
+    </div>
+
+    <!-- Barra de Contacto Digital Minimalista -->
+    <div class="flex flex-wrap items-center gap-8 mb-10 px-2 sm:px-4">
+        <a href="https://www.instagram.com/mundohomeopatico" target="_blank"
+            class="contact-minimal-link flex items-center gap-2 text-slate-500 hover:text-pink-600 transition-colors group">
+            <i data-lucide="instagram" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+            <span class="text-sm font-semibold">@mundohomeopatico</span>
+        </a>
+        <a href="https://www.mhmundohomeopatico.com" target="_blank"
+            class="contact-minimal-pill flex items-center gap-3 px-6 py-2.5 bg-slate-900 text-white rounded-full hover:bg-farmacia transition-all shadow-md group">
+            <i data-lucide="globe" class="w-4 h-4 text-slate-300 group-hover:text-white transition-colors"></i>
+            <span class="text-[11px] font-black tracking-widest uppercase">www.mhmundohomeopatico.com</span>
+        </a>
     </div>
 
     <!-- Sede Principal -->
@@ -159,6 +178,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- Distribuidores -->
     <h3 class="text-xl font-bold text-slate-700 mb-6 flex items-center gap-2">
@@ -357,13 +377,23 @@
         <p class="text-sm font-bold text-slate-600 mb-2 tracking-tight">© 2026 Mundo Homeopático -
             Todos los
             derechos reservados.</p>
-        <p class="text-xs text-slate-400 font-medium tracking-tight">Precios sujetos a cambios.
-            Consulte
-            disponibilidad.</p>
-        <div class="flex justify-center gap-8 mt-8 opacity-20">
-            <i data-lucide="shield-check" class="w-6 h-6"></i>
-            <i data-lucide="stethoscope" class="w-6 h-6"></i>
-            <i data-lucide="award" class="w-6 h-6"></i>
+        <p class="text-xs text-slate-400 font-medium tracking-tight">Precios sujetos a cambios. Consulte disponibilidad.
+        </p>
+
+        <!-- Enlaces Sociales Footer -->
+        <div class="flex justify-center gap-6 mt-6">
+            <a href="https://wa.me/573176680750" target="_blank" title="WhatsApp"
+                class="text-slate-400 hover:text-green-500 transition-colors">
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+            </a>
+            <a href="https://www.instagram.com/mundohomeopatico" target="_blank" title="Instagram"
+                class="text-slate-400 hover:text-pink-500 transition-colors">
+                <i data-lucide="instagram" class="w-5 h-5"></i>
+            </a>
+            <a href="https://www.mhmundohomeopatico.com" target="_blank" title="Sitio Web"
+                class="text-slate-400 hover:text-farmacia transition-colors">
+                <i data-lucide="globe" class="w-5 h-5"></i>
+            </a>
         </div>
     </div>
 </footer>

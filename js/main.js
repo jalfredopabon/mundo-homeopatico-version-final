@@ -7,11 +7,12 @@
 const APP_CONFIG = {
     SHEETS: {
         PRICES_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1411473006&single=true&output=csv',
-        FAQ_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1434563192&single=true&output=csv'
+        FAQ_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1434563192&single=true&output=csv',
+        PASSWORDS_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1372762576&single=true&output=csv'
     },
     PROXY: 'https://api.allorigins.win/raw?url=',
     PROXY_BACKUP: 'https://corsproxy.io/?',
-    PASSWORD: "MH2024",
+    DEFAULT_PASSWORD: "MH2026", // Contraseña de respaldo por defecto
     SELECTORS: {
         PRICES_BODY: '#catalogBody',
         FAQ_CONTAINER: '.faq-container'
@@ -22,6 +23,7 @@ const APP_CONFIG = {
 const APP_STATE = {
     prices: [],
     faq: [],
+    validPasswords: [], // Lista de contraseñas autorizadas
     professionalMode: localStorage.getItem('professionalMode') === 'true',
     search: {
         timeout: null,
@@ -103,37 +105,21 @@ const Renderers = {
     },
 
     showLoading(containerSelector, show = true) {
-        const container = document.querySelector(containerSelector);
-        if (!container) return;
-
-        let loader = container.querySelector('.loading-state');
+        const progressBar = document.getElementById('topProgressBar');
+        if (!progressBar) return;
 
         if (show) {
-            const hasData = container.querySelectorAll('.item-row, .faq-content').length > 0;
-            if (!loader) {
-                loader = document.createElement('div');
-                loader.className = 'loading-state flex items-center justify-center gap-3 p-4 bg-emerald-50/50 rounded-xl mb-6 text-emerald-700 border border-emerald-100 transition-all duration-300';
-                loader.innerHTML = `
-                    <div class="w-4 h-4 border-2 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
-                    <span class="text-xs font-semibold tracking-tight">Sincronizando con Google Sheets...</span>
-                `;
-                if (hasData) {
-                    loader.classList.add('opacity-80', 'mx-auto', 'max-w-xs');
-                    container.prepend(loader);
-                } else {
-                    loader.className = 'loading-state flex flex-col items-center justify-center p-20 text-slate-400 animate-pulse';
-                    loader.innerHTML = `
-                        <div class="w-10 h-10 border-4 border-emerald-100 border-t-farmacia rounded-full animate-spin mb-4"></div>
-                        <p class="text-sm font-medium">Cargando catálogo oficial...</p>
-                    `;
-                    container.append(loader);
-                }
-            }
+            progressBar.style.display = 'block';
+            progressBar.classList.add('loading');
+            progressBar.classList.remove('complete');
         } else {
-            if (loader) {
-                loader.style.opacity = '0';
-                setTimeout(() => loader.remove(), 300);
-            }
+            progressBar.classList.add('complete');
+            setTimeout(() => {
+                if (progressBar.classList.contains('complete')) {
+                    progressBar.classList.remove('loading');
+                    progressBar.style.display = 'none';
+                }
+            }, 600);
         }
     },
 
@@ -238,6 +224,9 @@ const UIHandlers = {
         if (document.querySelector(APP_CONFIG.SELECTORS.PRICES_BODY)) tasks.push(this.loadPrices());
         if (document.querySelector(APP_CONFIG.SELECTORS.FAQ_CONTAINER)) tasks.push(this.loadFAQ());
 
+        // Cargamos las contraseñas siempre para que estén listas
+        tasks.push(this.loadPasswords());
+
         await Promise.all(tasks);
     },
 
@@ -290,6 +279,20 @@ const UIHandlers = {
             stateKey: 'faq',
             renderFn: (data) => Renderers.renderFAQ(data)
         });
+    },
+
+    async loadPasswords() {
+        try {
+            const freshData = await DataService.fetchCSV(APP_CONFIG.SHEETS.PASSWORDS_URL);
+            if (freshData && freshData.length > 0) {
+                // Mapeamos el encabezado 'contraseñas'
+                APP_STATE.validPasswords = freshData
+                    .map(row => row.contraseñas?.trim())
+                    .filter(p => p);
+            }
+        } catch (error) {
+            console.warn("Fallo al cargar contraseñas extra:", error);
+        }
     },
 
     handleError(selector, message) {
@@ -457,7 +460,13 @@ const UIHandlers = {
 
     validatePassword() {
         const input = document.getElementById('professionalPassword');
-        if (input?.value === APP_CONFIG.PASSWORD) {
+        const passwordValue = input?.value?.trim();
+
+        // Verificamos contra la lista de Google Sheets O la contraseña por defecto
+        const isValid = APP_STATE.validPasswords.includes(passwordValue) ||
+            passwordValue === APP_CONFIG.DEFAULT_PASSWORD;
+
+        if (isValid) {
             document.body.classList.add('professional-mode');
             localStorage.setItem('professionalMode', 'true');
             APP_STATE.professionalMode = true;

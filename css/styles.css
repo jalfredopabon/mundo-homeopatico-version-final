@@ -472,3 +472,82 @@ aside:hover .flex-1.overflow-y-auto {
     scrollbar-width: thin;
     /* Aparece al hover */
 }
+
+/* ============================================
+   BARRA DE PROGRESO SUPERIOR
+   ============================================ */
+.top-progress-bar {
+    position: fixed;
+    top: 72px;
+    /* Justo debajo del header */
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--color-farmacia), #34d399);
+    z-index: 1000;
+    display: none;
+    transition: opacity 0.4s ease;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+.top-progress-bar.loading {
+    display: block;
+    width: 0;
+    /* Crecimiento lineal percibido de 0% a 95% */
+    animation: progress-grow 15s cubic-bezier(0.1, 0.5, 0.5, 1) forwards;
+}
+
+.top-progress-bar.complete {
+    width: 100% !important;
+    opacity: 0;
+    transition: width 0.3s ease-out, opacity 0.5s ease 0.2s;
+}
+
+@keyframes progress-grow {
+    0% {
+        width: 0;
+    }
+
+    5% {
+        width: 20%;
+    }
+
+    40% {
+        width: 70%;
+    }
+
+    100% {
+        width: 95%;
+    }
+}
+
+/* Ajuste para móvil: El header cambia de altura */
+@media (max-width: 768px) {
+    .top-progress-bar {
+        top: 0;
+    }
+}
+
+/* ============================================
+   CONTACTO DIGITAL MINIMALISTA
+   ============================================ */
+.contact-minimal-link {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover Instagram: Color Rosa Característico */
+.contact-minimal-link:hover {
+    color: #e1306c !important;
+    /* Rosa Instagram */
+}
+
+.contact-minimal-pill {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover Web: Color Verde de la Empresa */
+.contact-minimal-pill:hover {
+    background-color: var(--color-farmacia) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
