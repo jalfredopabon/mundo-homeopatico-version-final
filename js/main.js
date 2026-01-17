@@ -85,7 +85,7 @@ const Renderers = {
         return isNaN(numPrice) ? '-' : numPrice.toLocaleString('es-CO');
     },
 
-    // Indicador de carga no destructivo
+    // Indicador de carga inteligente (Subtle & Non-intrusive)
     showLoading(containerSelector, show = true) {
         const container = document.querySelector(containerSelector);
         if (!container) return;
@@ -93,17 +93,36 @@ const Renderers = {
         let loader = container.querySelector('.loading-state');
 
         if (show) {
+            // Solo mostrar el mensaje grande si el contenedor está casi vacío (ej: solo el título)
+            const hasData = container.querySelectorAll('.item-row, .faq-content').length > 0;
+
             if (!loader) {
                 loader = document.createElement('div');
-                loader.className = 'loading-state flex flex-col items-center justify-center p-12 text-slate-400 animate-pulse';
+                loader.className = 'loading-state flex items-center justify-center gap-3 p-4 bg-emerald-50/50 rounded-xl mb-6 text-emerald-700 border border-emerald-100 transition-all duration-300';
                 loader.innerHTML = `
-                    <div class="w-10 h-10 border-4 border-emerald-100 border-t-farmacia rounded-full animate-spin mb-4"></div>
-                    <p class="text-sm font-medium">Actualizando información...</p>
+                    <div class="w-4 h-4 border-2 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
+                    <span class="text-xs font-semibold tracking-tight">Sincronizando con Google Sheets...</span>
                 `;
-                container.prepend(loader);
+
+                // Si ya hay datos, lo ponemos de forma muy sutil arriba
+                if (hasData) {
+                    loader.classList.add('opacity-80', 'mx-auto', 'max-w-xs');
+                    container.prepend(loader);
+                } else {
+                    // Si no hay nada, centramos el loader de forma elegante
+                    loader.className = 'loading-state flex flex-col items-center justify-center p-20 text-slate-400 animate-pulse';
+                    loader.innerHTML = `
+                        <div class="w-10 h-10 border-4 border-emerald-100 border-t-farmacia rounded-full animate-spin mb-4"></div>
+                        <p class="text-sm font-medium">Cargando catálogo oficial...</p>
+                    `;
+                    container.append(loader);
+                }
             }
         } else {
-            if (loader) loader.remove();
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 300);
+            }
         }
     },
 
@@ -223,40 +242,44 @@ const UIHandlers = {
 
     async loadPrices() {
         try {
-            // 1. Cargar desde caché para inmediatez
+            // 1. Cargar desde caché para inmediatez absoluta
             const cached = localStorage.getItem('mh_prices_cache');
             if (cached) {
-                APP_STATE.prices = JSON.parse(cached);
-                Renderers.renderPrices(APP_STATE.prices);
+                try {
+                    APP_STATE.prices = JSON.parse(cached);
+                    Renderers.renderPrices(APP_STATE.prices);
+                } catch (e) { console.error('Error parseando caché precios'); }
             }
 
-            // 2. Mostrar cargando (vía overlay/no-destructivo)
+            // 2. Mostrar indicador sutil
             Renderers.showLoading(APP_CONFIG.SELECTORS.PRICES_BODY, true);
 
             // 3. Fetch real
-            APP_STATE.prices = await DataService.fetchCSV(APP_CONFIG.SHEETS.PRICES_URL);
+            const freshData = await DataService.fetchCSV(APP_CONFIG.SHEETS.PRICES_URL);
 
-            // 4. Guardar en caché y renderizar
-            localStorage.setItem('mh_prices_cache', JSON.stringify(APP_STATE.prices));
-            Renderers.renderPrices(APP_STATE.prices);
-
-            Renderers.showLoading(APP_CONFIG.SELECTORS.PRICES_BODY, false);
-            console.log(`✅ ${APP_STATE.prices.length} precios cargados`);
-        } catch (error) {
-            console.error('❌ Error Precios:', error);
-            if (APP_STATE.prices.length === 0) {
-                this.handleError(APP_CONFIG.SELECTORS.PRICES_BODY, 'No se pudieron cargar los precios.');
+            // 4. Solo actualizar si obtuvimos datos válidos
+            if (freshData && freshData.length > 0) {
+                APP_STATE.prices = freshData;
+                localStorage.setItem('mh_prices_cache', JSON.stringify(APP_STATE.prices));
+                Renderers.renderPrices(APP_STATE.prices);
+                console.log(`✅ ${APP_STATE.prices.length} precios sincronizados`);
             }
+
             Renderers.showLoading(APP_CONFIG.SELECTORS.PRICES_BODY, false);
+        } catch (error) {
+            console.error('❌ Error Sincronización Precios:', error);
+            Renderers.showLoading(APP_CONFIG.SELECTORS.PRICES_BODY, false);
+
+            // SOLO mostramos el mensaje de error "rojo" si la página está TOTALMENTE VACÍA
+            if (APP_STATE.prices.length === 0) {
+                this.handleError(APP_CONFIG.SELECTORS.PRICES_BODY, 'No se pudo conectar con el servidor de precios.');
+            }
         }
     },
 
     async loadFAQ() {
         try {
-            // 1. Mostrar cargando
-            Renderers.showLoading(APP_CONFIG.SELECTORS.FAQ_CONTAINER, true);
-
-            // 2. Cargar desde caché si existe
+            // 1. Cargar desde caché para inmediatez absoluta
             const cached = localStorage.getItem('mh_faq_cache');
             if (cached) {
                 try {
@@ -265,21 +288,29 @@ const UIHandlers = {
                 } catch (e) { console.error('Cache FAQ corrupto'); }
             }
 
+            // 2. Mostrar indicador sutil
+            Renderers.showLoading(APP_CONFIG.SELECTORS.FAQ_CONTAINER, true);
+
             // 3. Fetch real
-            APP_STATE.faq = await DataService.fetchCSV(APP_CONFIG.SHEETS.FAQ_URL);
+            const freshFAQ = await DataService.fetchCSV(APP_CONFIG.SHEETS.FAQ_URL);
 
-            // 4. Guardar y renderizar
-            localStorage.setItem('mh_faq_cache', JSON.stringify(APP_STATE.faq));
-            Renderers.renderFAQ(APP_STATE.faq);
+            // 4. Solo actualizar si obtuvimos datos válidos
+            if (freshFAQ && freshFAQ.length > 0) {
+                APP_STATE.faq = freshFAQ;
+                localStorage.setItem('mh_faq_cache', JSON.stringify(APP_STATE.faq));
+                Renderers.renderFAQ(APP_STATE.faq);
+                console.log(`✅ ${APP_STATE.faq.length} FAQ sincronizadas`);
+            }
 
             Renderers.showLoading(APP_CONFIG.SELECTORS.FAQ_CONTAINER, false);
-            console.log(`✅ ${APP_STATE.faq.length} FAQ cargadas`);
         } catch (error) {
-            console.error('❌ Error FAQ:', error);
+            console.error('❌ Error Sincronización FAQ:', error);
             Renderers.showLoading(APP_CONFIG.SELECTORS.FAQ_CONTAINER, false);
+
+            // SOLO mostramos mensaje si no hay nada en absoluto
             if (APP_STATE.faq.length === 0) {
                 const container = document.querySelector(APP_CONFIG.SELECTORS.FAQ_CONTAINER);
-                if (container) container.innerHTML = '<p class="text-center text-slate-500 py-8">No se pudieron cargar las preguntas frecuentes. Por favor, reintenta más tarde.</p>';
+                if (container) container.innerHTML = '<p class="text-center text-slate-500 py-8">Cargando preguntas frecuentes...</p>';
             }
         }
     },
