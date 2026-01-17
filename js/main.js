@@ -38,24 +38,41 @@ const DataService = {
         return this.parseCSV(csvText);
     },
 
-    // Parser robusto que maneja comas dentro de comillas
+    // Parser robusto que maneja comas dentro de comillas y campos vacíos
     parseCSV(csv) {
         const lines = csv.split(/\r?\n/);
-        if (lines.length === 0) return [];
+        if (lines.length < 2) return [];
 
         const headers = lines[0].split(',').map(h => h.trim());
-        return lines.slice(1)
-            .filter(line => line.trim() !== '')
-            .map(line => {
-                // Regex para manejar comas dentro de campos entrecomillados
-                const values = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
-                const row = {};
-                headers.forEach((header, index) => {
-                    let val = values[index] ? values[index].trim() : '';
-                    row[header] = val.replace(/^"|"$/g, ''); // Quitar comillas
-                });
-                return row;
+        const data = [];
+
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line) continue;
+
+            const values = [];
+            let current = '';
+            let inQuotes = false;
+
+            for (let char of line) {
+                if (char === '"') inQuotes = !inQuotes;
+                else if (char === ',' && !inQuotes) {
+                    values.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            values.push(current.trim());
+
+            const row = {};
+            headers.forEach((header, index) => {
+                let val = values[index] || '';
+                row[header] = val.replace(/^"|"$/g, '');
             });
+            data.push(row);
+        }
+        return data;
     }
 };
 
@@ -68,16 +85,26 @@ const Renderers = {
         return isNaN(numPrice) ? '-' : numPrice.toLocaleString('es-CO');
     },
 
-    // Crear indicador de carga
-    showLoading(containerSelector) {
+    // Indicador de carga no destructivo
+    showLoading(containerSelector, show = true) {
         const container = document.querySelector(containerSelector);
         if (!container) return;
-        container.innerHTML = `
-            <div class="flex flex-col items-center justify-center p-20 text-slate-400 animate-pulse">
-                <div class="w-12 h-12 border-4 border-emerald-100 border-t-farmacia rounded-full animate-spin mb-4"></div>
-                <p class="font-medium">Cargando datos actualizados...</p>
-            </div>
-        `;
+
+        let loader = container.querySelector('.loading-state');
+
+        if (show) {
+            if (!loader) {
+                loader = document.createElement('div');
+                loader.className = 'loading-state flex flex-col items-center justify-center p-12 text-slate-400 animate-pulse';
+                loader.innerHTML = `
+                    <div class="w-10 h-10 border-4 border-emerald-100 border-t-farmacia rounded-full animate-spin mb-4"></div>
+                    <p class="text-sm font-medium">Actualizando información...</p>
+                `;
+                container.prepend(loader);
+            }
+        } else {
+            if (loader) loader.remove();
+        }
     },
 
     // Renderizar Tablas de Precios
@@ -196,23 +223,64 @@ const UIHandlers = {
 
     async loadPrices() {
         try {
-            Renderers.showLoading(APP_CONFIG.SELECTORS.PRICES_BODY);
+            // 1. Cargar desde caché para inmediatez
+            const cached = localStorage.getItem('mh_prices_cache');
+            if (cached) {
+                APP_STATE.prices = JSON.parse(cached);
+                Renderers.renderPrices(APP_STATE.prices);
+            }
+
+            // 2. Mostrar cargando (vía overlay/no-destructivo)
+            Renderers.showLoading(APP_CONFIG.SELECTORS.PRICES_BODY, true);
+
+            // 3. Fetch real
             APP_STATE.prices = await DataService.fetchCSV(APP_CONFIG.SHEETS.PRICES_URL);
+
+            // 4. Guardar en caché y renderizar
+            localStorage.setItem('mh_prices_cache', JSON.stringify(APP_STATE.prices));
             Renderers.renderPrices(APP_STATE.prices);
-            console.log('✅ Precios cargados');
+
+            Renderers.showLoading(APP_CONFIG.SELECTORS.PRICES_BODY, false);
+            console.log(`✅ ${APP_STATE.prices.length} precios cargados`);
         } catch (error) {
             console.error('❌ Error Precios:', error);
-            this.handleError(APP_CONFIG.SELECTORS.PRICES_BODY, 'No se pudieron cargar los precios.');
+            if (APP_STATE.prices.length === 0) {
+                this.handleError(APP_CONFIG.SELECTORS.PRICES_BODY, 'No se pudieron cargar los precios.');
+            }
+            Renderers.showLoading(APP_CONFIG.SELECTORS.PRICES_BODY, false);
         }
     },
 
     async loadFAQ() {
         try {
+            // 1. Mostrar cargando
+            Renderers.showLoading(APP_CONFIG.SELECTORS.FAQ_CONTAINER, true);
+
+            // 2. Cargar desde caché si existe
+            const cached = localStorage.getItem('mh_faq_cache');
+            if (cached) {
+                try {
+                    APP_STATE.faq = JSON.parse(cached);
+                    Renderers.renderFAQ(APP_STATE.faq);
+                } catch (e) { console.error('Cache FAQ corrupto'); }
+            }
+
+            // 3. Fetch real
             APP_STATE.faq = await DataService.fetchCSV(APP_CONFIG.SHEETS.FAQ_URL);
+
+            // 4. Guardar y renderizar
+            localStorage.setItem('mh_faq_cache', JSON.stringify(APP_STATE.faq));
             Renderers.renderFAQ(APP_STATE.faq);
-            console.log('✅ FAQ cargadas');
+
+            Renderers.showLoading(APP_CONFIG.SELECTORS.FAQ_CONTAINER, false);
+            console.log(`✅ ${APP_STATE.faq.length} FAQ cargadas`);
         } catch (error) {
             console.error('❌ Error FAQ:', error);
+            Renderers.showLoading(APP_CONFIG.SELECTORS.FAQ_CONTAINER, false);
+            if (APP_STATE.faq.length === 0) {
+                const container = document.querySelector(APP_CONFIG.SELECTORS.FAQ_CONTAINER);
+                if (container) container.innerHTML = '<p class="text-center text-slate-500 py-8">No se pudieron cargar las preguntas frecuentes. Por favor, reintenta más tarde.</p>';
+            }
         }
     },
 
