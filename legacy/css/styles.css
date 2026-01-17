@@ -1,0 +1,93 @@
+/* ============================================
+   MUNDO HOMEOPÁTICO - ESTILOS COMPARTIDOS
+   ============================================ */
+
+/* Fuente base */
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #f8fafc;
+    scroll-behavior: smooth;
+}
+
+/* Colores personalizados */
+.text-farmacia {
+    color: #10b981;
+}
+
+.text-publico {
+    color: #2563eb;
+}
+
+.bg-farmacia {
+    background-color: #10b981;
+}
+
+.border-farmacia {
+    border-color: #10b981;
+}
+
+/* Navegación lateral activa */
+.sidebar-active {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    border-left: 4px solid #10b981;
+}
+
+/* Hover en filas de tabla */
+.hover-row {
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.hover-row:hover {
+    background-color: #f1f5f9 !important;
+    border-color: #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+/* Acordeón para distribuidores (móvil) */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.accordion-content.active {
+    max-height: 500px;
+}
+
+@media (min-width: 768px) {
+    .accordion-content {
+        max-height: none !important;
+        overflow: visible;
+    }
+
+    .accordion-toggle {
+        display: none;
+    }
+}
+
+/* Cards de distribuidores con hover */
+.distributor-card {
+    transition: all 0.3s ease;
+}
+
+.distributor-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    border-color: #10b981;
+}

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Contacta con Mundo Homeopático Medellín y nuestros distribuidores autorizados en toda Colombia. Sedes, horarios y atención personalizada.">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mundohomeopatico.com/contacto.html">
+    <meta property="og:title" content="Mundo Homeopático - Contacto y Sedes">
+    <meta property="og:description"
+        content="Encuentra nuestra sede principal y puntos de distribución autorizados en Colombia. Medellín, Costa Atlántica, Eje Cafetero y más.">
+    <meta property="og:image" content="img/logo-mundo-homeopatico.webp">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://mundohomeopatico.com/contacto.html">
+    <meta property="twitter:title" content="Mundo Homeopático - Contacto y Sedes">
+    <meta property="twitter:description"
+        content="Encuentra nuestra sede principal y puntos de distribución autorizados en Colombia.">
+    <meta property="twitter:image" content="img/logo-mundo-homeopatico.webp">
+
+    <title>Mundo Homeopático - Contacto y Soporte</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        farmacia: '#10b981',
+                        publico: '#2563eb'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<!-- Header con Divisiones de Cuadrícula -->
+<header class="h-[72px] sticky top-0 z-50 bg-white border-b border-slate-200 flex items-center p-0">
+    <!-- Parte A: Logo (Mismo ancho que Sidebar = 288px + Borde Derecho) -->
+    <div class="h-full flex items-center px-8 border-r border-slate-200" style="width: 288px;">
+        <a href="index.html" class="flex items-center gap-4">
+            <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center">
+                <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático" width="48" height="48"
+                    fetchpriority="high" class="h-10 w-auto object-contain" />
+            </div>
+            <div class="flex flex-col justify-center text-left">
+                <h1 class="text-xl font-black text-slate-800 tracking-tight leading-none">Mundo Homeopático</h1>
+            </div>
+        </a>
+    </div>
+    <!-- Parte B: Título Central y Botón (Contenido Derecha) -->
+    <div class="flex-1 h-full flex items-center justify-end px-8">
+        <a href="index.html" aria-label="Volver a la Lista de Precios"
+            class="flex items-center gap-2 bg-farmacia text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-emerald-600 transition-all shadow-sm">
+            <i data-lucide="list" class="w-4 h-4"></i>
+            <span>Lista de Precios</span>
+        </a>
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Título Principal de la Página -->
+    <div class="mb-10">
+        <h1 class="text-4xl font-black text-slate-800 tracking-tight mb-2">Contacto y Sedes</h1>
+        <p class="text-lg text-slate-500">Estamos aquí para atenderte en todo momento</p>
+    </div>
+
+    <!-- Vídeo Corporativo -->
+    <div class="mb-16">
+        <h1 class="text-3xl font-black text-slate-800 tracking-tight mb-6">Procesos de elaboración certificados y
+            rigor farmacéutico</h1>
+        <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-100 bg-slate-100 relative cursor-pointer youtube-facade max-w-3xl mx-auto"
+            data-video-id="ZCkVmauoVVo" onclick="UIHandlers.loadYouTubeVideo(this)">
+            <img src="https://img.youtube.com/vi/ZCkVmauoVVo/maxresdefault.jpg"
+                alt="Video presentación Mundo Homeopático" class="w-full h-full object-cover" loading="lazy">
+            <div
+                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-40 transition-all">
+                <div
+                    class="w-20 h-20 bg-farmacia rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
+                    <i data-lucide="play" class="w-10 h-10 text-white ml-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Título -->
+    <div class="mb-12">
+        <h2 class="text-2xl font-black text-slate-800 tracking-tight">Puntos de Distribución</h2>
+        <p class="text-slate-500 mt-2">Encuéntranos en todo el país</p>
+    </div>
+
+    <!-- Sede Principal -->
+    <div class="bg-gradient-to-br from-emerald-50 to-white rounded-3xl border-2 border-farmacia shadow-lg p-8 mb-12">
+        <div class="flex items-center gap-3 mb-6">
+            <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático" class="w-12 h-12 object-contain">
+            <div>
+                <h3 class="text-xl font-bold text-slate-800">SEDE PRINCIPAL</h3>
+                <p class="text-farmacia font-semibold">Medellín, Colombia</p>
+            </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div>
+                <p class="flex items-start gap-3 text-slate-700 mb-4">
+                    <i data-lucide="map-pin" class="w-5 h-5 text-farmacia flex-shrink-0 mt-0.5"></i>
+                    <span class="font-medium">Carrera 49 N° 64-06</span>
+                </p>
+                <p class="flex items-start gap-3 text-slate-700">
+                    <i data-lucide="clock" class="w-5 h-5 text-farmacia flex-shrink-0 mt-0.5"></i>
+                    <span>L-V: 8am-12pm / 2pm-6pm<br>Sábados: 8am-12pm</span>
+                </p>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <a href="https://wa.me/573182899126" target="_blank"
+                    aria-label="Contactar por WhatsApp a Sede Principal - Línea 1"
+                    class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.552 4.197 1.602 6.02L0 24l6.117-1.605a11.79 11.79 0 005.925 1.586h.005c6.635 0 12.049-5.415 12.049-12.05a11.782 11.782 0 00-3.511-8.527z" />
+                    </svg>
+                    318 289 9126
+                </a>
+                <a href="https://wa.me/573176687050" target="_blank"
+                    aria-label="Contactar por WhatsApp a Sede Principal - Línea 2"
+                    class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.552 4.197 1.602 6.02L0 24l6.117-1.605a11.79 11.79 0 005.925 1.586h.005c6.635 0 12.049-5.415 12.049-12.05a11.782 11.782 0 00-3.511-8.527z" />
+                    </svg>
+                    317 668 7050
+                </a>
+                <a href="https://wa.me/573017474675" target="_blank"
+                    aria-label="Contactar por WhatsApp a Sede Principal - Línea 3"
+                    class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.552 4.197 1.602 6.02L0 24l6.117-1.605a11.79 11.79 0 005.925 1.586h.005c6.635 0 12.049-5.415 12.049-12.05a11.782 11.782 0 00-3.511-8.527z" />
+                    </svg>
+                    301 747 4675
+                </a>
+                <a href="https://wa.me/573157150929" target="_blank"
+                    aria-label="Contactar por WhatsApp a Sede Principal - Línea 4"
+                    class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.552 4.197 1.602 6.02L0 24l6.117-1.605a11.79 11.79 0 005.925 1.586h.005c6.635 0 12.049-5.415 12.049-12.05a11.782 11.782 0 00-3.511-8.527z" />
+                    </svg>
+                    315 715 0929
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Distribuidores -->
+    <h3 class="text-xl font-bold text-slate-700 mb-6 flex items-center gap-2">
+        <i data-lucide="users" class="w-5 h-5 text-farmacia"></i>
+        Distribuidores Autorizados
+    </h3>
+
+    <div class="grid md:grid-cols-2 gap-6" id="distributors">
+        <!-- Costa Atlántica -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <button onclick="UIHandlers.toggleAccordion(this)"
+                class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo-biomedic.webp" alt="Logo Biomedic" class="w-8 h-8 object-contain">
+                    <span class="font-bold text-slate-700">Costa Atlántica</span>
+                </div>
+                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+            </button>
+            <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo-biomedic.webp" alt="Logo Biomedic" class="w-8 h-8 object-contain">
+                    <h4 class="font-bold text-slate-700">Costa Atlántica</h4>
+                </div>
+            </div>
+            <div class="accordion-content md:!max-h-none px-6 py-4">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+                    <div class="flex-1 space-y-1">
+                        <p class="text-sm font-bold text-slate-700">Biomedic</p>
+                        <p class="flex items-start gap-2 text-slate-600 text-sm">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
+                            Calle 80 N° 49 C 15, Oficina 301
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 items-end">
+                        <a href="https://wa.me/573215365720" target="_blank"
+                            aria-label="Contactar por WhatsApp a Distribuidor Costa Atlántica"
+                            class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-all">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                <path
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.552 4.197 1.602 6.02L0 24l6.117-1.605a11.79 11.79 0 005.925 1.586h.005c6.635 0 12.049-5.415 12.049-12.05a11.782 11.782 0 00-3.511-8.527z" />
+                            </svg>
+                            321 536 5720
+                        </a>
+                        <span
+                            class="flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-lg text-sm opacity-80">
+                            <i data-lucide="phone" class="w-4 h-4"></i> (605) 313 4131
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Eje Cafetero -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <button onclick="UIHandlers.toggleAccordion(this)"
+                class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
+                        class="w-8 h-8 object-contain">
+                    <span class="font-bold text-slate-700">Eje Cafetero</span>
+                </div>
+                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+            </button>
+            <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
+                        class="w-8 h-8 object-contain">
+                    <h4 class="font-bold text-slate-700">Eje Cafetero</h4>
+                </div>
+            </div>
+            <div class="accordion-content md:!max-h-none p-6">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+                    <div class="flex-1 space-y-2">
+                        <p class="flex items-start gap-2 text-slate-600 text-sm">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
+                            Pereira, Armenia, Manizales, Cartago
+                        </p>
+                        <p class="text-sm text-slate-500"><strong>Carlos Ramirez</strong></p>
+                    </div>
+                    <div class="flex justify-end items-start">
+                        <a href="https://wa.me/573187166230" target="_blank"
+                            aria-label="Contactar por WhatsApp a Distribuidor Eje Cafetero"
+                            class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-all">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                <path
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.552 4.197 1.602 6.02L0 24l6.117-1.605a11.79 11.79 0 005.925 1.586h.005c6.635 0 12.049-5.415 12.049-12.05a11.782 11.782 0 00-3.511-8.527z" />
+                            </svg>
+                            318 716 6230
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Montería -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <button onclick="UIHandlers.toggleAccordion(this)"
+                class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo-eco-natural.webp" alt="Logo Eco Natural" class="w-8 h-8 object-contain">
+                    <span class="font-bold text-slate-700">Montería</span>
+                </div>
+                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+            </button>
+            <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo-eco-natural.webp" alt="Logo Eco Natural" class="w-8 h-8 object-contain">
+                    <h4 class="font-bold text-slate-700">Montería</h4>
+                </div>
+            </div>
+            <div class="accordion-content md:!max-h-none p-6">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+                    <div class="flex-1 space-y-1">
+                        <p class="text-sm font-bold text-slate-700">Eco Natural</p>
+                        <p class="text-sm text-slate-500">Martha Elena Rivas</p>
+                    </div>
+                    <div class="flex flex-col gap-2 items-end">
+                        <a href="https://wa.me/573145532080" target="_blank"
+                            aria-label="Contactar por WhatsApp a Distribuidor Montería"
+                            class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-all">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                <path
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.552 4.197 1.602 6.02L0 24l6.117-1.605a11.79 11.79 0 005.925 1.586h.005c6.635 0 12.049-5.415 12.049-12.05a11.782 11.782 0 00-3.511-8.527z" />
+                            </svg>
+                            314 553 2080
+                        </a>
+                        <span
+                            class="flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-lg text-sm opacity-80">
+                            <i data-lucide="phone" class="w-4 h-4"></i> (034) 783 0339
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Norte de Santander -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <button onclick="UIHandlers.toggleAccordion(this)"
+                class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
+                        class="w-8 h-8 object-contain">
+                    <span class="font-bold text-slate-700">Norte de Santander</span>
+                </div>
+                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
+            </button>
+            <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
+                        class="w-8 h-8 object-contain">
+                    <span class="font-bold text-slate-700">Norte de Santander</span>
+                </div>
+            </div>
+            <div class="accordion-content md:!max-h-none p-6">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+                    <div class="flex-1">
+                        <p class="text-sm font-bold text-slate-700">Distribuidor</p>
+                        <p class="text-sm text-slate-500">Jhon Jairo Vallejo Rolón</p>
+                    </div>
+                    <div class="flex flex-col gap-2 items-end">
+                        <a href="https://wa.me/573133019777" target="_blank"
+                            aria-label="Contactar por WhatsApp a Distribuidor Norte de Santander"
+                            class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-all">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                <path
+                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.552 4.197 1.602 6.02L0 24l6.117-1.605a11.79 11.79 0 005.925 1.586h.005c6.635 0 12.049-5.415 12.049-12.05a11.782 11.782 0 00-3.511-8.527z" />
+                            </svg>
+                            313 301 9777
+                        </a>
+                        <span
+                            class="flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-lg text-sm opacity-80">
+                            <i data-lucide="phone" class="w-4 h-4"></i> 318 415 2610
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección FAQ -->
+    <div class="mt-16">
+        <h2 class="text-xl font-bold text-slate-700 mb-6 flex items-center gap-2">
+            <i data-lucide="help-circle" class="w-5 h-5 text-farmacia"></i>
+            Preguntas Frecuentes
+        </h2>
+
+        <div class="space-y-3 faq-container">
+            <!-- Inyectado por JS -->
+        </div>
+    </div>
+
+</main>
+
+<footer class="bg-white border-t border-slate-100 mt-16 py-8">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-sm font-bold text-slate-600 mb-2 tracking-tight">© 2026 Mundo Homeopático -
+            Todos los
+            derechos reservados.</p>
+        <p class="text-xs text-slate-400 font-medium tracking-tight">Precios sujetos a cambios.
+            Consulte
+            disponibilidad.</p>
+        <div class="flex justify-center gap-8 mt-8 opacity-20">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+            <i data-lucide="stethoscope" class="w-6 h-6"></i>
+            <i data-lucide="award" class="w-6 h-6"></i>
+        </div>
+    </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+
+</html>

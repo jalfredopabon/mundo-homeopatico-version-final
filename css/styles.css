@@ -1,0 +1,453 @@
+/* ============================================
+   VARIABLES CSS - SISTEMA DE DISEÑO
+   ============================================ */
+:root {
+    /* Colores */
+    --color-farmacia: #10b981;
+    --color-publico: #2563eb;
+
+    /* Tipografía */
+    --font-base: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* Espaciado */
+    --spacing-4: 1rem;
+
+    /* Bordes */
+    --radius-xl: 1rem;
+}
+
+/* ============================================
+   OPTIMIZACIÓN DE TABLAS
+   ============================================ */
+table {
+    font-variant-numeric: tabular-nums;
+}
+
+.text-farmacia,
+.text-publico {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+}
+
+/* ============================================
+   MUNDO HOMEOPÁTICO - ESTILOS COMPARTIDOS
+   ============================================ */
+
+/* Fuente base */
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+    scroll-behavior: smooth;
+}
+
+/* Colores personalizados */
+.text-farmacia {
+    color: #10b981;
+}
+
+.text-publico {
+    color: #2563eb;
+}
+
+.bg-farmacia {
+    background-color: #10b981;
+}
+
+.border-farmacia {
+    border-color: #10b981;
+}
+
+/* Navegación lateral activa */
+.sidebar-active {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    border-left: 4px solid #10b981;
+}
+
+/* Hover en filas de tabla */
+.hover-row {
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.hover-row:hover {
+    background-color: #f1f5f9 !important;
+    border-color: #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+/* Acordeón para distribuidores (móvil) */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.accordion-content.active {
+    max-height: 500px;
+}
+
+@media (min-width: 768px) {
+    .accordion-content {
+        max-height: none !important;
+        overflow: visible;
+    }
+
+    .accordion-toggle {
+        display: none;
+    }
+}
+
+/* Cards de distribuidores con hover */
+.distributor-card {
+    transition: all 0.3s ease;
+}
+
+.distributor-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    border-color: #10b981;
+}
+
+/* Sistema de Acceso Profesional */
+.professional-only {
+    display: none;
+}
+
+body.professional-mode .professional-only {
+    display: table-cell;
+}
+
+/* Modal de contraseña */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+}
+
+.error {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.error.hidden {
+    display: none;
+}
+
+/* ============================================
+   ANCHOS MÁXIMOS POR SECCIÓN
+   ============================================ */
+/* Hero/Video - Ancho medio para enfoque */
+.max-w-3xl {
+    max-width: 48rem;
+    /* 768px */
+}
+
+/* Sedes - Ancho amplio para grid */
+.max-w-6xl {
+    max-width: 72rem;
+    /* 1152px */
+}
+
+/* FAQ - Ancho estrecho para lectura */
+.max-w-2xl {
+    max-width: 42rem;
+    /* 672px */
+}
+
+/* Contenido general */
+main {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ============================================
+   BOTONES PERSONALIZADOS
+   ============================================ */
+/* Botón Ghost (borde verde) */
+button[onclick*="showPasswordModal"],
+button[onclick*="window.location"] {
+    transition: all 0.3s ease;
+}
+
+button[onclick*="showPasswordModal"]:hover,
+button[onclick*="window.location"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+/* Asegurar que los iconos se vean bien */
+[data-lucide] {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - MOBILE FIRST
+   ============================================ */
+/* Tablet y móvil (< 768px) */
+@media (max-width: 768px) {
+
+    /* Header responsive */
+    header {
+        padding: 0 1rem !important;
+        height: auto !important;
+        min-height: 72px;
+        flex-wrap: wrap;
+    }
+
+    header .flex.items-center.gap-6 {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: center;
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    header span {
+        display: none;
+        /* Ocultar "Contacto y Soporte | COP ($)" en móvil */
+    }
+
+    header button,
+    header a[class*="bg-farmacia"] {
+        font-size: 0.75rem;
+        padding: 0.5rem 1rem;
+    }
+
+    /* Logo más pequeño */
+    header img {
+        height: 2rem !important;
+    }
+
+    header h1 {
+        font-size: 1.25rem;
+    }
+
+    /* Sidebar oculto en móvil */
+    aside {
+        display: none;
+    }
+
+    /* Contenido a ancho completo */
+    .flex-1 {
+        width: 100% !important;
+    }
+
+    /* Padding reducido */
+    main {
+        padding: 1rem !important;
+    }
+
+    /* Anchos máximos responsive */
+    .max-w-3xl,
+    .max-w-6xl,
+    .max-w-2xl {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+}
+
+/* Móvil pequeño (< 480px) */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1rem;
+    }
+
+    header button span,
+    header a span {
+        display: none;
+        /* Solo iconos en móvil pequeño */
+    }
+
+    header button,
+    header a[class*="bg-farmacia"] {
+        padding: 0.5rem;
+        min-width: 44px;
+        min-height: 44px;
+        justify-content: center;
+    }
+}
+
+/* Tablas responsive - Cards en móvil */
+@media (max-width: 768px) {
+
+    /* Ocultar tabla tradicional */
+    table thead {
+        display: none;
+    }
+
+    table,
+    table tbody,
+    table tr,
+    table td {
+        display: block;
+        width: 100%;
+    }
+
+    table tr {
+        margin-bottom: 1rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    table td {
+        text-align: left !important;
+        padding: 0.5rem 0;
+        border: none;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-right: 10px;
+        font-weight: 600;
+        color: #475569;
+    }
+
+    /* Ocultar columna profesional en móvil si no está activo */
+    table td.professional-only {
+        display: none;
+    }
+
+    body.professional-mode table td.professional-only {
+        display: block;
+    }
+}
+
+/* Sedes y FAQ responsive */
+@media (max-width: 768px) {
+
+    /* FAQ más compacto */
+    .faq-content {
+        font-size: 0.875rem;
+    }
+
+    /* Botones FAQ */
+    button[onclick*="toggleFaq"] {
+        padding: 1rem;
+        font-size: 0.875rem;
+    }
+
+    /* Video responsive */
+    .aspect-video {
+        border-radius: 1rem !important;
+    }
+
+    /* Espaciado reducido */
+    .mb-16 {
+        margin-bottom: 2rem !important;
+    }
+
+    .py-12 {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+}
+
+/* Modal responsive */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-width: 95%;
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .modal-content h2 {
+        font-size: 1.25rem;
+    }
+
+    .modal-content input {
+        font-size: 1rem;
+        padding: 0.75rem;
+    }
+
+    .modal-content button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================
+   SCROLLBAR AUTO-HIDE (Aparece al Hover)
+   ============================================ */
+/* Por defecto: Scrollbar invisible */
+aside .flex-1.overflow-y-auto::-webkit-scrollbar {
+    width: 0px;
+    transition: width 0.3s ease;
+}
+
+aside .flex-1.overflow-y-auto::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+aside .flex-1.overflow-y-auto::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 20px;
+}
+
+aside .flex-1.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+    background-color: #94a3b8;
+}
+
+/* Al hacer hover en el SIDEBAR: Scrollbar aparece */
+aside:hover .flex-1.overflow-y-auto::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Firefox: Scrollbar solo visible al hover */
+aside .flex-1.overflow-y-auto {
+    scrollbar-width: none;
+    /* Oculto por defecto */
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+aside:hover .flex-1.overflow-y-auto {
+    scrollbar-width: thin;
+    /* Aparece al hover */
+}
