@@ -24,11 +24,20 @@
     <meta property="twitter:image" content="img/logo-mundo-homeopatico.webp">
 
     <title>Mundo Homeopático - Contacto y Soporte</title>
+
+    <!-- Preconnect para carga más rápida -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+    <!-- CSS crítico primero -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
-        rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Scripts no críticos con defer -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+
 
 </head>
 
@@ -186,14 +195,14 @@
             <button onclick="UIHandlers.toggleAccordion(this)"
                 class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
                 <div class="flex items-center gap-2">
-                    <img src="img/logo-biomedic.webp" alt="Logo Biomedic" class="w-8 h-8 object-contain">
+                    <img src="img/logo-biomedic.webp" alt="Logo Biomedic" class="w-8 h-8 object-contain" loading="lazy">
                     <span class="font-bold text-slate-700">Costa Atlántica</span>
                 </div>
                 <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
             </button>
             <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
                 <div class="flex items-center gap-2">
-                    <img src="img/logo-biomedic.webp" alt="Logo Biomedic" class="w-8 h-8 object-contain">
+                    <img src="img/logo-biomedic.webp" alt="Logo Biomedic" class="w-8 h-8 object-contain" loading="lazy">
                     <h4 class="font-bold text-slate-700">Costa Atlántica</h4>
                 </div>
             </div>
@@ -230,7 +239,7 @@
                 class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
                 <div class="flex items-center gap-2">
                     <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
-                        class="w-8 h-8 object-contain">
+                        class="w-8 h-8 object-contain" loading="lazy">
                     <span class="font-bold text-slate-700">Eje Cafetero</span>
                 </div>
                 <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
@@ -238,7 +247,7 @@
             <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
                 <div class="flex items-center gap-2">
                     <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
-                        class="w-8 h-8 object-contain">
+                        class="w-8 h-8 object-contain" loading="lazy">
                     <h4 class="font-bold text-slate-700">Eje Cafetero</h4>
                 </div>
             </div>
@@ -270,14 +279,16 @@
             <button onclick="UIHandlers.toggleAccordion(this)"
                 class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
                 <div class="flex items-center gap-2">
-                    <img src="img/logo-eco-natural.webp" alt="Logo Eco Natural" class="w-8 h-8 object-contain">
+                    <img src="img/logo-eco-natural.webp" alt="Logo Eco Natural" class="w-8 h-8 object-contain"
+                        loading="lazy">
                     <span class="font-bold text-slate-700">Montería</span>
                 </div>
                 <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
             </button>
             <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
                 <div class="flex items-center gap-2">
-                    <img src="img/logo-eco-natural.webp" alt="Logo Eco Natural" class="w-8 h-8 object-contain">
+                    <img src="img/logo-eco-natural.webp" alt="Logo Eco Natural" class="w-8 h-8 object-contain"
+                        loading="lazy">
                     <h4 class="font-bold text-slate-700">Montería</h4>
                 </div>
             </div>
@@ -311,7 +322,7 @@
                 class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
                 <div class="flex items-center gap-2">
                     <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
-                        class="w-8 h-8 object-contain">
+                        class="w-8 h-8 object-contain" loading="lazy">
                     <span class="font-bold text-slate-700">Norte de Santander</span>
                 </div>
                 <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
@@ -319,7 +330,7 @@
             <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
                 <div class="flex items-center gap-2">
                     <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
-                        class="w-8 h-8 object-contain">
+                        class="w-8 h-8 object-contain" loading="lazy">
                     <span class="font-bold text-slate-700">Norte de Santander</span>
                 </div>
             </div>
