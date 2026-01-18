@@ -31,6 +31,11 @@
     --radius-xl: 1rem;
     --radius-2xl: 1.5rem;
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+    /* Layout */
+    --sidebar-width: 288px;
+    --sidebar-width-tablet: 220px;
+    --header-height: 72px;
 }
 
 /* ============================================
@@ -550,4 +555,67 @@ aside:hover .flex-1.overflow-y-auto {
     background-color: var(--color-farmacia) !important;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+/* ============================================
+   CORRECCIÓN: Legibilidad Móvil (min 12px)
+   ============================================ */
+@media (max-width: 768px) {
+
+    /* Forzar tamaño mínimo legible en textos pequeños */
+    .text-\[9px\],
+    .text-\[10px\],
+    .text-\[11px\] {
+        font-size: 0.75rem !important;
+        /* 12px mínimo */
+    }
+
+    /* Navegación sidebar (aunque está oculta, por consistencia) */
+    .nav-link {
+        font-size: 0.875rem !important;
+        /* 14px */
+        padding: 0.75rem 1rem !important;
+        /* Área táctil 44px+ */
+    }
+
+    /* Mejorar legibilidad de encabezados de tabla en móvil */
+    table td:before {
+        font-size: 0.75rem;
+        /* 12px */
+    }
+}
+
+/* ============================================
+   BREAKPOINT TABLET (768px - 1024px)
+   ============================================ */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    /* Sidebar más estrecho en tablets */
+    aside {
+        width: var(--sidebar-width-tablet) !important;
+        min-width: var(--sidebar-width-tablet) !important;
+    }
+
+    /* Header logo section ajustado */
+    header>div:first-child {
+        width: var(--sidebar-width-tablet) !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    /* Contenido principal con más espacio */
+    main {
+        padding: 1.5rem !important;
+    }
+
+    /* Tablas más compactas */
+    table th,
+    table td {
+        padding: 0.75rem 1rem !important;
+    }
+
+    /* Títulos de sección más compactos */
+    .text-2xl {
+        font-size: 1.25rem !important;
+    }
 }
