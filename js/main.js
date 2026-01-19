@@ -572,6 +572,25 @@ const UIHandlers = {
         }
     },
 
+    logout() {
+        // Limpiar localStorage
+        localStorage.removeItem('professionalMode');
+        localStorage.removeItem('userName');
+
+        // Resetear estado
+        APP_STATE.professionalMode = false;
+        APP_STATE.userName = '';
+
+        // Ocultar saludo
+        this.hideUserGreeting();
+
+        // Quitar clase del body
+        document.body.classList.remove('professional-mode');
+
+        // Recargar página para resetear todo el estado
+        window.location.reload();
+    },
+
     toggleAccordion(button) {
         const content = button.parentElement.querySelector('.accordion-content');
         const icon = button.querySelector('[data-lucide="chevron-down"]');

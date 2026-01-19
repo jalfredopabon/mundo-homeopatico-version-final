@@ -55,8 +55,25 @@
             </div>
         </a>
     </div>
-    <!-- Parte B: Título Central y Botón (Contenido Derecha) -->
-    <div class="flex-1 h-full flex items-center justify-end px-8">
+    <!-- Parte B: Saludo personalizado (solo visible con sesión activa) -->
+    <div id="userGreeting" class="h-full hidden items-center px-6 gap-3">
+        <div class="flex items-center gap-2 text-slate-700">
+            <i data-lucide="user-circle" class="w-4 h-4 text-farmacia flex-shrink-0"></i>
+            <span id="greetingText" class="text-sm font-semibold whitespace-nowrap"></span>
+        </div>
+        <button onclick="UIHandlers.logout()"
+            class="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+            title="Cerrar sesión">
+            <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+            <span>Salir</span>
+        </button>
+    </div>
+
+    <!-- Espacio flexible para empujar el botón a la derecha -->
+    <div class="flex-1"></div>
+
+    <!-- Parte C: Botón de navegación (siempre a la derecha) -->
+    <div class="h-full flex items-center px-8">
         <a href="index.html" aria-label="Ir a la lista de precios"
             class="flex items-center gap-2 bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-md">
             <span>Ir a lista de precios</span>
