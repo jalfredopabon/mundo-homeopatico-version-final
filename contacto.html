@@ -57,10 +57,10 @@
     </div>
     <!-- Parte B: Título Central y Botón (Contenido Derecha) -->
     <div class="flex-1 h-full flex items-center justify-end px-8">
-        <a href="index.html" aria-label="Volver a la Lista de Precios"
-            class="flex items-center gap-2 bg-farmacia text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-emerald-600 transition-all shadow-sm">
-            <i data-lucide="list" class="w-4 h-4"></i>
-            <span>Lista de Precios</span>
+        <a href="index.html" aria-label="Ir a la lista de precios"
+            class="flex items-center gap-2 bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-md">
+            <span>Ir a lista de precios</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
     </div>
 </header>
@@ -103,26 +103,30 @@
         </div>
     </div>
 
-    <div class="mb-12">
-        <h2 class="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-3">
-            <i data-lucide="map" class="w-6 h-6 text-farmacia flex-shrink-0"></i>
-            <span>Puntos de Distribución</span>
-        </h2>
-        <p class="text-slate-500 mt-2">Encuéntranos en todo el país</p>
-    </div>
+    <!-- Sección de título con enlaces sociales alineados -->
+    <div class="flex flex-wrap items-start justify-between gap-6 mb-10">
+        <!-- Izquierda: Título y descripción -->
+        <div>
+            <h2 class="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-3">
+                <i data-lucide="map" class="w-6 h-6 text-farmacia flex-shrink-0"></i>
+                <span>Puntos de Distribución</span>
+            </h2>
+            <p class="text-slate-500 mt-2">Encuéntranos en todo el país</p>
+        </div>
 
-    <!-- Barra de Contacto Digital Minimalista -->
-    <div class="flex flex-wrap items-center gap-8 mb-10 px-2 sm:px-4">
-        <a href="https://www.instagram.com/mundohomeopatico" target="_blank"
-            class="contact-minimal-link flex items-center gap-2 text-slate-500 hover:text-pink-600 transition-colors group">
-            <i data-lucide="instagram" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
-            <span class="text-sm font-semibold">@mundohomeopatico</span>
-        </a>
-        <a href="https://www.mhmundohomeopatico.com" target="_blank"
-            class="contact-minimal-pill flex items-center gap-3 px-6 py-2.5 bg-slate-900 text-white rounded-full hover:bg-farmacia transition-all shadow-md group">
-            <i data-lucide="globe" class="w-4 h-4 text-slate-300 group-hover:text-white transition-colors"></i>
-            <span class="text-[11px] font-black tracking-widest uppercase">www.mhmundohomeopatico.com</span>
-        </a>
+        <!-- Derecha: Enlaces de contacto digital -->
+        <div class="flex flex-wrap items-center gap-4">
+            <a href="https://www.instagram.com/mundohomeopatico" target="_blank"
+                class="contact-minimal-link flex items-center gap-2 text-slate-500 hover:text-pink-600 transition-colors group">
+                <i data-lucide="instagram" class="w-5 h-5 transition-transform group-hover:scale-110"></i>
+                <span class="text-sm font-semibold">@mundohomeopatico</span>
+            </a>
+            <a href="https://www.mhmundohomeopatico.com" target="_blank"
+                class="contact-minimal-pill flex items-center gap-3 px-6 py-2.5 bg-slate-900 text-white rounded-full hover:bg-farmacia transition-all shadow-md group">
+                <i data-lucide="globe" class="w-4 h-4 text-slate-300 group-hover:text-white transition-colors"></i>
+                <span class="text-[11px] font-black tracking-widest uppercase">www.mhmundohomeopatico.com</span>
+            </a>
+        </div>
     </div>
 
     <!-- Sede Principal -->

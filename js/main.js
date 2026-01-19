@@ -24,6 +24,8 @@ const APP_STATE = {
     prices: [],
     faq: [],
     validPasswords: [], // Lista de contraseñas autorizadas
+    userMap: new Map(), // Mapa de contraseña -> nombre de usuario
+    userName: localStorage.getItem('userName') || '', // Nombre del usuario actual
     professionalMode: localStorage.getItem('professionalMode') === 'true',
     search: {
         timeout: null,
@@ -109,17 +111,20 @@ const Renderers = {
         if (!progressBar) return;
 
         if (show) {
+            // Resetear completamente antes de mostrar
+            progressBar.classList.remove('complete');
             progressBar.style.display = 'block';
             progressBar.classList.add('loading');
-            progressBar.classList.remove('complete');
         } else {
+            progressBar.classList.remove('loading');
             progressBar.classList.add('complete');
+
             setTimeout(() => {
-                if (progressBar.classList.contains('complete')) {
-                    progressBar.classList.remove('loading');
-                    progressBar.style.display = 'none';
-                }
-            }, 600);
+                // Ocultar y limpiar completamente
+                progressBar.classList.remove('complete', 'loading');
+                progressBar.style.display = 'none';
+                progressBar.style.width = '0';
+            }, 700);
         }
     },
 
@@ -217,6 +222,14 @@ const Renderers = {
 // 5. EVENT HANDLERS & LOGIC
 const UIHandlers = {
     async init() {
+        // Asegurar que la barra de progreso esté oculta al inicio
+        const progressBar = document.getElementById('topProgressBar');
+        if (progressBar) {
+            progressBar.classList.remove('loading', 'complete');
+            progressBar.style.display = 'none';
+            progressBar.style.width = '0';
+        }
+
         this.setupEventListeners();
         this.checkAuth();
 
@@ -286,13 +299,23 @@ const UIHandlers = {
             console.log("🔐 Sincronizando lista de acceso...");
             const freshData = await DataService.fetchCSV(APP_CONFIG.SHEETS.PASSWORDS_URL);
             if (freshData && freshData.length > 0) {
-                // Tomamos el primer valor de cada fila, sin confiar en el nombre exacto del encabezado (evita líos con tildes/eñes)
-                APP_STATE.validPasswords = freshData
-                    .map(row => {
-                        const values = Object.values(row);
-                        return values.length > 0 ? values[0].trim() : null;
-                    })
-                    .filter(p => p);
+                // Leer columna A (contraseñas) y columna B (nombres)
+                APP_STATE.validPasswords = [];
+                APP_STATE.userMap.clear();
+
+                freshData.forEach(row => {
+                    const values = Object.values(row);
+                    const password = values[0]?.trim(); // Columna A
+                    const name = values[1]?.trim(); // Columna B
+
+                    if (password) {
+                        APP_STATE.validPasswords.push(password);
+                        if (name) {
+                            APP_STATE.userMap.set(password, name);
+                        }
+                    }
+                });
+
                 console.log("✅ Accesos autorizados cargados exitosamente.");
             }
         } catch (error) {
@@ -311,6 +334,36 @@ const UIHandlers = {
             </div>
         `;
         if (typeof lucide !== 'undefined') lucide.createIcons();
+    },
+
+    getTimeBasedGreeting() {
+        const hour = new Date().getHours();
+        if (hour < 12) return 'Buenos días';
+        if (hour < 19) return 'Buenas tardes';
+        return 'Buenas noches';
+    },
+
+    showUserGreeting(userName) {
+        const greetingElement = document.getElementById('userGreeting');
+        const greetingText = document.getElementById('greetingText');
+
+        if (greetingElement && greetingText && userName) {
+            const greeting = this.getTimeBasedGreeting();
+            greetingText.textContent = `${greeting}, ${userName}`;
+            greetingElement.classList.remove('hidden');
+            greetingElement.classList.add('flex');
+
+            // Actualizar iconos de Lucide
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+    },
+
+    hideUserGreeting() {
+        const greetingElement = document.getElementById('userGreeting');
+        if (greetingElement) {
+            greetingElement.classList.add('hidden');
+            greetingElement.classList.remove('flex');
+        }
     },
 
     setupEventListeners() {
@@ -340,6 +393,12 @@ const UIHandlers = {
         if (APP_STATE.professionalMode) {
             document.body.classList.add('professional-mode');
         }
+
+        // Mostrar saludo si hay usuario logueado
+        if (APP_STATE.userName) {
+            this.showUserGreeting(APP_STATE.userName);
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('login') === 'true') {
             this.showPasswordModal();
@@ -475,6 +534,19 @@ const UIHandlers = {
             document.body.classList.add('professional-mode');
             localStorage.setItem('professionalMode', 'true');
             APP_STATE.professionalMode = true;
+
+            // Obtener y guardar el nombre del usuario
+            let userName = APP_STATE.userMap.get(passwordValue);
+            if (!userName && passwordValue === APP_CONFIG.DEFAULT_PASSWORD) {
+                userName = 'Administrador'; // Nombre por defecto para la contraseña maestra
+            }
+
+            if (userName) {
+                APP_STATE.userName = userName;
+                localStorage.setItem('userName', userName);
+                this.showUserGreeting(userName);
+            }
+
             this.closePasswordModal();
             if (typeof lucide !== 'undefined') lucide.createIcons();
         } else {

@@ -9,3 +9,6 @@ Desktop.ini
 
 # Logs
 *.log
+
+# Carpeta temporal para ejemplos
+carpeta temporal/

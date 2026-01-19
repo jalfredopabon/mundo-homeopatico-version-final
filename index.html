@@ -46,7 +46,7 @@
     <header class="h-[72px] sticky top-0 z-50 bg-white border-b border-slate-200 flex items-center p-0">
         <!-- Parte A: Logo (Mismo ancho que Sidebar = 288px + Borde Derecho) -->
         <div class="h-full flex items-center px-8 border-r border-slate-200" style="width: 288px;">
-            <a href="index.html" class="flex items-center gap-4">
+            <div class="flex items-center gap-4">
                 <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center">
                     <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático" width="48" height="48"
                         class="h-10 w-auto object-contain" />
@@ -54,15 +54,23 @@
                 <div class="flex flex-col justify-center text-left">
                     <h1 class="text-xl font-black text-slate-800 tracking-tight leading-none">Mundo Homeopático</h1>
                 </div>
-            </a>
+            </div>
         </div>
-        <!-- Parte B: Título Central y Botón (Contenido Derecha) -->
-        <div class="flex-1 h-full flex items-center justify-end px-8">
+        <!-- Parte B: Saludo personalizado (solo visible con sesión activa) -->
+        <div id="userGreeting" class="flex-1 h-full hidden items-center justify-center px-8">
+            <div class="flex items-center gap-2 text-slate-700">
+                <i data-lucide="user-circle" class="w-5 h-5 text-farmacia"></i>
+                <span id="greetingText" class="text-sm font-semibold"></span>
+            </div>
+        </div>
+
+        <!-- Parte C: Botón de navegación (Contenido Derecha) -->
+        <div class="h-full flex items-center justify-end px-8">
 
             <a href="contacto.html"
-                class="flex items-center gap-2 bg-farmacia text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-emerald-600 transition-all shadow-sm">
-                <i data-lucide="headphones" class="w-4 h-4"></i>
-                <span>Contacto y Sedes</span>
+                class="flex items-center gap-2 bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-farmacia transition-all shadow-md">
+                <span>Ir a contacto y sedes</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
         </div>
     </header>

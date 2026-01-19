@@ -82,6 +82,31 @@ body {
     border-color: var(--color-farmacia);
 }
 
+/* Eliminar efectos de selección en header */
+header a,
+header a:focus,
+header a:active {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Saludo personalizado en header */
+#userGreeting {
+    animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Navegación lateral activa */
 .sidebar-active {
     background-color: var(--slate-100);
@@ -243,6 +268,24 @@ button[onclick*="window.location"]:hover {
 [data-lucide] {
     display: inline-block;
     vertical-align: middle;
+}
+
+/* Botón de navegación a contacto - Header */
+header a[href="contacto.html"] {
+    transition: all 0.3s ease;
+}
+
+header a[href="contacto.html"]:hover {
+    background-color: var(--color-farmacia) !important;
+}
+
+/* Botón de navegación a index - Header */
+header a[href="index.html"] {
+    transition: all 0.3s ease;
+}
+
+header a[href="index.html"]:hover {
+    background-color: var(--color-farmacia) !important;
 }
 
 /* ============================================
@@ -508,6 +551,11 @@ aside:hover .flex-1.overflow-y-auto {
     transition: width 0.3s ease-out, opacity 0.5s ease 0.2s;
 }
 
+/* Asegurar que se oculte completamente después de la transición */
+.top-progress-bar.complete {
+    display: none !important;
+}
+
 @keyframes progress-grow {
     0% {
         width: 0;
@@ -553,8 +601,6 @@ aside:hover .flex-1.overflow-y-auto {
 /* Hover Web: Color Verde de la Empresa */
 .contact-minimal-pill:hover {
     background-color: var(--color-farmacia) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
 /* ============================================
