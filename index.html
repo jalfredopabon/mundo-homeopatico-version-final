@@ -42,22 +42,22 @@
 
 <body class="text-slate-900">
 
-    <!-- Header con Divisiones de Cuadrícula -->
-    <header class="h-[72px] sticky top-0 z-50 bg-white border-b border-slate-200 flex items-center p-0">
-        <!-- Parte A: Logo (Mismo ancho que Sidebar = 288px + Borde Derecho) -->
-        <div class="h-full flex items-center px-8 border-r border-slate-200" style="width: 288px;">
-            <div class="flex items-center gap-4">
+    <!-- Header Estandarizado -->
+    <header class="main-header">
+        <!-- Parte A: Logo (Alineado con Sidebar a 260px) -->
+        <div class="header-logo-container">
+            <a href="index.html" class="flex items-center gap-4">
                 <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center">
                     <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático" width="48" height="48"
-                        class="h-10 w-auto object-contain" />
+                        fetchpriority="high" class="h-10 w-auto object-contain" />
                 </div>
                 <div class="flex flex-col justify-center text-left">
                     <h1 class="text-xl font-black text-slate-800 tracking-tight leading-none">Mundo Homeopático</h1>
                 </div>
-            </div>
+            </a>
         </div>
         <!-- Parte B: Saludo personalizado (solo visible con sesión activa) -->
-        <div id="userGreeting" class="h-full hidden items-center px-6 gap-3">
+        <div id="userGreeting" class="header-user-greeting hidden">
             <div class="flex items-center gap-2 text-slate-700">
                 <i data-lucide="user-circle" class="w-4 h-4 text-farmacia flex-shrink-0"></i>
                 <span id="greetingText" class="text-sm font-semibold whitespace-nowrap"></span>
@@ -69,58 +69,50 @@
                 <span>Salir</span>
             </button>
         </div>
-
-        <!-- Espacio flexible para empujar el botón a la derecha -->
         <div class="flex-1"></div>
-
-        <!-- Parte C: Botón de navegación (siempre a la derecha) -->
+        <!-- Parte C: Botón de navegación -->
         <div class="h-full flex items-center px-8">
-            <a href="contacto.html"
-                class="flex items-center gap-2 bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-farmacia transition-all shadow-md">
+            <a href="contacto.html" class="nav-button-primary">
                 <span>Ir a contacto y sedes</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
         </div>
     </header>
+
     <div id="topProgressBar" class="top-progress-bar"></div>
+
+
 
     <!-- Contenedor principal (Sidebar + Contenido) -->
     <div class="flex">
-        <!-- Sidebar -->
+        <!-- Sidebar Estandarizado -->
         <aside
-            class="w-72 flex-shrink-0 bg-white border-r border-slate-100 z-40 flex flex-col h-[calc(100vh-72px)] sticky top-[72px]">
-
-            <!-- Contenido del Sidebar con Scroll -->
+            class="flex-shrink-0 bg-white border-r border-slate-100 z-40 flex flex-col h-[calc(100vh-72px)] sticky top-[72px]"
+            style="width: 260px; min-width: 260px;">
             <!-- Contenido del Sidebar con Scroll -->
             <div class="flex-1 overflow-y-auto px-4 pt-1 pb-8 space-y-4 custom-scrollbar">
+
                 <!-- Barra de búsqueda -->
                 <div class="px-0 pt-0 pb-2 relative">
                     <div class="relative">
-                        <!-- Icono de búsqueda -->
                         <i data-lucide="search"
                             class="absolute top-1/2 -translate-y-1/2 left-2.5 w-4 h-4 text-slate-400"></i>
-
                         <input type="text" id="mainSearch" onkeyup="UIHandlers.filterItems()"
                             onfocus="UIHandlers.filterItems()" placeholder="Buscar..."
                             aria-label="Buscar productos en el catálogo"
-                            class="w-full pl-9 pr-9 py-2 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-100 focus:border-farmacia outline-none transition-all text-[11px] font-medium placeholder:text-slate-400">
+                            class="w-full pl-9 pr-9 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-100 focus:border-farmacia outline-none transition-all font-medium placeholder:text-slate-400"
+                            style="font-size: var(--sidebar-text-size);">
 
-                        <!-- Botón de cancelar búsqueda -->
                         <button id="clearSearch" onclick="UIHandlers.clearSearch()"
                             class="absolute top-1/2 -translate-y-1/2 right-2 flex items-center justify-center w-5 h-5 text-slate-400 hover:text-slate-600 transition-colors hidden">
                             <i data-lucide="x" class="w-4 h-4"></i>
                         </button>
                     </div>
-
-                    <!-- Dropdown de autocompletado -->
                     <div id="searchDropdown"
                         class="absolute left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-lg max-h-80 overflow-y-auto hidden z-50">
-                        <div id="dropdownResults" class="divide-y divide-slate-100">
-                            <!-- Los resultados se insertarán aquí dinámicamente -->
-                        </div>
+                        <div id="dropdownResults" class="divide-y divide-slate-100"></div>
                     </div>
                 </div>
-
                 <!-- Feedback de búsqueda -->
                 <div id="searchFeedback" class="mb-4 text-xs transition-all duration-300 opacity-0 hidden">
                     <div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-50">
@@ -128,376 +120,380 @@
                         <span id="feedbackText" class="text-slate-600 font-medium"></span>
                     </div>
                 </div>
-
-                <!-- Acceso a distribuidores -->
-                <div class="px-4">
+                <!-- Botón de Acceso (Estandarizado con fondo verde suave) -->
+                <div class="mt-3">
                     <button onclick="UIHandlers.showPasswordModal()"
-                        class="w-full flex items-center gap-2 px-3 py-2 text-left text-xs font-medium text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">
-                        <i data-lucide="key" class="w-3.5 h-3.5 text-farmacia"></i>
-                        <span>Acceso a distribuidores</span>
+                        class="sidebar-nav-link sidebar-icon-gap bg-emerald-50 hover:bg-emerald-100 !px-3 font-semibold text-slate-700">
+                        <i data-lucide="key" class="sidebar-icon-main text-farmacia"></i>
+                        <span>Acceso distribuidores</span>
                     </button>
                 </div>
-
-                <!-- Divisor completo -->
-                <div class="border-t border-slate-200 mb-4 -mx-4"></div>
-
-                <!-- De Nuestra Farmacia -->
-                <div class="pt-4 pb-4">
-                    <p class="text-[10px] font-bold text-slate-400 tracking-widest px-4 py-1">De Nuestra
-                        Farmacia</p>
-
-                    <!-- Preparaciones según prescripción -->
-                    <div class="ml-4 mt-2">
-                        <p class="text-[9px] font-bold text-slate-500 tracking-wider px-4 py-1">
-                            Preparaciones según prescripción</p>
-
-                        <nav class="space-y-1 ml-8 mt-2">
-                            <a href="#oficinales"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="droplet" class="w-2.5 h-2.5"></i> Oficinales
-                            </a>
-                            <a href="#multipotencias"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="droplets" class="w-2.5 h-2.5"></i> Multipotencias
-                            </a>
-                            <a href="#magistrales"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="flask-conical" class="w-2.5 h-2.5"></i> Magistrales
-                            </a>
-                        </nav>
-
-                        <!-- Esencias florales -->
-                        <div class="ml-4 mt-2">
+                <div class="border-t border-slate-200 sidebar-divider -mx-4"></div>
+                <!-- 1. DE NUESTRA FARMACIA -->
+                <div class="sidebar-section">
+                    <p class="sidebar-title-main">De Nuestra Farmacia</p>
+                    <div class="mt-1">
+                        <p class="sidebar-subtitle">Según prescripción</p>
+                        <!-- Acordeón Homeopáticos -->
+                        <div class="mt-2 sidebar-nav-item">
+                            <button onclick="UIHandlers.toggleSidebarAccordion(this)"
+                                class="sidebar-accordion-btn sidebar-icon-gap">
+                                <i data-lucide="chevron-down"
+                                    class="sidebar-icon-chevron text-slate-400 transition-transform"></i>
+                                <span class="font-semibold text-slate-600">Homeopáticos</span>
+                            </button>
+                            <nav class="sidebar-items-gap ml-4 mt-1 hidden flex flex-col">
+                                <a href="#oficinales"
+                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
+                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Oficinales
+                                </a>
+                                <a href="#multipotencias"
+                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
+                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Multipotencias
+                                </a>
+                                <a href="#magistrales"
+                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
+                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Magistrales
+                                </a>
+                            </nav>
+                        </div>
+                        <div class="mt-2 sidebar-nav-item">
                             <a href="#esencias-prep"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[11px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="flower" class="w-3 h-3"></i> Esencias florales
+                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
+                                <i data-lucide="flower" class="sidebar-icon-main"></i> Esencias florales
                             </a>
                         </div>
-
-                        <!-- Oligoelementos -->
-                        <div class="ml-4 mt-2">
+                        <div class="mt-2 sidebar-nav-item">
                             <a href="#oligo-prep"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[11px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="component" class="w-3 h-3"></i> Oligoelementos
+                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
+                                <i data-lucide="component" class="sidebar-icon-main"></i> Oligoelementos
                             </a>
                         </div>
                     </div>
-
-                    <!-- Separador sutil -->
-                    <div class="my-4 mx-4 border-t border-slate-100"></div>
-
-                    <div class="ml-4 mt-2">
-                        <p class="text-[9px] font-bold text-slate-500 tracking-wider px-4 py-1">Línea
-                            Mundo Homeopático</p>
-
-                        <nav class="space-y-1 ml-8 mt-2">
-                            <a href="#esenciales-d4"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="package" class="w-2.5 h-2.5"></i> Esenciales
-                            </a>
-                            <a href="#especiales"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="star" class="w-2.5 h-2.5"></i> Especiales
-                            </a>
-                            <a href="#capilar"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="sparkles" class="w-2.5 h-2.5"></i> Cuidado capilar
-                            </a>
-                            <a href="#capsulas"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="pill" class="w-2.5 h-2.5"></i> Cápsulas
-                            </a>
-                            <a href="#cremas"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="droplet" class="w-2.5 h-2.5"></i> Cremas
-                            </a>
-                            <a href="#geles"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="droplets" class="w-2.5 h-2.5"></i> Geles
-                            </a>
-                            <a href="#unguentos"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="container" class="w-2.5 h-2.5"></i> Ungüentos
-                            </a>
-                            <a href="#elixires"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="wine" class="w-2.5 h-2.5"></i> Elíxires
-                            </a>
-                        </nav>
-
-                        <!-- Separador entre subsecciones de mismo nivel -->
-                        <div class="my-4 mx-4 border-t border-slate-50"></div>
-
-                        <!-- Esencias florales -->
-                        <div class="ml-8">
+                    <div class="border-t border-slate-200 sidebar-divider"></div>
+                    <div class="mt-1">
+                        <p class="sidebar-subtitle">Línea MH</p>
+                        <!-- Acordeón Homeopatía -->
+                        <div class="mt-2 sidebar-nav-item">
+                            <button onclick="UIHandlers.toggleSidebarAccordion(this)"
+                                class="sidebar-accordion-btn sidebar-icon-gap">
+                                <i data-lucide="chevron-down"
+                                    class="sidebar-icon-chevron text-slate-400 transition-transform"></i>
+                                <span class="font-semibold text-slate-600">Homeopatía</span>
+                            </button>
+                            <nav class="sidebar-items-gap ml-4 mt-1 hidden flex flex-col">
+                                <a href="#esenciales-d4"
+                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
+                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Homeopáticos esenciales
+                                </a>
+                                <a href="#especiales"
+                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
+                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Homeopáticos especiales
+                                </a>
+                                <a href="#capilar"
+                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
+                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Cuidado capilar
+                                </a>
+                                <a href="#capsulas"
+                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
+                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Cápsulas
+                                </a>
+                                <a href="#cremas"
+                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
+                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Cremas
+                                </a>
+                                <a href="#geles"
+                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
+                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Geles
+                                </a>
+                                <a href="#unguentos"
+                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
+                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Ungüentos
+                                </a>
+                                <a href="#elixires"
+                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
+                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Elíxires
+                                </a>
+                            </nav>
+                        </div>
+                        <div class="mt-2 sidebar-nav-item">
                             <a href="#esencias-mh"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="flower-2" class="w-2.5 h-2.5"></i> Esencias florales
+                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
+                                <i data-lucide="flower-2" class="sidebar-icon-main"></i> Esencias florales
                             </a>
                         </div>
-
-                        <!-- Separador entre subsecciones de mismo nivel -->
-                        <div class="my-4 mx-4 border-t border-slate-50"></div>
-
-                        <!-- Oligoelementos K7 -->
-                        <div class="ml-8">
+                        <div class="mt-2 sidebar-nav-item">
                             <a href="#oligo-k7"
-                                class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                                <i data-lucide="layers" class="w-2.5 h-2.5"></i> Oligoelementos K7
+                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
+                                <i data-lucide="layers" class="sidebar-icon-main"></i> Oligoelementos K7
                             </a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Productos Exclusivos -->
-                <div class="pt-4">
-                    <p class="text-[10px] font-bold text-slate-400 tracking-widest px-4 py-1">
-                        Productos Exclusivos</p>
-                    <nav class="space-y-1 ml-4 mt-2">
-                        <a href="#alimentos-funcionales"
-                            class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                            <i data-lucide="heart-pulse" class="w-2.5 h-2.5"></i> Alimentos funcionales
-                        </a>
-                        <a href="#cbd"
-                            class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                            <i data-lucide="leaf" class="w-2.5 h-2.5"></i> CBD
-                        </a>
-                        <a href="#aceites-esenciales"
-                            class="nav-link flex items-center gap-2 px-3 py-2 rounded-lg text-[10px] font-semibold text-slate-600 hover:bg-slate-50 transition-all">
-                            <i data-lucide="droplet" class="w-2.5 h-2.5"></i> Aceites esenciales
-                        </a>
+                <div class="border-t border-slate-200 sidebar-divider"></div>
+                <!-- 2. PRODUCTOS EXCLUSIVOS -->
+                <div class="sidebar-section">
+                    <p class="sidebar-title-main">Productos Exclusivos</p>
+                    <nav class="sidebar-items-gap mt-2 flex flex-col">
+                        <div class="sidebar-nav-item">
+                            <a href="#alimentos-funcionales"
+                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
+                                <i data-lucide="heart-pulse" class="sidebar-icon-main"></i> Alimentos funcionales
+                            </a>
+                        </div>
+                        <div class="sidebar-nav-item">
+                            <a href="#cbd"
+                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
+                                <i data-lucide="leaf" class="sidebar-icon-main"></i> CBD
+                            </a>
+                        </div>
+                        <div class="sidebar-nav-item">
+                            <a href="#aceites-esenciales"
+                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
+                                <i data-lucide="droplet" class="sidebar-icon-main"></i> Aceites esenciales
+                            </a>
+                        </div>
                     </nav>
                 </div>
-
             </div>
         </aside>
 
         <!-- Contenedor Derecho (Header + Contenido) -->
         <div class="flex-1 flex flex-col min-h-screen">
 
+
+            <!-- Banner informativo - Prescripción médica -->
+            <div id="prescriptionBanner" class="bg-amber-50 border-b border-amber-100 hidden sticky top-[72px] z-30">
+                <div class="max-w-7xl mx-auto px-8 py-2">
+                    <div class="flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
+                            <p class="text-[11px] md:text-xs text-slate-700 leading-tight">
+                                <span class="font-bold text-amber-900">Aviso importante:</span>
+                                Productos homeopáticos y magistrales disponibles únicamente bajo prescripción médica.
+                            </p>
+                        </div>
+                        <button onclick="UIHandlers.closePrescriptionBanner()"
+                            class="flex-shrink-0 p-1 hover:bg-amber-100 rounded-lg transition-colors"
+                            aria-label="Cerrar aviso">
+                            <i data-lucide="x" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Contenido Principal -->
             <main class="flex-grow p-8" id="catalogBody">
 
                 <!-- Título Principal del Catálogo -->
-                <div class="mb-12 border-b border-slate-100 pb-8">
-                    <h2 class="text-4xl font-black text-slate-800 tracking-tight">Lista de Precios</h2>
+                <div class="mb-12 border-b border-slate-100 pb-8 banner-spacer">
+                    <h2 class="page-title">Lista de Precios</h2>
                     <p class="text-slate-500 mt-2 font-medium">Catálogo 2026 • Filtros y búsqueda en tiempo real</p>
                 </div>
 
                 <!-- GRUPO 1: DE NUESTRA FARMACIA -->
                 <div class="space-y-10">
-                    <div class="border-l-4 border-farmacia pl-6">
-                        <h2 class="text-2xl font-black text-slate-800 tracking-tight">De Nuestra Farmacia</h2>
-                        <p class="text-sm text-slate-500 mt-2">Preparaciones personalizadas según prescripción
+                    <div>
+                        <h2 class="section-title border-l-4 border-farmacia pl-6">De
+                            Nuestra Farmacia</h2>
+                        <p class="text-sm text-slate-500 mt-2 ml-6">Preparaciones personalizadas según prescripción
                             médica
                         </p>
                     </div>
 
                     <!-- 1.1 Preparaciones según prescripción -->
-                    <div class="ml-6 mt-8">
-                        <h3 class="text-lg font-bold text-slate-700 mb-3">Preparaciones según
+                    <div class="ml-6">
+                        <h3 class="subsection-title">Preparaciones según
                             prescripción
                         </h3>
                         <p class="text-sm text-slate-600 mb-4">Contamos con un gran stock de principios activos
                             disponibles para elaboraciones a medida.</p>
 
                         <!-- 1.1.1 Homeopáticos -->
-                        <section id="homeopaticos-prep" class="section-group scroll-mt-32 space-y-6 mb-8">
-                            <h4 class="text-md font-bold text-slate-700 flex items-center gap-2 mb-4">
+                        <section id="homeopaticos-prep" class="section-group space-y-6 mb-8">
+                            <h4 class="subsection-title flex items-center gap-2">
                                 <i data-lucide="flask-conical" class="w-4 h-4 text-farmacia"></i>
                                 Homeopáticos
                             </h4>
 
-                            <!-- 1.1.1.1 Oficinales -->
-                            <div id="oficinales"
-                                class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden scroll-mt-40">
-                                <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                    <h5 class="text-sm font-bold text-slate-700">Oficinales</h5>
-                                    <p class="text-xs text-slate-500 mt-1">Un medicamento con una dilución •
-                                        Gotas x
-                                        30ml / Glóbulos x 30g</p>
-                                </div>
-                                <table class="w-full text-sm text-left">
-                                    <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest">
-                                        <tr>
-                                            <th scope="col" class="px-6 py-4 text-slate-400">Dilución / Escala</th>
-                                            <th scope="col"
-                                                class="px-6 py-4 text-right text-farmacia professional-only">
-                                                Precio
-                                                Farmacia</th>
-                                            <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-slate-100">
-                                        <!-- Inyectado por JS -->
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <!-- 1.1.1.2 Multipotencias -->
-                            <div id="multipotencias"
-                                class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden scroll-mt-32">
-                                <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                    <h5 class="text-sm font-bold text-slate-700">Multipotencias</h5>
-                                    <p class="text-xs text-slate-500 mt-1">Un medicamento con varias diluciones
-                                        • Gotas
-                                        x 30ml / Glóbulos x 30g</p>
-                                </div>
-                                <table class="w-full text-sm text-left">
-                                    <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest">
-                                        <tr>
-                                            <th scope="col" class="px-6 py-4 text-slate-400">Dilución / Escala</th>
-                                            <th scope="col"
-                                                class="px-6 py-4 text-right text-farmacia professional-only">
-                                                Precio
-                                                Farmacia</th>
-                                            <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-slate-100">
-                                        <!-- Inyectado por JS -->
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <!-- 1.1.1.3 Magistrales -->
-                            <div id="magistrales"
-                                class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden scroll-mt-32">
-                                <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                    <h5 class="text-sm font-bold text-slate-700">Magistrales</h5>
-                                    <p class="text-xs text-slate-500 mt-1">Mezcla de dos o más medicamentos</p>
-                                </div>
-
-                                <!-- Presentaciones Clásicas -->
-                                <div class="px-6 py-4">
-                                    <p class="text-xs font-bold text-slate-600 mb-3">• Presentaciones Clásicas:
-                                        Gotas x
-                                        30ml / Glóbulos x 30g</p>
-                                    <table class="w-full text-sm text-left">
-                                        <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest">
+                            <!-- Tabla 1: Oficinales -->
+                            <div id="oficinales" class="scroll-mt-24">
+                                <h3 class="subsection-title">Preparaciones Oficinales</h3>
+                                <div class="price-table-container">
+                                    <table class="price-table">
+                                        <thead class="price-table-header">
                                             <tr>
-                                                <th scope="col" class="px-6 py-4 text-slate-400">Dilución / Escala</th>
+                                                <th scope="col" class="price-table-th">Dilución / Escala</th>
                                                 <th scope="col"
-                                                    class="px-6 py-4 text-right text-farmacia professional-only">
-                                                    Precio
-                                                    Farmacia</th>
-                                                <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público
-                                                </th>
+                                                    class="price-table-th price-table-th-farmacia professional-only">
+                                                    Precio Farmacia</th>
+                                                <th scope="col" class="price-table-th price-table-th-publico">Precio
+                                                    Público</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-slate-100">
+                                        <tbody class="price-table-body">
                                             <!-- Inyectado por JS -->
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
 
-                                <!-- Otras presentaciones -->
-                                <div class="px-6 py-4 border-t border-slate-100">
-                                    <p class="text-xs font-bold text-slate-600 mb-3">• Otras presentaciones para
-                                        magistrales (Diluciones hasta la 99)</p>
-                                    <table class="w-full text-sm text-left">
-                                        <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest">
+                            <!-- Tabla 2: Multipotencias -->
+                            <div id="multipotencias" class="scroll-mt-24">
+                                <h3 class="subsection-title">Multipotencias</h3>
+                                <div class="price-table-container">
+                                    <table class="price-table">
+                                        <thead class="price-table-header">
                                             <tr>
-                                                <th scope="col" class="px-6 py-4 text-slate-400">Presentación</th>
+                                                <th scope="col" class="price-table-th">Dilución / Escala</th>
                                                 <th scope="col"
-                                                    class="px-6 py-4 text-right text-farmacia professional-only">
-                                                    Precio
-                                                    Farmacia</th>
-                                                <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público
-                                                </th>
+                                                    class="price-table-th price-table-th-farmacia professional-only">
+                                                    Precio Farmacia</th>
+                                                <th scope="col" class="price-table-th price-table-th-publico">Precio
+                                                    Público</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-slate-100">
+                                        <tbody class="price-table-body">
                                             <!-- Inyectado por JS -->
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+
+                            <!-- Magistrales -->
+                            <div id="magistrales" class="scroll-mt-24">
+                                <h3 class="subsection-title">Fórmulas Magistrales</h3>
+                                <div class="price-table-container">
+                                    <!-- Sección 1: Clásicas -->
+                                    <div class="p-6 border-b border-slate-50">
+                                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">
+                                            • Presentaciones Clásicas: Gotas x 30ml / Glóbulos x 30g
+                                        </p>
+                                        <table class="price-table">
+                                            <thead class="price-table-header">
+                                                <tr>
+                                                    <th scope="col" class="price-table-th-compact">Tipo de Fórmula</th>
+                                                    <th scope="col"
+                                                        class="price-table-th-compact price-table-th-farmacia professional-only">
+                                                        Precio Farmacia</th>
+                                                    <th scope="col"
+                                                        class="price-table-th-compact price-table-th-publico">Precio
+                                                        Público</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="price-table-body">
+                                                <!-- Inyectado por JS (Usa datos de tabla Magistrales) -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- Sección 2: Otras presentaciones -->
+                                    <div class="p-6">
+                                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">
+                                            • Otras presentaciones magistrales
+                                        </p>
+                                        <table class="price-table">
+                                            <thead class="price-table-header">
+                                                <tr>
+                                                    <th scope="col" class="price-table-th-compact">Presentación</th>
+                                                    <th scope="col"
+                                                        class="price-table-th-compact price-table-th-farmacia professional-only">
+                                                        Precio Farmacia</th>
+                                                    <th scope="col"
+                                                        class="price-table-th-compact price-table-th-publico">Precio
+                                                        Público</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="price-table-body">
+                                                <tr class="hover-row">
+                                                    <td class="price-table-th-compact font-bold">Gotas o Glóbulos x
+                                                        60ml/g</td>
+                                                    <td
+                                                        class="price-table-th-compact text-right text-farmacia professional-only">
+                                                        $ 34.200</td>
+                                                    <td class="price-table-th-compact text-right text-publico">$ 45.600
+                                                    </td>
+                                                </tr>
+                                                <tr class="hover-row">
+                                                    <td class="price-table-th-compact font-bold">Gotas o Glóbulos x
+                                                        110ml/g</td>
+                                                    <td
+                                                        class="price-table-th-compact text-right text-farmacia professional-only">
+                                                        $ 44.400</td>
+                                                    <td class="price-table-th-compact text-right text-publico">$ 59.200
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </section>
 
                         <!-- 1.1.2 Esencias Florales -->
-                        <section id="esencias-prep" class="section-group scroll-mt-32 mb-8">
-                            <h4 class="text-md font-bold text-slate-700 flex items-center gap-2 mb-4">
-                                <i data-lucide="flower" class="w-4 h-4 text-farmacia"></i>
-                                Esencias florales
-                            </h4>
-                            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                                <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                    <h5 class="text-sm font-bold text-slate-700">Esencias Florales</h5>
-                                    <p class="text-xs text-slate-500 mt-1">Individuales o combinadas, según
-                                        prescripción, a partir de flores de Bach, Australianas, Orquídeas del
-                                        Amazonas y
-                                        Nueva Generación</p>
-                                </div>
-                                <table class="w-full text-sm text-left">
-                                    <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest">
+                        <div id="esencias-prep" class="scroll-mt-24 mb-10">
+                            <h3 class="subsection-title">Esencias florales</h3>
+                            <p class="text-sm text-slate-500 mb-4">Individuales o combinadas, según prescripción.</p>
+                            <div class="price-table-container">
+                                <table class="price-table">
+                                    <thead class="price-table-header">
                                         <tr>
-                                            <th scope="col" class="px-6 py-4 text-slate-400">Presentación</th>
+                                            <th scope="col" class="price-table-th">Presentación</th>
                                             <th scope="col"
-                                                class="px-6 py-4 text-right text-farmacia professional-only">
-                                                Precio
+                                                class="price-table-th price-table-th-farmacia professional-only">Precio
                                                 Farmacia</th>
-                                            <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público
+                                            <th scope="col" class="price-table-th price-table-th-publico">Precio Público
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-slate-100">
+                                    <tbody class="price-table-body">
                                         <!-- Inyectado por JS -->
                                     </tbody>
                                 </table>
                             </div>
-                        </section>
+                        </div>
 
                         <!-- 1.1.3 Oligoelementos -->
-                        <section id="oligo-prep" class="section-group scroll-mt-32">
-                            <h4 class="text-md font-bold text-slate-700 flex items-center gap-2 mb-4">
-                                <i data-lucide="component" class="w-4 h-4 text-farmacia"></i>
-                                Oligoelementos
-                            </h4>
-                            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                                <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                    <h5 class="text-sm font-bold text-slate-700">Oligoelementos</h5>
-                                    <p class="text-xs text-slate-500 mt-1">Individuales o combinados, se
-                                        elaboran en
-                                        dilución D7</p>
-                                </div>
-                                <div class="px-6 py-4">
-                                    <p class="text-xs font-bold text-slate-600 mb-3">• Gotas o Spray x 30 ml y
-                                        Glóbulos
-                                        x 30g</p>
-                                    <table class="w-full text-sm text-left">
-                                        <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest">
+                        <div id="oligo-prep" class="scroll-mt-24 mb-10">
+                            <h3 class="subsection-title">Oligoelementos</h3>
+                            <p class="text-sm text-slate-500 mb-4">Individuales o combinados, se elaboran en dilución
+                                D7.</p>
+                            <div class="price-table-container">
+                                <div class="p-6">
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">
+                                        • Gotas o Spray x 30 ml y Glóbulos x 30g
+                                    </p>
+                                    <table class="price-table">
+                                        <thead class="price-table-header">
                                             <tr>
-                                                <th scope="col" class="px-6 py-4 text-slate-400">Composición</th>
+                                                <th scope="col" class="price-table-th-compact">Composición</th>
                                                 <th scope="col"
-                                                    class="px-6 py-4 text-right text-farmacia professional-only">
-                                                    Precio
-                                                    Farmacia</th>
-                                                <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público
-                                                </th>
+                                                    class="price-table-th-compact price-table-th-farmacia professional-only">
+                                                    Precio Farmacia</th>
+                                                <th scope="col" class="price-table-th-compact price-table-th-publico">
+                                                    Precio Público</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-slate-100">
+                                        <tbody class="price-table-body">
                                             <!-- Inyectado por JS -->
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                        </section>
+                        </div>
                     </div>
                 </div>
 
                 <!-- GRUPO 2: LÍNEA MUNDO HOMEOPÁTICO -->
                 <div class="space-y-10">
-                    <div class="border-l-4 border-farmacia pl-6">
-                        <h2 class="text-2xl font-black text-slate-800 tracking-tight">Línea Mundo Homeopático
+                    <div>
+                        <h2 class="section-title border-l-4 border-farmacia pl-6">
+                            Línea Mundo Homeopático
                         </h2>
-                        <p class="text-sm text-slate-500 mt-2">Formulaciones propias de alta calidad y en gran
+                        <p class="text-sm text-slate-500 mt-2 ml-6">Formulaciones propias de alta calidad y en gran
                             variedad
                             de formas farmacéuticas.</p>
-                        <p class="text-sm text-slate-500 mt-2">Nuestra línea incluye medicamentos homeopáticos
+                        <p class="text-sm text-slate-500 mt-2 ml-6">Nuestra línea incluye medicamentos homeopáticos
                             (gotas,
                             spray, glóbulos, tabletas, cremas, geles, ungüentos, cápsulas, cuidado capilar,
                             elíxires),
@@ -506,424 +502,424 @@
 
                     <!-- 1.2.1 Homeopatía -->
                     <!-- Esenciales D4 (Listado Largo) -->
-                    <section id="esenciales-d4" class="section-group scroll-mt-32 space-y-6 mt-8 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div
-                                class="px-6 py-4 bg-slate-50/50 border-b border-slate-100 flex justify-between items-center">
-                                <h3 class="text-sm font-bold text-slate-700 tracking-wider mb-6">Homeopáticos
-                                    Esenciales</h3>
-                                <span
-                                    class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded font-bold">STOCK
-                                    PERMANENTE</span>
+                    <div id="esenciales-d4" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4 flex items-center justify-between">
+                            <div>
+                                <h5 class="subsection-title">Homeopáticos Esenciales</h5>
+                                <p class="text-sm text-slate-500">Formulaciones de stock permanente.</p>
                             </div>
-                            <div class="p-6">
-                                <p class="text-sm text-slate-600 mb-4 font-semibold">Gotas x 30 ml y tabletas x
-                                    90 en
-                                    stock permanente (ver listado)</p>
-                                <p class="text-xs text-slate-500 mb-6">Otras presentaciones bajo pedido:
-                                    Glóbulos x 30g,
-                                    Glóbulos caja x 10 tubos, Spray oral x 30ml, Viales bebibles caja x 12,
-                                    Viales
-                                    nebulizables caja x 12, presentación pediátrica en Glóbulos (Caja x 5
-                                    tubos), Viales
-                                    bebibles caja x 12 viales de 10ml</p>
+                            <span
+                                class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Stock
+                                Permanente</span>
+                        </div>
 
-                                <table class="w-full text-sm text-left mb-8">
-                                    <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                        <div class="price-table-container">
+                            <div class="p-6">
+                                <div class="mb-6">
+                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">• Gotas
+                                        x 30 ml y tabletas x 90</p>
+                                    <p class="text-xs text-slate-500 leading-relaxed">
+                                        Otras presentaciones bajo pedido: Glóbulos x 30g, Glóbulos caja x 10 tubos,
+                                        Spray oral x 30ml, Viales bebibles caja x 12, Viales nebulizables caja x 12,
+                                        presentación pediátrica en Glóbulos (Caja x 5 tubos), Viales bebibles caja x 12
+                                        viales de 10ml.
+                                    </p>
+                                </div>
+
+                                <table class="price-table">
+                                    <thead class="price-table-header">
                                         <tr>
-                                            <th scope="col" class="px-4 py-2">Presentación</th>
+                                            <th scope="col" class="price-table-th-compact">Presentación</th>
                                             <th scope="col"
-                                                class="px-4 py-2 text-right text-farmacia professional-only">
-                                                Precio
-                                                Farmacia</th>
-                                            <th scope="col" class="px-4 py-2 text-right text-publico">Precio público
-                                            </th>
+                                                class="price-table-th-compact price-table-th-farmacia professional-only">
+                                                Precio Farmacia</th>
+                                            <th scope="col" class="price-table-th-compact price-table-th-publico">Precio
+                                                Público</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-slate-50">
+                                    <tbody class="price-table-body">
                                         <!-- Inyectado por JS -->
                                     </tbody>
                                 </table>
 
-                                <p class="text-sm text-slate-600 mb-4 font-semibold">Gotas X 30 ml y tabletas x
-                                    90 en
-                                    stock permanente (Todos etiquetados a la D4)</p>
-                                <div
-                                    class="grid grid-cols-2 md:grid-cols-4 gap-y-2 text-[10px] text-slate-500 mb-8 px-2 py-4 bg-slate-50 rounded-xl">
-                                    <span>• Abies</span><span>• Acid picricum</span><span>•
-                                        Aconitum</span><span>•
-                                        Aesculus</span>
-                                    <span>• Agnus</span><span>• Alúmina</span><span>• Angélica</span><span>•
-                                        Apis</span>
-                                    <span>• Árnica</span><span>• Aurum metallicum</span><span>•
-                                        Baptisia</span><span>•
-                                        Baryta carbónica</span>
-                                    <span>• Belladonna</span><span>• Benzoicum acidum</span><span>•
-                                        Berberis</span><span>• Bryonia</span>
-                                    <span>• Cactus</span><span>• Calcáreas phosphorica</span><span>• Carbo
-                                        vegetabilis</span><span>• Centella asiática</span>
-                                    <span>• Chelidonium</span><span>• Chimaphilla</span><span>•
-                                        Chininum</span><span>•
-                                        Cholesterolum</span>
-                                    <span>• Cicuta</span><span>• Cinamomum</span><span>• Colchicum</span><span>•
-                                        Colocynthis</span>
-                                    <span>• Crataegus</span><span>• Crocus</span><span>• Damiana</span><span>•
-                                        Echinacea</span>
-                                    <span>• Equisetum</span><span>• Euphatorium</span><span>•
-                                        Euphrasia</span><span>•
-                                        Fucus</span>
-                                    <span>• Galium</span><span>• Gelsemium</span><span>• Gentiana</span><span>•
-                                        Ginkgo
-                                        biloba</span>
-                                    <span>• Glonoinum</span><span>• Graphites</span><span>•
-                                        Hamamelis</span><span>•
-                                        Hydrangea</span>
-                                    <span>• Hydrastis</span><span>• Hypericum</span><span>•
-                                        Ignatia</span><span>•
-                                        Iodum</span>
-                                    <span>• Ipeca</span><span>• Iris</span><span>• Jaborandi</span><span>•
-                                        Juglans</span>
-                                    <span>• Kalium bichromicum</span><span>• Klaium bromatum</span><span>•
-                                        Klamia</span><span>• Leptandra</span>
-                                    <span>• Lilium</span><span>• Luffa</span><span>• Magnesia
-                                        phosphorica</span><span>•
-                                        Marrubium</span>
-                                    <span>• Medicago</span><span>• Melissa</span><span>• Mercurius</span><span>•
-                                        Mezereum</span>
-                                    <span>• Nux vómica</span><span>• Passiflora</span><span>•
-                                        Petroleum</span><span>•
-                                        Phosphoricum acidum</span>
-                                    <span>• Placenta</span><span>• Plumbum</span><span>•
-                                        Pulsatilla</span><span>•
-                                        Rhododendron</span>
-                                    <span>• Rhus tox</span><span>• Rumex</span><span>• Ruta</span><span>•
-                                        Sabal</span>
-                                    <span>• Sambucus</span><span>• Scrofularia</span><span>•
-                                        Selenium</span><span>•
-                                        Senna</span>
-                                    <span>• Solidago</span><span>• Staphysagria</span><span>•
-                                        Sulphur</span><span>•
-                                        Syzygium</span>
-                                    <span>• Tabacum</span><span>• Taraxacum</span><span>• Teucrium</span><span>•
-                                        Thallium</span>
-                                    <span>• Thuja</span><span>• Urtica</span><span>• Vaccinium</span><span>•
-                                        Vincetoxicum</span>
-                                    <span>• Vipera</span><span>• Viscum</span><span>• Zincum
-                                        metallicum</span><span>•
-                                        Zingiber</span>
+                                <div class="mt-8 pt-8 border-t border-slate-100">
+                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">•
+                                        Listado de Esenciales (Etiquetados a la D4)</p>
+                                    <div
+                                        class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 text-[10px] text-slate-500 px-4 py-4 bg-slate-50/50 rounded-xl border border-slate-100/50">
+                                        <span>• Abies</span><span>• Acid picricum</span><span>• Aconitum</span><span>•
+                                            Aesculus</span>
+                                        <span>• Agnus</span><span>• Alúmina</span><span>• Angélica</span><span>•
+                                            Apis</span>
+                                        <span>• Árnica</span><span>• Aurum metallicum</span><span>•
+                                            Baptisia</span><span>• Baryta carbónica</span>
+                                        <span>• Belladonna</span><span>• Benzoicum acidum</span><span>•
+                                            Berberis</span><span>• Bryonia</span>
+                                        <span>• Cactus</span><span>• Calcáreas phosphorica</span><span>• Carbo
+                                            vegetabilis</span><span>• Centella asiática</span>
+                                        <span>• Chelidonium</span><span>• Chimaphilla</span><span>•
+                                            Chininum</span><span>• Cholesterolum</span>
+                                        <span>• Cicuta</span><span>• Cinamomum</span><span>• Colchicum</span><span>•
+                                            Colocynthis</span>
+                                        <span>• Crataegus</span><span>• Crocus</span><span>• Damiana</span><span>•
+                                            Echinacea</span>
+                                        <span>• Equisetum</span><span>• Euphatorium</span><span>•
+                                            Euphrasia</span><span>• Fucus</span>
+                                        <span>• Galium</span><span>• Gelsemium</span><span>• Gentiana</span><span>•
+                                            Ginkgo biloba</span>
+                                        <span>• Glonoinum</span><span>• Graphites</span><span>• Hamamelis</span><span>•
+                                            Hydrangea</span>
+                                        <span>• Hydrastis</span><span>• Hypericum</span><span>• Ignatia</span><span>•
+                                            Iodum</span>
+                                        <span>• Ipeca</span><span>• Iris</span><span>• Jaborandi</span><span>•
+                                            Juglans</span>
+                                        <span>• Kalium bichromicum</span><span>• Klaium bromatum</span><span>•
+                                            Klamia</span><span>• Leptandra</span>
+                                        <span>• Lilium</span><span>• Luffa</span><span>• Magnesia
+                                            phosphorica</span><span>• Marrubium</span>
+                                        <span>• Medicago</span><span>• Melissa</span><span>• Mercurius</span><span>•
+                                            Mezereum</span>
+                                        <span>• Nux vómica</span><span>• Passiflora</span><span>•
+                                            Petroleum</span><span>• Phosphoricum acidum</span>
+                                        <span>• Placenta</span><span>• Plumbum</span><span>• Pulsatilla</span><span>•
+                                            Rhododendron</span>
+                                        <span>• Rhus tox</span><span>• Rumex</span><span>• Ruta</span><span>•
+                                            Sabal</span>
+                                        <span>• Sambucus</span><span>• Scrofularia</span><span>• Selenium</span><span>•
+                                            Senna</span>
+                                        <span>• Solidago</span><span>• Staphysagria</span><span>• Sulphur</span><span>•
+                                            Syzygium</span>
+                                        <span>• Tabacum</span><span>• Taraxacum</span><span>• Teucrium</span><span>•
+                                            Thallium</span>
+                                        <span>• Thuja</span><span>• Urtica</span><span>• Vaccinium</span><span>•
+                                            Vincetoxicum</span>
+                                        <span>• Vipera</span><span>• Viscum</span><span>• Zincum
+                                            metallicum</span><span>• Zingiber</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </div>
 
                     <!-- 1.2.1.2 Homeopáticos Especiales -->
-                    <section id="especiales" class="section-group scroll-mt-32 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 mb-3">Homeopáticos Especiales
-                                </h3>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <div id="especiales" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">Homeopáticos Especiales</h5>
+                            <p class="text-sm text-slate-500">Formulaciones específicas para diversas condiciones.</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th scope="col" class="px-6 py-4">Medicamento</th>
-                                        <th scope="col" class="px-6 py-4">Presentación</th>
-                                        <th scope="col" class="px-6 py-4 text-right text-farmacia professional-only">
-                                            Precio
-                                            Farmacia
+                                        <th scope="col" class="price-table-th">Medicamento</th>
+                                        <th scope="col" class="price-table-th">Presentación</th>
+                                        <th scope="col"
+                                            class="price-table-th price-table-th-farmacia professional-only">
+                                            Precio Farmacia</th>
+                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
                                         </th>
-                                        <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
 
                     <!-- Cuidado Capilar -->
-                    <section id="capilar" class="section-group scroll-mt-32 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 mb-3">Cuidado Capilar</h3>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <!-- Cuidado Capilar -->
+                    <div id="capilar" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">Cuidado Capilar</h5>
+                            <p class="text-sm text-slate-500">Tratamientos especializados para la salud capilar.</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th class="px-6 py-4">Producto</th>
-                                        <th scope="col" class="px-6 py-4">Presentación</th>
-                                        <th class="px-6 py-4 text-right text-farmacia professional-only">Precio Farmacia
+                                        <th class="price-table-th">Producto</th>
+                                        <th scope="col" class="price-table-th">Presentación</th>
+                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
+                                            Farmacia
                                         </th>
-                                        <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público</th>
+                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
 
                     <!-- 1.2.1.4 Cápsulas -->
-                    <section id="capsulas" class="section-group scroll-mt-32 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 mb-3">Cápsulas</h3>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <div id="capsulas" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">Cápsulas</h5>
+                            <p class="text-sm text-slate-500">Suplementos en cápsulas de alta concentración.</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th class="px-6 py-4">Producto y cantidad por envase</th>
-                                        <th class="px-6 py-4 text-right text-farmacia professional-only">Precio Farmacia
+                                        <th class="price-table-th">Producto y cantidad por envase</th>
+                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
+                                            Farmacia
                                         </th>
-                                        <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público</th>
+                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
 
                     <!-- 1.2.1.5 Cremas -->
-                    <section id="cremas" class="section-group scroll-mt-32 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 tracking-widest mb-6">Cremas x
-                                    120g (todas etiquetadas a la D4)</h3>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <div id="cremas" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">Cremas</h5>
+                            <p class="text-sm text-slate-500">Cremas x 120g (todas etiquetadas a la D4).</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th class="px-6 py-4">Producto</th>
-                                        <th class="px-6 py-4 text-right text-farmacia professional-only">Precio Farmacia
+                                        <th class="price-table-th">Producto</th>
+                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
+                                            Farmacia
                                         </th>
-                                        <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público</th>
+                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
 
                     <!-- 1.2.1.6 Geles -->
-                    <section id="geles" class="section-group scroll-mt-32 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 tracking-widest mb-6">Geles x
-                                    120g (Todos etiquetados a la D4)</h3>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <div id="geles" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">Geles</h5>
+                            <p class="text-sm text-slate-500">Geles x 120g (Todos etiquetados a la D4).</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th class="px-6 py-4">Producto</th>
-                                        <th class="px-6 py-4 text-right text-farmacia professional-only">Precio Farmacia
+                                        <th class="price-table-th">Producto</th>
+                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
+                                            Farmacia
                                         </th>
-                                        <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público</th>
+                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
 
                     <!-- 1.2.1.7 Ungüentos -->
-                    <section id="unguentos" class="section-group scroll-mt-32 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 mb-3">Ungüentos x 40g</h3>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <div id="unguentos" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">Ungüentos</h5>
+                            <p class="text-sm text-slate-500">Ungüentos x 40g.</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th class="px-6 py-4">Producto</th>
-                                        <th class="px-6 py-4 text-right text-farmacia professional-only">Precio Farmacia
+                                        <th class="price-table-th">Producto</th>
+                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
+                                            Farmacia
                                         </th>
-                                        <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público</th>
+                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
 
                     <!-- 1.2.1.8 Elíxires -->
-                    <section id="elixires" class="section-group scroll-mt-32 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 mb-3">Elíxires x 240ml (Todos
-                                    etiquetados a la D4)</h3>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <div id="elixires" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">Elíxires</h5>
+                            <p class="text-sm text-slate-500">Elíxires x 240ml (Todos etiquetados a la D4).</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th scope="col" class="px-6 py-4">Medicamento</th>
-                                        <th class="px-6 py-4 text-right text-farmacia professional-only">Precio Farmacia
+                                        <th scope="col" class="price-table-th">Medicamento</th>
+                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
+                                            Farmacia
                                         </th>
-                                        <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público</th>
+                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
 
                     <!-- 1.2.2 Esencias florales -->
-                    <section id="esencias-mh" class="section-group scroll-mt-32 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 mb-3">Esencias florales</h3>
-                                <p class="text-xs text-slate-500 mt-2">Nuestras fórmulas florales están
-                                    conformadas por
-                                    23 referencias de uso oral, 7 <span class="font-semibold">splash</span> para
-                                    ambientes, una crema y un kit para uso
-                                    externo.</p>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <div id="esencias-mh" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">Esencias florales</h5>
+                            <p class="text-sm text-slate-500">23 referencias de uso oral, 7 splash para ambientes, una
+                                crema y un kit para uso externo.</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th class="px-6 py-4">Producto y Presentación</th>
-                                        <th class="px-6 py-4 text-right text-farmacia professional-only">Precio Farmacia
+                                        <th class="price-table-th">Producto y Presentación</th>
+                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
+                                            Farmacia
                                         </th>
-                                        <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público</th>
+                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
 
                     <!-- 1.2.3 Oligoelementos K7 -->
-                    <section id="oligo-k7" class="section-group scroll-mt-32">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 mb-3">Oligoelementos K7</h3>
-                                <p class="text-xs text-slate-500 mt-2">Nuestras combinaciones de oligoelementos
-                                    por
-                                    diátesis.</p>
-                                <p class="text-xs text-slate-500">En stock permanente gotas x 30ml. Bajo pedido
-                                    glóbulos
-                                    x 30g</p>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <div id="oligo-k7" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">Oligoelementos K7</h5>
+                            <p class="text-sm text-slate-500">Combinaciones por diátesis. Stock permanente gotas x 30ml
+                                / Bajo pedido glóbulos x 30g.</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th class="px-6 py-4">Producto</th>
-                                        <th class="px-6 py-4 text-right text-farmacia professional-only">Precio Farmacia
+                                        <th class="price-table-th">Producto</th>
+                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
+                                            Farmacia
                                         </th>
-                                        <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público</th>
+                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
                 </div>
 
                 <!-- GRUPO 3: PRODUCTOS EXCLUSIVOS -->
                 <div class="space-y-10">
-                    <div class="border-l-4 border-farmacia pl-6">
-                        <h2 class="text-2xl font-black text-slate-800 tracking-tight">Productos Exclusivos
+                    <div>
+                        <h2 class="section-title border-l-4 border-farmacia pl-6">
+                            Productos Exclusivos
                         </h2>
-                        <p class="text-sm text-slate-500 mt-2">Productos especializados de alta calidad</p>
+                        <p class="text-sm text-slate-500 mt-2 ml-6">Productos especializados de alta calidad</p>
                     </div>
 
                     <!-- 2.1 Alimentos funcionales -->
-                    <section id="alimentos-funcionales" class="section-group scroll-mt-32 mt-8 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 mb-3">Alimentos funcionales con
-                                    Registro Invima</h3>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <div id="alimentos-funcionales" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">Alimentos funcionales</h5>
+                            <p class="text-sm text-slate-500">Productos con Registro Invima.</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th class="px-6 py-4">Producto</th>
-                                        <th class="px-6 py-4 text-right text-farmacia professional-only">Precio Farmacia
+                                        <th class="price-table-th">Producto</th>
+                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
+                                            Farmacia
                                         </th>
-                                        <th class="px-6 py-4 text-right text-publico">Precio público</th>
+                                        <th class="price-table-th price-table-th-publico">Precio público</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
 
                     <!-- 2.2 CBD -->
-                    <section id="cbd" class="section-group scroll-mt-32 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 mb-3">CBD con Registro Invima
-                                    (Cannabis medicinal)</h3>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <div id="cbd" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">CBD</h5>
+                            <p class="text-sm text-slate-500">CBD con Registro Invima (Cannabis medicinal).</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th class="px-6 py-4">Producto</th>
-                                        <th class="px-6 py-4 text-right text-farmacia professional-only">Precio Farmacia
+                                        <th class="price-table-th">Producto</th>
+                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
+                                            Farmacia
                                         </th>
-                                        <th scope="col" class="px-6 py-4 text-right text-publico">Precio Público</th>
+                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
+                                        </th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
 
                     <!-- 2.3 Aceites esenciales -->
-                    <section id="aceites-esenciales" class="section-group scroll-mt-32 mb-8">
-                        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-                            <div class="px-6 py-4 bg-slate-50/50 border-b border-slate-100">
-                                <h3 class="text-sm font-bold text-slate-700 mb-3">Aceites esenciales de grado
-                                    terapéutico</h3>
-                                <p class="text-xs text-slate-500 mt-2">Frasco gotero x 10ml</p>
-                            </div>
-                            <table class="w-full text-sm text-left">
-                                <thead class="bg-slate-50/30 text-[10px] font-bold tracking-widest text-slate-400">
+                    <div id="aceites-esenciales" class="scroll-mt-[94px] mb-10">
+                        <div class="mb-4">
+                            <h5 class="subsection-title">Aceites esenciales</h5>
+                            <p class="text-sm text-slate-500">Aceites de grado terapéutico. Frasco gotero x 10ml.</p>
+                        </div>
+                        <div class="price-table-container">
+                            <table class="price-table">
+                                <thead class="price-table-header">
                                     <tr>
-                                        <th class="px-6 py-4">Aceite Esencial</th>
-                                        <th class="px-6 py-4 text-right text-farmacia professional-only">Al 20%
-                                        </th>
-                                        <th class="px-6 py-4 text-right text-publico">Al 100%</th>
+                                        <th class="price-table-th">Aceite Esencial</th>
+                                        <th class="price-table-th price-table-th-farmacia professional-only">Al 20%</th>
+                                        <th class="price-table-th price-table-th-publico">Al 100%</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="price-table-body">
                                     <!-- Inyectado por JS -->
                                 </tbody>
                             </table>
                         </div>
-                    </section>
+                    </div>
                 </div>
 
             </main>
 
-            <footer class="bg-white border-t border-slate-100 mt-16 py-8">
+            <!-- Footer Estandarizado -->
+            <footer class="main-footer">
                 <div class="max-w-7xl mx-auto px-4 text-center">
-                    <p class="text-sm font-bold text-slate-600 mb-2 tracking-tight">© 2026 Mundo Homeopático -
-                        Todos los
-                        derechos reservados.</p>
-                    <p class="text-xs text-slate-400 font-medium tracking-tight">Precios sujetos a cambios. Consulte
-                        disponibilidad.</p>
-
-                    <!-- Enlaces Sociales Footer -->
+                    <p class="footer-copyright">© 2026 Mundo Homeopático - Todos los derechos reservados.</p>
+                    <p class="footer-disclaimer">Precios sujetos a cambios. Consulte disponibilidad.</p>
                     <div class="flex justify-center gap-6 mt-6">
                         <a href="https://wa.me/573176680750" target="_blank" title="WhatsApp"
                             class="text-slate-400 hover:text-green-500 transition-colors">
@@ -940,31 +936,53 @@
                     </div>
                 </div>
             </footer>
-        </div>
-    </div>
 
-    <!-- Modal de Contraseña Profesional -->
-    <div id="passwordModal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <h3 class="text-xl font-bold text-slate-800 mb-4">Acceso Profesionales</h3>
-            <p class="text-sm text-slate-600 mb-4">Ingrese la contraseña para ver precios profesionales</p>
-            <input type="password" id="professionalPassword" placeholder="Contraseña"
-                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-farmacia mb-4">
-            <div class="flex gap-3">
-                <button id="submitPassword"
-                    class="flex-1 bg-farmacia text-white px-4 py-2 rounded-lg font-semibold hover:bg-emerald-600 transition-colors">
-                    Ingresar
-                </button>
-                <button id="cancelPassword"
-                    class="flex-1 bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-semibold hover:bg-slate-300 transition-colors">
-                    Cancelar
-                </button>
+            <!-- Modal de Contraseña Profesional -->
+            <div id="passwordModal" class="modal-overlay hidden">
+                <div class="modal-content">
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">Acceso Profesionales</h3>
+                    <p class="text-sm text-slate-600 mb-4">Ingrese la contraseña para ver precios profesionales</p>
+                    <input type="password" id="professionalPassword" placeholder="Contraseña"
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-farmacia mb-4">
+                    <div class="flex gap-3">
+                        <button id="submitPassword"
+                            class="flex-1 bg-farmacia text-white px-4 py-2 rounded-lg font-semibold hover:bg-emerald-600 transition-colors">
+                            Ingresar
+                        </button>
+                        <button id="cancelPassword"
+                            class="flex-1 bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-semibold hover:bg-slate-300 transition-colors">
+                            Cancelar
+                        </button>
+                    </div>
+                    <p id="errorMessage" class="error hidden">Contraseña incorrecta. Intente nuevamente.</p>
+                </div>
             </div>
-            <p id="errorMessage" class="error hidden">Contraseña incorrecta. Intente nuevamente.</p>
+
+            <script src="js/main.js"></script>
         </div>
     </div>
 
-    <script src="js/main.js"></script>
+    <footer class="main-footer">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="footer-copyright">© 2026 Mundo Homeopático - Todos los derechos reservados.</p>
+            <p class="footer-disclaimer">Precios sujetos a cambios. Consulte disponibilidad.</p>
+            <div class="flex justify-center gap-6 mt-6">
+                <a href="https://wa.me/573176680750" target="_blank" title="WhatsApp"
+                    class="text-slate-400 hover:text-green-500 transition-colors">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                </a>
+                <a href="https://www.instagram.com/mundohomeopatico" target="_blank" title="Instagram"
+                    class="text-slate-400 hover:text-pink-500 transition-colors">
+                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                </a>
+                <a href="https://www.mhmundohomeopatico.com" target="_blank" title="Sitio Web"
+                    class="text-slate-400 hover:text-farmacia transition-colors">
+                    <i data-lucide="globe" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
 </body>
 
 </html>

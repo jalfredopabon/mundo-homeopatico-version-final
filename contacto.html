@@ -41,10 +41,8 @@
 
 </head>
 
-<!-- Header con Divisiones de Cuadrícula -->
-<header class="h-[72px] sticky top-0 z-50 bg-white border-b border-slate-200 flex items-center p-0">
-    <!-- Parte A: Logo (Mismo ancho que Sidebar = 288px + Borde Derecho) -->
-    <div class="h-full flex items-center px-8 border-r border-slate-200" style="width: 288px;">
+<header class="main-header">
+    <div class="header-logo-container">
         <a href="index.html" class="flex items-center gap-4">
             <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center">
                 <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático" width="48" height="48"
@@ -55,8 +53,8 @@
             </div>
         </a>
     </div>
-    <!-- Parte B: Saludo personalizado (solo visible con sesión activa) -->
-    <div id="userGreeting" class="h-full hidden items-center px-6 gap-3">
+    <!-- Parte B: Saludo personalizado -->
+    <div id="userGreeting" class="header-user-greeting hidden">
         <div class="flex items-center gap-2 text-slate-700">
             <i data-lucide="user-circle" class="w-4 h-4 text-farmacia flex-shrink-0"></i>
             <span id="greetingText" class="text-sm font-semibold whitespace-nowrap"></span>
@@ -68,16 +66,12 @@
             <span>Salir</span>
         </button>
     </div>
-
-    <!-- Espacio flexible para empujar el botón a la derecha -->
     <div class="flex-1"></div>
-
-    <!-- Parte C: Botón de navegación (siempre a la derecha) -->
+    <!-- Parte C: Botón de navegación -->
     <div class="h-full flex items-center px-8">
-        <a href="index.html" aria-label="Ir a la lista de precios"
-            class="flex items-center gap-2 bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-md">
+        <a href="index.html" class="nav-button-primary">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
             <span>Ir a lista de precios</span>
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
     </div>
 </header>
@@ -96,20 +90,20 @@
 
     <!-- Título Principal de la Página -->
     <div class="mb-10">
-        <h2 class="text-4xl font-black text-slate-800 tracking-tight mb-2">Contacto y Sedes</h2>
+        <h2 class="page-title">Contacto y Sedes</h2>
         <p class="text-lg text-slate-500">Estamos aquí para atenderte en todo momento</p>
     </div>
 
     <!-- Vídeo Corporativo -->
     <div class="mb-16">
-        <h2 class="text-3xl font-black text-slate-800 tracking-tight mb-6 flex items-center gap-3">
+        <h2 class="section-title flex items-center gap-3">
             <i data-lucide="sparkles" class="w-8 h-8 text-farmacia flex-shrink-0"></i>
             <span>Procesos de elaboración certificados y rigor farmacéutico</span>
         </h2>
         <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-100 bg-slate-100 relative cursor-pointer youtube-facade max-w-3xl mx-auto"
             data-video-id="ZCkVmauoVVo" onclick="UIHandlers.loadYouTubeVideo(this)">
             <img src="https://img.youtube.com/vi/ZCkVmauoVVo/hqdefault.jpg" alt="Video presentación Mundo Homeopático"
-                class="w-full h-full object-cover" loading="eager">
+                width="480" height="360" class="w-full h-full object-cover" loading="eager">
             <div
                 class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-40 transition-all">
                 <div
@@ -124,7 +118,7 @@
     <div class="flex flex-wrap items-start justify-between gap-6 mb-10">
         <!-- Izquierda: Título y descripción -->
         <div>
-            <h2 class="text-2xl font-black text-slate-800 tracking-tight flex items-center gap-3">
+            <h2 class="section-title flex items-center gap-3">
                 <i data-lucide="map" class="w-6 h-6 text-farmacia flex-shrink-0"></i>
                 <span>Puntos de Distribución</span>
             </h2>
@@ -146,239 +140,17 @@
         </div>
     </div>
 
-    <!-- Sede Principal -->
-    <div class="bg-gradient-to-br from-emerald-50 to-white rounded-3xl border-2 border-farmacia shadow-lg p-8 mb-12">
-        <div class="flex items-center gap-3 mb-6">
-            <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático" class="w-12 h-12 object-contain">
-            <div>
-                <h3 class="text-xl font-bold text-slate-800">SEDE PRINCIPAL</h3>
-                <p class="text-farmacia font-semibold">Medellín, Colombia</p>
-            </div>
-        </div>
-        <div class="grid md:grid-cols-2 gap-6">
-            <div>
-                <p class="flex items-start gap-3 text-slate-700 mb-4">
-                    <i data-lucide="map-pin" class="w-5 h-5 text-farmacia flex-shrink-0 mt-0.5"></i>
-                    <span class="font-medium">Carrera 49 N° 64-06</span>
-                </p>
-                <p class="flex items-start gap-3 text-slate-700">
-                    <i data-lucide="clock" class="w-5 h-5 text-farmacia flex-shrink-0 mt-0.5"></i>
-                    <span>L-V: 8am-12pm / 2pm-6pm<br>Sábados: 8am-12pm</span>
-                </p>
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-                <a href="https://wa.me/573182899126" target="_blank"
-                    aria-label="Contactar por WhatsApp a Sede Principal - Línea 1"
-                    class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all">
-                    <svg class="w-4 h-4">
-                        <use href="#icon-whatsapp" />
-                    </svg>
-                    318 289 9126
-                </a>
-                <a href="https://wa.me/573176687050" target="_blank"
-                    aria-label="Contactar por WhatsApp a Sede Principal - Línea 2"
-                    class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all">
-                    <svg class="w-4 h-4">
-                        <use href="#icon-whatsapp" />
-                    </svg>
-                    317 668 7050
-                </a>
-                <a href="https://wa.me/573017474675" target="_blank"
-                    aria-label="Contactar por WhatsApp a Sede Principal - Línea 3"
-                    class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all">
-                    <svg class="w-4 h-4">
-                        <use href="#icon-whatsapp" />
-                    </svg>
-                    301 747 4675
-                </a>
-                <a href="https://wa.me/573157150929" target="_blank"
-                    aria-label="Contactar por WhatsApp a Sede Principal - Línea 4"
-                    class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all">
-                    <svg class="w-4 h-4">
-                        <use href="#icon-whatsapp" />
-                    </svg>
-                    315 715 0929
-                </a>
-            </div>
-        </div>
-    </div>
+    <!-- Contenedor Sede Principal (Dinámico) -->
+    <div id="sede-principal-container"></div>
 
-
-    <!-- Distribuidores -->
-    <h3 class="text-xl font-bold text-slate-700 mb-6 flex items-center gap-2">
+    <!-- Separador Estandarizado -->
+    <h3 class="subsection-title flex items-center gap-2">
         <i data-lucide="users" class="w-5 h-5 text-farmacia"></i>
         Distribuidores Autorizados
     </h3>
 
-    <div class="grid md:grid-cols-2 gap-6" id="distributors">
-        <!-- Costa Atlántica -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <button onclick="UIHandlers.toggleAccordion(this)"
-                class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
-                <div class="flex items-center gap-2">
-                    <img src="img/logo-biomedic.webp" alt="Logo Biomedic" class="w-8 h-8 object-contain" loading="lazy">
-                    <span class="font-bold text-slate-700">Costa Atlántica</span>
-                </div>
-                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
-            </button>
-            <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
-                <div class="flex items-center gap-2">
-                    <img src="img/logo-biomedic.webp" alt="Logo Biomedic" class="w-8 h-8 object-contain" loading="lazy">
-                    <h4 class="font-bold text-slate-700">Costa Atlántica</h4>
-                </div>
-            </div>
-            <div class="accordion-content md:!max-h-none px-6 py-4">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-                    <div class="flex-1 space-y-1">
-                        <p class="text-sm font-bold text-slate-700">Biomedic</p>
-                        <p class="flex items-start gap-2 text-slate-600 text-sm">
-                            <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
-                            Calle 80 N° 49 C 15, Oficina 301
-                        </p>
-                    </div>
-                    <div class="flex flex-col gap-2 items-end">
-                        <a href="https://wa.me/573215365720" target="_blank"
-                            aria-label="Contactar por WhatsApp a Distribuidor Costa Atlántica"
-                            class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-all">
-                            <svg class="w-4 h-4">
-                                <use href="#icon-whatsapp" />
-                            </svg>
-                            321 536 5720
-                        </a>
-                        <span
-                            class="flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-lg text-sm opacity-80">
-                            <i data-lucide="phone" class="w-4 h-4"></i> (605) 313 4131
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Eje Cafetero -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <button onclick="UIHandlers.toggleAccordion(this)"
-                class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
-                <div class="flex items-center gap-2">
-                    <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
-                        class="w-8 h-8 object-contain" loading="lazy">
-                    <span class="font-bold text-slate-700">Eje Cafetero</span>
-                </div>
-                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
-            </button>
-            <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
-                <div class="flex items-center gap-2">
-                    <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
-                        class="w-8 h-8 object-contain" loading="lazy">
-                    <h4 class="font-bold text-slate-700">Eje Cafetero</h4>
-                </div>
-            </div>
-            <div class="accordion-content md:!max-h-none p-6">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-                    <div class="flex-1 space-y-2">
-                        <p class="flex items-start gap-2 text-slate-600 text-sm">
-                            <i data-lucide="map-pin" class="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5"></i>
-                            Pereira, Armenia, Manizales, Cartago
-                        </p>
-                        <p class="text-sm text-slate-500"><strong>Carlos Ramirez</strong></p>
-                    </div>
-                    <div class="flex justify-end items-start">
-                        <a href="https://wa.me/573187166230" target="_blank"
-                            aria-label="Contactar por WhatsApp a Distribuidor Eje Cafetero"
-                            class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-all">
-                            <svg class="w-4 h-4">
-                                <use href="#icon-whatsapp" />
-                            </svg>
-                            318 716 6230
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Montería -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <button onclick="UIHandlers.toggleAccordion(this)"
-                class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
-                <div class="flex items-center gap-2">
-                    <img src="img/logo-eco-natural.webp" alt="Logo Eco Natural" class="w-8 h-8 object-contain"
-                        loading="lazy">
-                    <span class="font-bold text-slate-700">Montería</span>
-                </div>
-                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
-            </button>
-            <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
-                <div class="flex items-center gap-2">
-                    <img src="img/logo-eco-natural.webp" alt="Logo Eco Natural" class="w-8 h-8 object-contain"
-                        loading="lazy">
-                    <h4 class="font-bold text-slate-700">Montería</h4>
-                </div>
-            </div>
-            <div class="accordion-content md:!max-h-none p-6">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-                    <div class="flex-1 space-y-1">
-                        <p class="text-sm font-bold text-slate-700">Eco Natural</p>
-                        <p class="text-sm text-slate-500">Martha Elena Rivas</p>
-                    </div>
-                    <div class="flex flex-col gap-2 items-end">
-                        <a href="https://wa.me/573145532080" target="_blank"
-                            aria-label="Contactar por WhatsApp a Distribuidor Montería"
-                            class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-all">
-                            <svg class="w-4 h-4">
-                                <use href="#icon-whatsapp" />
-                            </svg>
-                            314 553 2080
-                        </a>
-                        <span
-                            class="flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-lg text-sm opacity-80">
-                            <i data-lucide="phone" class="w-4 h-4"></i> (034) 783 0339
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Norte de Santander -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <button onclick="UIHandlers.toggleAccordion(this)"
-                class="accordion-toggle w-full px-6 py-4 flex items-center justify-between bg-slate-50 md:hidden">
-                <div class="flex items-center gap-2">
-                    <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
-                        class="w-8 h-8 object-contain" loading="lazy">
-                    <span class="font-bold text-slate-700">Norte de Santander</span>
-                </div>
-                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 transition-transform"></i>
-            </button>
-            <div class="hidden md:block px-6 py-4 bg-slate-50 border-b border-slate-100">
-                <div class="flex items-center gap-2">
-                    <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático"
-                        class="w-8 h-8 object-contain" loading="lazy">
-                    <span class="font-bold text-slate-700">Norte de Santander</span>
-                </div>
-            </div>
-            <div class="accordion-content md:!max-h-none p-6">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
-                    <div class="flex-1">
-                        <p class="text-sm font-bold text-slate-700">Distribuidor</p>
-                        <p class="text-sm text-slate-500">Jhon Jairo Vallejo Rolón</p>
-                    </div>
-                    <div class="flex flex-col gap-2 items-end">
-                        <a href="https://wa.me/573133019777" target="_blank"
-                            aria-label="Contactar por WhatsApp a Distribuidor Norte de Santander"
-                            class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-all">
-                            <svg class="w-4 h-4">
-                                <use href="#icon-whatsapp" />
-                            </svg>
-                            313 301 9777
-                        </a>
-                        <span
-                            class="flex items-center gap-2 bg-slate-100 text-slate-700 px-3 py-2 rounded-lg text-sm opacity-80">
-                            <i data-lucide="phone" class="w-4 h-4"></i> 318 415 2610
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Grid de distribuidores dinámico -->
+    <div class="grid md:grid-cols-2 gap-6" id="distributors-grid"></div>
 
     <!-- Sección FAQ -->
     <div class="mt-16">
@@ -394,15 +166,10 @@
 
 </main>
 
-<footer class="bg-white border-t border-slate-100 mt-16 py-8">
+<footer class="main-footer">
     <div class="max-w-7xl mx-auto px-4 text-center">
-        <p class="text-sm font-bold text-slate-600 mb-2 tracking-tight">© 2026 Mundo Homeopático -
-            Todos los
-            derechos reservados.</p>
-        <p class="text-xs text-slate-400 font-medium tracking-tight">Precios sujetos a cambios. Consulte disponibilidad.
-        </p>
-
-        <!-- Enlaces Sociales Footer -->
+        <p class="footer-copyright">© 2026 Mundo Homeopático - Todos los derechos reservados.</p>
+        <p class="footer-disclaimer">Precios sujetos a cambios. Consulte disponibilidad.</p>
         <div class="flex justify-center gap-6 mt-6">
             <a href="https://wa.me/573176680750" target="_blank" title="WhatsApp"
                 class="text-slate-400 hover:text-green-500 transition-colors">
