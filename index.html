@@ -4,985 +4,1304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Homeopático | Catálogo Senior 2026</title>
     <meta name="description"
-        content="Lista de precios oficial de Mundo Homeopático 2026. Catálogo completo de medicamentos homeopáticos, esencias florales, oligoelementos y productos naturales de alta calidad.">
+        content="Catálogo oficial de Mundo Homeopático 2026. Lista de precios de farmacia, multipotencias, esencias florales y red de distribuidores en Colombia.">
 
-    <!-- Open Graph / Facebook / WhatsApp -->
+    <!-- Open Graph (WhatsApp, Facebook) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mundohomeopatico.com/">
-    <meta property="og:title" content="Mundo Homeopático - Lista de Precios 2026">
+    <meta property="og:title" content="Mundo Homeopático - Catálogo 2026">
     <meta property="og:description"
-        content="Explora nuestro catálogo completo de soluciones naturales. Precios actualizados y búsqueda inteligente.">
+        content="Consulta nuestra lista de precios actualizada y red de sedes en tiempo real.">
     <meta property="og:image" content="img/logo-mundo-homeopatico.webp">
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://mundohomeopatico.com/">
-    <meta property="twitter:title" content="Mundo Homeopático - Lista de Precios 2026">
-    <meta property="twitter:description"
-        content="Explora nuestro catálogo completo de soluciones naturales. Precios actualizados y búsqueda inteligente.">
-    <meta property="twitter:image" content="img/logo-mundo-homeopatico.webp">
-
-    <title>Mundo Homeopático - Lista de Precios 2026</title>
-
-    <!-- Preconnect para carga más rápida -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-
-    <!-- CSS crítico primero -->
+    <!-- //#region INFRAESTRUCTURA EXTERNA -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- //#endregion -->
 
-    <!-- Scripts no críticos con defer -->
-    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <style>
+        /* //#region VARIABLES Y DISEÑO MATEMÁTICO (LA PIEL) */
+        :root {
+            /* Branding: Abstracción de colores del logo */
+            --primary: #10b981;
+            /* Verde Institucional */
+            --primary-dark: #059669;
+            --secondary: #0f172a;
+            /* Azul Pizarra (Identidad Visual) */
+            --primary-light: #ecfdf5;
 
+            /* Escala de Grises y Superficies */
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-400: #94a3b8;
+
+            /* Grid System (Medidas Matemáticas de imagen adjunta) */
+            --header-h: 80px;
+            /* Heading Panel Height */
+            --sidebar-w: 280px;
+            /* Navigation Area Width */
+            --radius: 24px;
+            /* Radio de curvatura estándar */
+        }
+
+        body {
+            font-family: 'Atkinson Hyperlegible', sans-serif;
+            background: var(--slate-50);
+            color: var(--secondary);
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Estructura SPA */
+        .main-header {
+            height: var(--header-h);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--slate-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .app-layout {
+            display: flex;
+            max-width: 1440px;
+            margin: 0 auto;
+            min-height: calc(100vh - var(--header-h));
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 2rem;
+            padding-bottom: 60vh;
+            /* Permite que el último ítem llegue al tope y se seleccione */
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .main-sidebar {
+            width: var(--sidebar-w);
+            background: #fff;
+            border-right: 1px solid var(--slate-200);
+            height: calc(100vh - var(--header-h));
+            position: sticky;
+            top: var(--header-h);
+            overflow-y: auto;
+            flex-shrink: 0;
+            padding: 1.5rem 2rem;
+            /* Alineado verticalmente con px-8 del Header */
+            overscroll-behavior: contain;
+            -ms-overflow-style: none;
+            /* Ocultar scrollbar IE */
+            scrollbar-width: none;
+            /* Ocultar scrollbar Firefox */
+        }
+
+        .main-sidebar::-webkit-scrollbar {
+            display: none;
+            /* Ocultar scrollbar Chrome/Safari */
+        }
+
+        .sidebar-link {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Banner Dinámico Fluido (Comportamiento solicitado) */
+        .banner-wrapper {
+            position: sticky;
+            top: var(--header-h);
+            z-index: 90;
+            background: #fffbeb;
+            border-bottom: 1px solid #fef3c7;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 200px;
+            overflow: hidden;
+            opacity: 1;
+        }
+
+        .banner-wrapper.collapsed {
+            max-height: 0;
+            border: none;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Botones Proporción 1:2 (Medida matemática) */
+        .btn-base {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            border-radius: 999px;
+            font-weight: 700;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            padding: 0.75rem 1.5rem;
+            background: var(--secondary);
+            color: white;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Sidebar Links e Iconografía */
+        .sidebar-label-l1 {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--secondary);
+            /* Negro suavizado institucional */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 1rem;
+            margin: 1.5rem 0 0.5rem;
+            height: 32px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            margin-right: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1e293b;
+            /* Slate 800: Negro menos intenso para mejor UI */
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 0 999px 999px 0;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .sidebar-link:hover {
+            background: var(--slate-100);
+            color: var(--secondary);
+        }
+
+        .sidebar-link.active {
+            background: #f0fdf4;
+            /* Verde muy suave */
+            color: #10b981;
+            /* Primary Green */
+            font-weight: 700;
+        }
+
+        /* Jerarquía de Línea Vertical (Items dentro de Acordeón) */
+        .sidebar-accordion-content {
+            border-left: 1px solid var(--slate-200);
+            margin-left: 26px;
+            /* Alineado con el chevron/texto del padre */
+            padding-left: 10px;
+            margin-bottom: 8px;
+        }
+
+        .sidebar-link.child-link {
+            height: 32px;
+            font-size: 12.5px;
+            color: var(--slate-500);
+            border-radius: 4px;
+            /* Border radius más sutil para hijos */
+        }
+
+        .sidebar-link.child-link.active {
+            color: #10b981;
+            background: #f0fdf4;
+            font-weight: 700;
+        }
+
+        /* Estilo de Cabecera para N2 con hijos */
+        .sidebar-n2-parent {
+            padding: 0.5rem 1rem 0.2rem 2.6rem;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--slate-400);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Data Displays: Jerarquía H1-H5 */
+        .catalog-card {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--slate-200);
+            padding: 2.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        .data-grid-container {
+            border-radius: 0;
+            /* Drive es más plano en los bordes de tabla */
+            border: none;
+            background: transparent;
+            margin-top: 1rem;
+        }
+
+        .data-grid {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .data-grid th {
+            background: white;
+            padding: 10px 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 500;
+            color: #5f6368;
+            /* Gris de Etiquetas Google */
+            text-transform: none;
+            border-bottom: 1px solid #747775;
+            /* Header más fuerte (Google v3) */
+        }
+
+        .data-grid td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #c7c7c7;
+            /* Línea de fila visible y definida */
+            font-size: 14px;
+            color: #202124;
+            vertical-align: middle;
+        }
+
+        .data-grid tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-grid tr:hover td {
+            background-color: #f8f9fa;
+            /* Hover oficial Drive */
+            cursor: pointer;
+        }
+
+        .data-grid th.text-right,
+        .data-grid td.text-right {
+            text-align: right;
+            padding-right: 24px;
+        }
+
+        /* Ajuste para el nombre del producto (Negrita suave como Drive) */
+        .product-name {
+            font-weight: 500;
+            color: #202124;
+        }
+
+        .distributor-card {
+            background: linear-gradient(135deg, #065f46 0%, #10b981 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-top: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 1024px) {
+            .main-sidebar {
+                position: fixed;
+                left: 0;
+                transform: translateX(-100%);
+                z-index: 200;
+                height: 100vh;
+                top: 0;
+                box-shadow: 20px 0 50px rgba(0, 0, 0, 0.1);
+            }
+
+            .main-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .data-grid thead {
+                display: none;
+            }
+
+            .data-grid td {
+                display: block;
+                text-align: right;
+                padding: 0.75rem 1rem;
+                position: relative;
+                border-bottom: 1px solid var(--slate-50);
+            }
+
+            .data-grid td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 1rem;
+                font-weight: 800;
+                color: var(--slate-400);
+                font-size: 0.6rem;
+                text-transform: uppercase;
+            }
+
+            .data-grid td:first-child {
+                text-align: left;
+                padding-bottom: 1.25rem;
+                background: var(--slate-50);
+            }
+        }
+
+        .professional-only {
+            display: none !important;
+        }
+
+        body.professional-mode .professional-only {
+            display: table-cell !important;
+        }
+
+        @media (max-width: 1024px) {
+            body.professional-mode .professional-only {
+                display: block !important;
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* //#endregion */
+    </style>
 </head>
 
-<body class="text-slate-900">
+<body>
 
-    <!-- Header Estandarizado -->
     <header class="main-header">
-        <!-- Parte A: Logo (Alineado con Sidebar a 260px) -->
-        <div class="header-logo-container">
-            <a href="index.html" class="flex items-center gap-4">
-                <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center">
-                    <img src="img/logo-mundo-homeopatico.webp" alt="Logo Mundo Homeopático" width="48" height="48"
-                        fetchpriority="high" class="h-10 w-auto object-contain" />
-                </div>
-                <div class="flex flex-col justify-center text-left">
-                    <h1 class="text-xl font-black text-slate-800 tracking-tight leading-none">Mundo Homeopático</h1>
-                </div>
-            </a>
-        </div>
-        <!-- Parte B: Saludo personalizado (solo visible con sesión activa) -->
-        <div id="userGreeting" class="header-user-greeting hidden">
-            <div class="flex items-center gap-2 text-slate-700">
-                <i data-lucide="user-circle" class="w-4 h-4 text-farmacia flex-shrink-0"></i>
-                <span id="greetingText" class="text-sm font-semibold whitespace-nowrap"></span>
-            </div>
-            <button onclick="UIHandlers.logout()"
-                class="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                title="Cerrar sesión">
-                <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
-                <span>Salir</span>
+        <div class="flex items-center h-full px-8 max-w-[1440px] mx-auto w-full">
+            <button onclick="UIHandlers.toggleSidebar()"
+                class="lg:hidden mr-4 p-2 text-slate-500 hover:bg-slate-100 rounded-xl transition-all">
+                <i data-lucide="menu"></i>
             </button>
-        </div>
-        <div class="flex-1"></div>
-        <!-- Parte C: Botón de navegación -->
-        <div class="h-full flex items-center px-8">
-            <a href="contacto.html" class="nav-button-primary">
-                <span>Ir a contacto y sedes</span>
-                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <a href="#" onclick="Navigation.goTo('catalog')"
+                class="flex items-center gap-4 transition-transform active:scale-95">
+                <img src="img/logo-mundo-homeopatico.webp" alt="Logo" class="h-10 w-auto"
+                    onerror="this.src='https://placehold.co/120x40?text=MH+LOGO'">
+                <h1 class="font-black text-xl tracking-tighter text-secondary ml-2">Mundo Homeopático</h1>
             </a>
+
+            <!-- Saludo Dinámico (Feedback de Antigravity) -->
+            <div id="userGreeting"
+                class="hidden ml-8 flex items-center gap-3 px-4 py-1.5 bg-emerald-50 rounded-full border border-emerald-100">
+                <span id="greetingText"
+                    class="text-[10px] font-black text-emerald-700 uppercase tracking-widest"></span>
+                <button onclick="UIHandlers.logout()" class="text-emerald-300 hover:text-emerald-600"><i
+                        data-lucide="log-out" class="w-3 h-3"></i></button>
+            </div>
+
+            <div class="flex-grow"></div>
+
+            <button onclick="Navigation.toggle()" id="navToggleButton"
+                class="btn-base btn-primary shadow-xl uppercase tracking-widest">
+                <i data-lucide="map-pin" class="w-4 h-4"></i> <span id="navButtonText">Sedes y Contacto</span>
+            </button>
         </div>
     </header>
 
-    <div id="topProgressBar" class="top-progress-bar"></div>
-
-
-
-    <!-- Contenedor principal (Sidebar + Contenido) -->
-    <div class="flex">
-        <!-- Sidebar Estandarizado -->
-        <aside
-            class="flex-shrink-0 bg-white border-r border-slate-100 z-40 flex flex-col h-[calc(100vh-72px)] sticky top-[72px]"
-            style="width: 260px; min-width: 260px;">
-            <!-- Contenido del Sidebar con Scroll -->
-            <div class="flex-1 overflow-y-auto px-4 pt-1 pb-8 space-y-4 custom-scrollbar">
-
-                <!-- Barra de búsqueda -->
-                <div class="px-0 pt-0 pb-2 relative">
-                    <div class="relative">
-                        <i data-lucide="search"
-                            class="absolute top-1/2 -translate-y-1/2 left-2.5 w-4 h-4 text-slate-400"></i>
-                        <input type="text" id="mainSearch" onkeyup="UIHandlers.filterItems()"
-                            onfocus="UIHandlers.filterItems()" placeholder="Buscar..."
-                            aria-label="Buscar productos en el catálogo"
-                            class="w-full pl-9 pr-9 py-2.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-100 focus:border-farmacia outline-none transition-all font-medium placeholder:text-slate-400"
-                            style="font-size: var(--sidebar-text-size);">
-
-                        <button id="clearSearch" onclick="UIHandlers.clearSearch()"
-                            class="absolute top-1/2 -translate-y-1/2 right-2 flex items-center justify-center w-5 h-5 text-slate-400 hover:text-slate-600 transition-colors hidden">
-                            <i data-lucide="x" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                    <div id="searchDropdown"
-                        class="absolute left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-lg max-h-80 overflow-y-auto hidden z-50">
-                        <div id="dropdownResults" class="divide-y divide-slate-100"></div>
-                    </div>
-                </div>
-                <!-- Feedback de búsqueda -->
-                <div id="searchFeedback" class="mb-4 text-xs transition-all duration-300 opacity-0 hidden">
-                    <div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-50">
-                        <i data-lucide="info" class="w-3.5 h-3.5 text-slate-400"></i>
-                        <span id="feedbackText" class="text-slate-600 font-medium"></span>
-                    </div>
-                </div>
-                <!-- Botón de Acceso (Estandarizado con fondo verde suave) -->
-                <div class="mt-3">
-                    <button onclick="UIHandlers.showPasswordModal()"
-                        class="sidebar-nav-link sidebar-icon-gap bg-emerald-50 hover:bg-emerald-100 !px-3 font-semibold text-slate-700">
-                        <i data-lucide="key" class="sidebar-icon-main text-farmacia"></i>
-                        <span>Acceso distribuidores</span>
-                    </button>
-                </div>
-                <div class="border-t border-slate-200 sidebar-divider -mx-4"></div>
-                <!-- 1. DE NUESTRA FARMACIA -->
-                <div class="sidebar-section">
-                    <p class="sidebar-title-main">De Nuestra Farmacia</p>
-                    <div class="mt-1">
-                        <p class="sidebar-subtitle">Según prescripción</p>
-                        <!-- Acordeón Homeopáticos -->
-                        <div class="mt-2 sidebar-nav-item">
-                            <button onclick="UIHandlers.toggleSidebarAccordion(this)"
-                                class="sidebar-accordion-btn sidebar-icon-gap">
-                                <i data-lucide="chevron-down"
-                                    class="sidebar-icon-chevron text-slate-400 transition-transform"></i>
-                                <span class="font-semibold text-slate-600">Homeopáticos</span>
-                            </button>
-                            <nav class="sidebar-items-gap ml-4 mt-1 hidden flex flex-col">
-                                <a href="#oficinales"
-                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
-                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Oficinales
-                                </a>
-                                <a href="#multipotencias"
-                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
-                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Multipotencias
-                                </a>
-                                <a href="#magistrales"
-                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
-                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Magistrales
-                                </a>
-                            </nav>
-                        </div>
-                        <div class="mt-2 sidebar-nav-item">
-                            <a href="#esencias-prep"
-                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
-                                <i data-lucide="flower" class="sidebar-icon-main"></i> Esencias florales
-                            </a>
-                        </div>
-                        <div class="mt-2 sidebar-nav-item">
-                            <a href="#oligo-prep"
-                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
-                                <i data-lucide="component" class="sidebar-icon-main"></i> Oligoelementos
-                            </a>
-                        </div>
-                    </div>
-                    <div class="border-t border-slate-200 sidebar-divider"></div>
-                    <div class="mt-1">
-                        <p class="sidebar-subtitle">Línea MH</p>
-                        <!-- Acordeón Homeopatía -->
-                        <div class="mt-2 sidebar-nav-item">
-                            <button onclick="UIHandlers.toggleSidebarAccordion(this)"
-                                class="sidebar-accordion-btn sidebar-icon-gap">
-                                <i data-lucide="chevron-down"
-                                    class="sidebar-icon-chevron text-slate-400 transition-transform"></i>
-                                <span class="font-semibold text-slate-600">Homeopatía</span>
-                            </button>
-                            <nav class="sidebar-items-gap ml-4 mt-1 hidden flex flex-col">
-                                <a href="#esenciales-d4"
-                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
-                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Homeopáticos esenciales
-                                </a>
-                                <a href="#especiales"
-                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
-                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Homeopáticos especiales
-                                </a>
-                                <a href="#capilar"
-                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
-                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Cuidado capilar
-                                </a>
-                                <a href="#capsulas"
-                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
-                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Cápsulas
-                                </a>
-                                <a href="#cremas"
-                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
-                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Cremas
-                                </a>
-                                <a href="#geles"
-                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
-                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Geles
-                                </a>
-                                <a href="#unguentos"
-                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
-                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Ungüentos
-                                </a>
-                                <a href="#elixires"
-                                    class="nav-link sidebar-nav-link sidebar-icon-gap !px-2 text-slate-600">
-                                    <i data-lucide="circle" class="sidebar-icon-bullet"></i> Elíxires
-                                </a>
-                            </nav>
-                        </div>
-                        <div class="mt-2 sidebar-nav-item">
-                            <a href="#esencias-mh"
-                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
-                                <i data-lucide="flower-2" class="sidebar-icon-main"></i> Esencias florales
-                            </a>
-                        </div>
-                        <div class="mt-2 sidebar-nav-item">
-                            <a href="#oligo-k7"
-                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
-                                <i data-lucide="layers" class="sidebar-icon-main"></i> Oligoelementos K7
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="border-t border-slate-200 sidebar-divider"></div>
-                <!-- 2. PRODUCTOS EXCLUSIVOS -->
-                <div class="sidebar-section">
-                    <p class="sidebar-title-main">Productos Exclusivos</p>
-                    <nav class="sidebar-items-gap mt-2 flex flex-col">
-                        <div class="sidebar-nav-item">
-                            <a href="#alimentos-funcionales"
-                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
-                                <i data-lucide="heart-pulse" class="sidebar-icon-main"></i> Alimentos funcionales
-                            </a>
-                        </div>
-                        <div class="sidebar-nav-item">
-                            <a href="#cbd"
-                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
-                                <i data-lucide="leaf" class="sidebar-icon-main"></i> CBD
-                            </a>
-                        </div>
-                        <div class="sidebar-nav-item">
-                            <a href="#aceites-esenciales"
-                                class="nav-link sidebar-nav-link sidebar-icon-gap !px-0 font-semibold text-slate-600">
-                                <i data-lucide="droplet" class="sidebar-icon-main"></i> Aceites esenciales
-                            </a>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Contenedor Derecho (Header + Contenido) -->
-        <div class="flex-1 flex flex-col min-h-screen">
-
-
-            <!-- Banner informativo - Prescripción médica -->
-            <div id="prescriptionBanner" class="bg-amber-50 border-b border-amber-100 hidden sticky top-[72px] z-30">
-                <div class="max-w-7xl mx-auto px-8 py-2">
-                    <div class="flex items-center justify-between gap-4">
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
-                            <p class="text-[11px] md:text-xs text-slate-700 leading-tight">
-                                <span class="font-bold text-amber-900">Aviso importante:</span>
-                                Productos homeopáticos y magistrales disponibles únicamente bajo prescripción médica.
-                            </p>
-                        </div>
-                        <button onclick="UIHandlers.closePrescriptionBanner()"
-                            class="flex-shrink-0 p-1 hover:bg-amber-100 rounded-lg transition-colors"
-                            aria-label="Cerrar aviso">
-                            <i data-lucide="x" class="w-4 h-4 text-slate-400"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contenido Principal -->
-            <main class="flex-grow p-8" id="catalogBody">
-
-                <!-- Título Principal del Catálogo -->
-                <div class="mb-12 border-b border-slate-100 pb-8 banner-spacer">
-                    <h2 class="page-title">Lista de Precios</h2>
-                    <p class="text-slate-500 mt-2 font-medium">Catálogo 2026 • Filtros y búsqueda en tiempo real</p>
-                </div>
-
-                <!-- GRUPO 1: DE NUESTRA FARMACIA -->
-                <div class="space-y-10">
-                    <div>
-                        <h2 class="section-title border-l-4 border-farmacia pl-6">De
-                            Nuestra Farmacia</h2>
-                        <p class="text-sm text-slate-500 mt-2 ml-6">Preparaciones personalizadas según prescripción
-                            médica
-                        </p>
-                    </div>
-
-                    <!-- 1.1 Preparaciones según prescripción -->
-                    <div class="ml-6">
-                        <h3 class="subsection-title">Preparaciones según
-                            prescripción
-                        </h3>
-                        <p class="text-sm text-slate-600 mb-4">Contamos con un gran stock de principios activos
-                            disponibles para elaboraciones a medida.</p>
-
-                        <!-- 1.1.1 Homeopáticos -->
-                        <section id="homeopaticos-prep" class="section-group space-y-6 mb-8">
-                            <h4 class="subsection-title flex items-center gap-2">
-                                <i data-lucide="flask-conical" class="w-4 h-4 text-farmacia"></i>
-                                Homeopáticos
-                            </h4>
-
-                            <!-- Tabla 1: Oficinales -->
-                            <div id="oficinales" class="scroll-mt-24">
-                                <h3 class="subsection-title">Preparaciones Oficinales</h3>
-                                <div class="price-table-container">
-                                    <table class="price-table">
-                                        <thead class="price-table-header">
-                                            <tr>
-                                                <th scope="col" class="price-table-th">Dilución / Escala</th>
-                                                <th scope="col"
-                                                    class="price-table-th price-table-th-farmacia professional-only">
-                                                    Precio Farmacia</th>
-                                                <th scope="col" class="price-table-th price-table-th-publico">Precio
-                                                    Público</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="price-table-body">
-                                            <!-- Inyectado por JS -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Tabla 2: Multipotencias -->
-                            <div id="multipotencias" class="scroll-mt-24">
-                                <h3 class="subsection-title">Multipotencias</h3>
-                                <div class="price-table-container">
-                                    <table class="price-table">
-                                        <thead class="price-table-header">
-                                            <tr>
-                                                <th scope="col" class="price-table-th">Dilución / Escala</th>
-                                                <th scope="col"
-                                                    class="price-table-th price-table-th-farmacia professional-only">
-                                                    Precio Farmacia</th>
-                                                <th scope="col" class="price-table-th price-table-th-publico">Precio
-                                                    Público</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="price-table-body">
-                                            <!-- Inyectado por JS -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Magistrales -->
-                            <div id="magistrales" class="scroll-mt-24">
-                                <h3 class="subsection-title">Fórmulas Magistrales</h3>
-                                <div class="price-table-container">
-                                    <!-- Sección 1: Clásicas -->
-                                    <div class="p-6 border-b border-slate-50">
-                                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">
-                                            • Presentaciones Clásicas: Gotas x 30ml / Glóbulos x 30g
-                                        </p>
-                                        <table class="price-table">
-                                            <thead class="price-table-header">
-                                                <tr>
-                                                    <th scope="col" class="price-table-th-compact">Tipo de Fórmula</th>
-                                                    <th scope="col"
-                                                        class="price-table-th-compact price-table-th-farmacia professional-only">
-                                                        Precio Farmacia</th>
-                                                    <th scope="col"
-                                                        class="price-table-th-compact price-table-th-publico">Precio
-                                                        Público</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="price-table-body">
-                                                <!-- Inyectado por JS (Usa datos de tabla Magistrales) -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <!-- Sección 2: Otras presentaciones -->
-                                    <div class="p-6">
-                                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">
-                                            • Otras presentaciones magistrales
-                                        </p>
-                                        <table class="price-table">
-                                            <thead class="price-table-header">
-                                                <tr>
-                                                    <th scope="col" class="price-table-th-compact">Presentación</th>
-                                                    <th scope="col"
-                                                        class="price-table-th-compact price-table-th-farmacia professional-only">
-                                                        Precio Farmacia</th>
-                                                    <th scope="col"
-                                                        class="price-table-th-compact price-table-th-publico">Precio
-                                                        Público</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="price-table-body">
-                                                <tr class="hover-row">
-                                                    <td class="price-table-th-compact font-bold">Gotas o Glóbulos x
-                                                        60ml/g</td>
-                                                    <td
-                                                        class="price-table-th-compact text-right text-farmacia professional-only">
-                                                        $ 34.200</td>
-                                                    <td class="price-table-th-compact text-right text-publico">$ 45.600
-                                                    </td>
-                                                </tr>
-                                                <tr class="hover-row">
-                                                    <td class="price-table-th-compact font-bold">Gotas o Glóbulos x
-                                                        110ml/g</td>
-                                                    <td
-                                                        class="price-table-th-compact text-right text-farmacia professional-only">
-                                                        $ 44.400</td>
-                                                    <td class="price-table-th-compact text-right text-publico">$ 59.200
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        <!-- 1.1.2 Esencias Florales -->
-                        <div id="esencias-prep" class="scroll-mt-24 mb-10">
-                            <h3 class="subsection-title">Esencias florales</h3>
-                            <p class="text-sm text-slate-500 mb-4">Individuales o combinadas, según prescripción.</p>
-                            <div class="price-table-container">
-                                <table class="price-table">
-                                    <thead class="price-table-header">
-                                        <tr>
-                                            <th scope="col" class="price-table-th">Presentación</th>
-                                            <th scope="col"
-                                                class="price-table-th price-table-th-farmacia professional-only">Precio
-                                                Farmacia</th>
-                                            <th scope="col" class="price-table-th price-table-th-publico">Precio Público
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="price-table-body">
-                                        <!-- Inyectado por JS -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- 1.1.3 Oligoelementos -->
-                        <div id="oligo-prep" class="scroll-mt-24 mb-10">
-                            <h3 class="subsection-title">Oligoelementos</h3>
-                            <p class="text-sm text-slate-500 mb-4">Individuales o combinados, se elaboran en dilución
-                                D7.</p>
-                            <div class="price-table-container">
-                                <div class="p-6">
-                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">
-                                        • Gotas o Spray x 30 ml y Glóbulos x 30g
-                                    </p>
-                                    <table class="price-table">
-                                        <thead class="price-table-header">
-                                            <tr>
-                                                <th scope="col" class="price-table-th-compact">Composición</th>
-                                                <th scope="col"
-                                                    class="price-table-th-compact price-table-th-farmacia professional-only">
-                                                    Precio Farmacia</th>
-                                                <th scope="col" class="price-table-th-compact price-table-th-publico">
-                                                    Precio Público</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="price-table-body">
-                                            <!-- Inyectado por JS -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- GRUPO 2: LÍNEA MUNDO HOMEOPÁTICO -->
-                <div class="space-y-10">
-                    <div>
-                        <h2 class="section-title border-l-4 border-farmacia pl-6">
-                            Línea Mundo Homeopático
-                        </h2>
-                        <p class="text-sm text-slate-500 mt-2 ml-6">Formulaciones propias de alta calidad y en gran
-                            variedad
-                            de formas farmacéuticas.</p>
-                        <p class="text-sm text-slate-500 mt-2 ml-6">Nuestra línea incluye medicamentos homeopáticos
-                            (gotas,
-                            spray, glóbulos, tabletas, cremas, geles, ungüentos, cápsulas, cuidado capilar,
-                            elíxires),
-                            esencias florales y oligoelementos.</p>
-                    </div>
-
-                    <!-- 1.2.1 Homeopatía -->
-                    <!-- Esenciales D4 (Listado Largo) -->
-                    <div id="esenciales-d4" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4 flex items-center justify-between">
-                            <div>
-                                <h5 class="subsection-title">Homeopáticos Esenciales</h5>
-                                <p class="text-sm text-slate-500">Formulaciones de stock permanente.</p>
-                            </div>
-                            <span
-                                class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Stock
-                                Permanente</span>
-                        </div>
-
-                        <div class="price-table-container">
-                            <div class="p-6">
-                                <div class="mb-6">
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">• Gotas
-                                        x 30 ml y tabletas x 90</p>
-                                    <p class="text-xs text-slate-500 leading-relaxed">
-                                        Otras presentaciones bajo pedido: Glóbulos x 30g, Glóbulos caja x 10 tubos,
-                                        Spray oral x 30ml, Viales bebibles caja x 12, Viales nebulizables caja x 12,
-                                        presentación pediátrica en Glóbulos (Caja x 5 tubos), Viales bebibles caja x 12
-                                        viales de 10ml.
-                                    </p>
-                                </div>
-
-                                <table class="price-table">
-                                    <thead class="price-table-header">
-                                        <tr>
-                                            <th scope="col" class="price-table-th-compact">Presentación</th>
-                                            <th scope="col"
-                                                class="price-table-th-compact price-table-th-farmacia professional-only">
-                                                Precio Farmacia</th>
-                                            <th scope="col" class="price-table-th-compact price-table-th-publico">Precio
-                                                Público</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="price-table-body">
-                                        <!-- Inyectado por JS -->
-                                    </tbody>
-                                </table>
-
-                                <div class="mt-8 pt-8 border-t border-slate-100">
-                                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">•
-                                        Listado de Esenciales (Etiquetados a la D4)</p>
-                                    <div
-                                        class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 text-[10px] text-slate-500 px-4 py-4 bg-slate-50/50 rounded-xl border border-slate-100/50">
-                                        <span>• Abies</span><span>• Acid picricum</span><span>• Aconitum</span><span>•
-                                            Aesculus</span>
-                                        <span>• Agnus</span><span>• Alúmina</span><span>• Angélica</span><span>•
-                                            Apis</span>
-                                        <span>• Árnica</span><span>• Aurum metallicum</span><span>•
-                                            Baptisia</span><span>• Baryta carbónica</span>
-                                        <span>• Belladonna</span><span>• Benzoicum acidum</span><span>•
-                                            Berberis</span><span>• Bryonia</span>
-                                        <span>• Cactus</span><span>• Calcáreas phosphorica</span><span>• Carbo
-                                            vegetabilis</span><span>• Centella asiática</span>
-                                        <span>• Chelidonium</span><span>• Chimaphilla</span><span>•
-                                            Chininum</span><span>• Cholesterolum</span>
-                                        <span>• Cicuta</span><span>• Cinamomum</span><span>• Colchicum</span><span>•
-                                            Colocynthis</span>
-                                        <span>• Crataegus</span><span>• Crocus</span><span>• Damiana</span><span>•
-                                            Echinacea</span>
-                                        <span>• Equisetum</span><span>• Euphatorium</span><span>•
-                                            Euphrasia</span><span>• Fucus</span>
-                                        <span>• Galium</span><span>• Gelsemium</span><span>• Gentiana</span><span>•
-                                            Ginkgo biloba</span>
-                                        <span>• Glonoinum</span><span>• Graphites</span><span>• Hamamelis</span><span>•
-                                            Hydrangea</span>
-                                        <span>• Hydrastis</span><span>• Hypericum</span><span>• Ignatia</span><span>•
-                                            Iodum</span>
-                                        <span>• Ipeca</span><span>• Iris</span><span>• Jaborandi</span><span>•
-                                            Juglans</span>
-                                        <span>• Kalium bichromicum</span><span>• Klaium bromatum</span><span>•
-                                            Klamia</span><span>• Leptandra</span>
-                                        <span>• Lilium</span><span>• Luffa</span><span>• Magnesia
-                                            phosphorica</span><span>• Marrubium</span>
-                                        <span>• Medicago</span><span>• Melissa</span><span>• Mercurius</span><span>•
-                                            Mezereum</span>
-                                        <span>• Nux vómica</span><span>• Passiflora</span><span>•
-                                            Petroleum</span><span>• Phosphoricum acidum</span>
-                                        <span>• Placenta</span><span>• Plumbum</span><span>• Pulsatilla</span><span>•
-                                            Rhododendron</span>
-                                        <span>• Rhus tox</span><span>• Rumex</span><span>• Ruta</span><span>•
-                                            Sabal</span>
-                                        <span>• Sambucus</span><span>• Scrofularia</span><span>• Selenium</span><span>•
-                                            Senna</span>
-                                        <span>• Solidago</span><span>• Staphysagria</span><span>• Sulphur</span><span>•
-                                            Syzygium</span>
-                                        <span>• Tabacum</span><span>• Taraxacum</span><span>• Teucrium</span><span>•
-                                            Thallium</span>
-                                        <span>• Thuja</span><span>• Urtica</span><span>• Vaccinium</span><span>•
-                                            Vincetoxicum</span>
-                                        <span>• Vipera</span><span>• Viscum</span><span>• Zincum
-                                            metallicum</span><span>• Zingiber</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 1.2.1.2 Homeopáticos Especiales -->
-                    <div id="especiales" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">Homeopáticos Especiales</h5>
-                            <p class="text-sm text-slate-500">Formulaciones específicas para diversas condiciones.</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th scope="col" class="price-table-th">Medicamento</th>
-                                        <th scope="col" class="price-table-th">Presentación</th>
-                                        <th scope="col"
-                                            class="price-table-th price-table-th-farmacia professional-only">
-                                            Precio Farmacia</th>
-                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Cuidado Capilar -->
-                    <!-- Cuidado Capilar -->
-                    <div id="capilar" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">Cuidado Capilar</h5>
-                            <p class="text-sm text-slate-500">Tratamientos especializados para la salud capilar.</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th class="price-table-th">Producto</th>
-                                        <th scope="col" class="price-table-th">Presentación</th>
-                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
-                                            Farmacia
-                                        </th>
-                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- 1.2.1.4 Cápsulas -->
-                    <div id="capsulas" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">Cápsulas</h5>
-                            <p class="text-sm text-slate-500">Suplementos en cápsulas de alta concentración.</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th class="price-table-th">Producto y cantidad por envase</th>
-                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
-                                            Farmacia
-                                        </th>
-                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- 1.2.1.5 Cremas -->
-                    <div id="cremas" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">Cremas</h5>
-                            <p class="text-sm text-slate-500">Cremas x 120g (todas etiquetadas a la D4).</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th class="price-table-th">Producto</th>
-                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
-                                            Farmacia
-                                        </th>
-                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- 1.2.1.6 Geles -->
-                    <div id="geles" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">Geles</h5>
-                            <p class="text-sm text-slate-500">Geles x 120g (Todos etiquetados a la D4).</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th class="price-table-th">Producto</th>
-                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
-                                            Farmacia
-                                        </th>
-                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- 1.2.1.7 Ungüentos -->
-                    <div id="unguentos" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">Ungüentos</h5>
-                            <p class="text-sm text-slate-500">Ungüentos x 40g.</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th class="price-table-th">Producto</th>
-                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
-                                            Farmacia
-                                        </th>
-                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- 1.2.1.8 Elíxires -->
-                    <div id="elixires" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">Elíxires</h5>
-                            <p class="text-sm text-slate-500">Elíxires x 240ml (Todos etiquetados a la D4).</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th scope="col" class="price-table-th">Medicamento</th>
-                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
-                                            Farmacia
-                                        </th>
-                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- 1.2.2 Esencias florales -->
-                    <div id="esencias-mh" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">Esencias florales</h5>
-                            <p class="text-sm text-slate-500">23 referencias de uso oral, 7 splash para ambientes, una
-                                crema y un kit para uso externo.</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th class="price-table-th">Producto y Presentación</th>
-                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
-                                            Farmacia
-                                        </th>
-                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- 1.2.3 Oligoelementos K7 -->
-                    <div id="oligo-k7" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">Oligoelementos K7</h5>
-                            <p class="text-sm text-slate-500">Combinaciones por diátesis. Stock permanente gotas x 30ml
-                                / Bajo pedido glóbulos x 30g.</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th class="price-table-th">Producto</th>
-                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
-                                            Farmacia
-                                        </th>
-                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- GRUPO 3: PRODUCTOS EXCLUSIVOS -->
-                <div class="space-y-10">
-                    <div>
-                        <h2 class="section-title border-l-4 border-farmacia pl-6">
-                            Productos Exclusivos
-                        </h2>
-                        <p class="text-sm text-slate-500 mt-2 ml-6">Productos especializados de alta calidad</p>
-                    </div>
-
-                    <!-- 2.1 Alimentos funcionales -->
-                    <div id="alimentos-funcionales" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">Alimentos funcionales</h5>
-                            <p class="text-sm text-slate-500">Productos con Registro Invima.</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th class="price-table-th">Producto</th>
-                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
-                                            Farmacia
-                                        </th>
-                                        <th class="price-table-th price-table-th-publico">Precio público</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- 2.2 CBD -->
-                    <div id="cbd" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">CBD</h5>
-                            <p class="text-sm text-slate-500">CBD con Registro Invima (Cannabis medicinal).</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th class="price-table-th">Producto</th>
-                                        <th class="price-table-th price-table-th-farmacia professional-only">Precio
-                                            Farmacia
-                                        </th>
-                                        <th scope="col" class="price-table-th price-table-th-publico">Precio Público
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- 2.3 Aceites esenciales -->
-                    <div id="aceites-esenciales" class="scroll-mt-[94px] mb-10">
-                        <div class="mb-4">
-                            <h5 class="subsection-title">Aceites esenciales</h5>
-                            <p class="text-sm text-slate-500">Aceites de grado terapéutico. Frasco gotero x 10ml.</p>
-                        </div>
-                        <div class="price-table-container">
-                            <table class="price-table">
-                                <thead class="price-table-header">
-                                    <tr>
-                                        <th class="price-table-th">Aceite Esencial</th>
-                                        <th class="price-table-th price-table-th-farmacia professional-only">Al 20%</th>
-                                        <th class="price-table-th price-table-th-publico">Al 100%</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="price-table-body">
-                                    <!-- Inyectado por JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </main>
-
-            <!-- Footer Estandarizado -->
-            <footer class="main-footer">
-                <div class="max-w-7xl mx-auto px-4 text-center">
-                    <p class="footer-copyright">© 2026 Mundo Homeopático - Todos los derechos reservados.</p>
-                    <p class="footer-disclaimer">Precios sujetos a cambios. Consulte disponibilidad.</p>
-                    <div class="flex justify-center gap-6 mt-6">
-                        <a href="https://wa.me/573176680750" target="_blank" title="WhatsApp"
-                            class="text-slate-400 hover:text-green-500 transition-colors">
-                            <i data-lucide="message-circle" class="w-5 h-5"></i>
-                        </a>
-                        <a href="https://www.instagram.com/mundohomeopatico" target="_blank" title="Instagram"
-                            class="text-slate-400 hover:text-pink-500 transition-colors">
-                            <i data-lucide="instagram" class="w-5 h-5"></i>
-                        </a>
-                        <a href="https://www.mhmundohomeopatico.com" target="_blank" title="Sitio Web"
-                            class="text-slate-400 hover:text-farmacia transition-colors">
-                            <i data-lucide="globe" class="w-5 h-5"></i>
-                        </a>
-                    </div>
-                </div>
-            </footer>
-
-            <!-- Modal de Contraseña Profesional -->
-            <div id="passwordModal" class="modal-overlay hidden">
-                <div class="modal-content">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4">Acceso Profesionales</h3>
-                    <p class="text-sm text-slate-600 mb-4">Ingrese la contraseña para ver precios profesionales</p>
-                    <input type="password" id="professionalPassword" placeholder="Contraseña"
-                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-farmacia mb-4">
-                    <div class="flex gap-3">
-                        <button id="submitPassword"
-                            class="flex-1 bg-farmacia text-white px-4 py-2 rounded-lg font-semibold hover:bg-emerald-600 transition-colors">
-                            Ingresar
-                        </button>
-                        <button id="cancelPassword"
-                            class="flex-1 bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-semibold hover:bg-slate-300 transition-colors">
-                            Cancelar
-                        </button>
-                    </div>
-                    <p id="errorMessage" class="error hidden">Contraseña incorrecta. Intente nuevamente.</p>
-                </div>
-            </div>
-
-            <script src="js/main.js"></script>
+    <div id="bannerWrapper" class="banner-wrapper hidden">
+        <div
+            class="max-w-[1440px] mx-auto px-8 py-3.5 flex items-center gap-4 text-amber-900 text-[10px] font-black uppercase tracking-widest animate-fade-in">
+            <i data-lucide="megaphone" class="w-4 h-4 flex-shrink-0 text-amber-500"></i>
+            <p id="bannerText" class="flex-grow text-center"></p>
+            <button onclick="UIHandlers.closeBanner()" class="p-2 hover:bg-amber-100 rounded-full transition-colors">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
         </div>
     </div>
 
-    <footer class="main-footer">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="footer-copyright">© 2026 Mundo Homeopático - Todos los derechos reservados.</p>
-            <p class="footer-disclaimer">Precios sujetos a cambios. Consulte disponibilidad.</p>
-            <div class="flex justify-center gap-6 mt-6">
-                <a href="https://wa.me/573176680750" target="_blank" title="WhatsApp"
-                    class="text-slate-400 hover:text-green-500 transition-colors">
-                    <i data-lucide="message-circle" class="w-5 h-5"></i>
-                </a>
-                <a href="https://www.instagram.com/mundohomeopatico" target="_blank" title="Instagram"
-                    class="text-slate-400 hover:text-pink-500 transition-colors">
-                    <i data-lucide="instagram" class="w-5 h-5"></i>
-                </a>
-                <a href="https://www.mhmundohomeopatico.com" target="_blank" title="Sitio Web"
-                    class="text-slate-400 hover:text-farmacia transition-colors">
-                    <i data-lucide="globe" class="w-5 h-5"></i>
-                </a>
+    <!-- MODAL DE ACCESO (Recuperado) -->
+    <div id="passwordModal"
+        class="fixed inset-0 bg-secondary/80 backdrop-blur-sm z-[300] hidden flex items-center justify-center p-4 animate-fade-in">
+        <div class="bg-white rounded-[2rem] p-8 w-full max-w-sm shadow-2xl transform scale-100">
+            <div class="text-center mb-6">
+                <div
+                    class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="lock" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-xl font-black text-secondary">Acceso Profesional</h3>
+                <p class="text-xs text-slate-400 mt-2 font-medium">Ingrese su clave de distribuidor autorizado</p>
+            </div>
+
+            <input type="password" id="professionalPassword" placeholder="Contraseña"
+                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-center font-bold tracking-widest mb-4 focus:ring-4 focus:ring-emerald-500/20 outline-none transition-all"
+                onkeypress="if(event.key === 'Enter') UIHandlers.validateLogin()">
+
+            <div class="grid gap-3">
+                <button onclick="UIHandlers.validateLogin()"
+                    class="btn-base btn-primary w-full justify-center shadow-lg shadow-emerald-500/30">
+                    Ingresar
+                </button>
+                <button onclick="UIHandlers.closeModal()"
+                    class="text-xs font-bold text-slate-400 hover:text-slate-600 p-2 uppercase tracking-widest">
+                    Cancelar
+                </button>
             </div>
         </div>
-    </footer>
+    </div>
 
+    <div class="app-layout">
+        <!-- SIDEBAR ÚNICO SPA -->
+        <aside id="mainSidebar" class="main-sidebar">
+            <!-- VISTA: CATÁLOGO -->
+            <div id="sidebar-catalog-view" class="flex flex-col h-full animate-fade-in">
+                <div class="flex-grow">
+                    <div class="mb-4">
+                        <div class="relative">
+                            <i data-lucide="search" class="absolute left-4 top-3.5 w-4 h-4 text-slate-300"></i>
+                            <input type="text" id="mainSearch" placeholder="¿Qué necesitas?"
+                                class="w-full pl-11 pr-4 py-3.5 bg-slate-100 rounded-2xl outline-none focus:ring-4 focus:ring-emerald-500/10 text-sm font-medium transition-all">
+                        </div>
+                    </div>
+                    <button onclick="document.getElementById('passwordModal').classList.remove('hidden')"
+                        class="w-full bg-emerald-50 text-emerald-700 p-4 rounded-xl font-black text-[10px] flex justify-center items-center gap-2 hover:bg-emerald-100 transition-all mb-4 tracking-widest border border-emerald-100 text-center leading-tight">
+                        <i data-lucide="key" class="w-4 h-4 flex-shrink-0"></i> <span>Acceso Distribuidores</span>
+                    </button>
+                    <!-- LÍNEA DIVISORIA ESTRATÉGICA (Separación Utilidad vs Contenido) -->
+                    <!-- LÍNEA DIVISORIA ESTRATÉGICA (Ancho Completo Absoluto) -->
+                    <div class="w-full bg-slate-100 mb-6 h-px"></div>
+
+                    <nav id="sidebar-menu" class="space-y-1"></nav>
+                </div>
+            </div>
+
+            <!-- VISTA: CONTACTO (CONTEXTUAL) -->
+            <div id="sidebar-contact-view" class="flex flex-col h-full hidden animate-fade-in">
+                <div class="flex-grow px-1">
+                    <p class="sidebar-label-l1">Explorar Sedes</p>
+                    <nav class="space-y-1">
+                        <a href="#view-contact" onclick="UIHandlers.toggleSidebar()" class="sidebar-link active"><i
+                                data-lucide="building" class="w-4 h-4"></i> Sedes Principales</a>
+                        <a href="#distributorsSection" onclick="UIHandlers.toggleSidebar()" class="sidebar-link"><i
+                                data-lucide="truck" class="w-4 h-4"></i> Red de Distribuidores</a>
+                        <a href="#videoSection" onclick="UIHandlers.toggleSidebar()" class="sidebar-link"><i
+                                data-lucide="play-circle" class="w-4 h-4"></i> Calidad Farmacéutica</a>
+                    </nav>
+                    <div class="distributor-card mt-12 animate-fade-in shadow-lg">
+                        <h5 class="font-black text-xs tracking-widest mb-2">Se Distribuidor</h5>
+                        <p class="text-[10px] opacity-80 leading-relaxed mb-5 font-medium text-white/90">Únete a nuestra
+                            red nacional de farmacias autorizadas.</p>
+                        <a href="https://wa.me/573176680750" target="_blank"
+                            class="flex items-center justify-center gap-2 w-full py-3 bg-white text-emerald-600 rounded-xl font-black text-[10px] uppercase transition-transform active:scale-95 shadow-sm">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp Directo
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pie de Autoría -->
+            <div id="author-credit" class="sidebar-footer mt-12 pt-6 opacity-0 transition-opacity duration-1000">
+                <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em] text-center leading-loose">
+                    Desarrollado por<br>
+                    <a id="author-link" href="#" target="_blank"
+                        class="text-slate-400 hover:text-emerald-500 transition-colors font-bold border-b border-transparent hover:border-emerald-500"></a>
+                </p>
+            </div>
+        </aside>
+
+        <!-- PANEL CENTRAL SPA -->
+        <main id="view-catalog" class="flex-grow p-8 lg:p-16 min-w-0">
+            <div class="mb-16 animate-fade-in">
+                <h2 class="text-6xl font-black tracking-tighter mb-3 text-secondary">Lista de Precios</h2>
+                <p class="text-slate-400 font-medium italic text-sm">Catálogo 2026</p>
+            </div>
+            <div id="tables-container" class="space-y-32">
+                <div class="h-64 bg-white rounded-[3rem] animate-pulse border border-slate-100 mb-10"></div>
+            </div>
+        </main>
+
+        <main id="view-contact" class="flex-grow p-8 lg:p-16 min-w-0 hidden">
+            <div class="mb-16 animate-fade-in">
+                <h2 class="text-6xl font-black tracking-tighter mb-3 text-secondary">Sedes y Atención</h2>
+                <p class="text-slate-400 font-medium italic text-sm">Presencia regional y garantía farmacéutica
+                    certificada.</p>
+            </div>
+
+            <section id="videoSection" class="mb-24 scroll-mt-24">
+                <div id="videoContainer"
+                    class="aspect-video w-full rounded-[3rem] bg-slate-200 overflow-hidden shadow-2xl border-8 border-white animate-fade-in">
+                </div>
+            </section>
+
+            <section id="distributorsSection" class="scroll-mt-24">
+                <h3 class="text-2xl font-black text-secondary mb-12 tracking-tight flex items-center gap-3">
+                    <i data-lucide="map-pin" class="text-primary"></i> Nuestros Distribuidores
+                </h3>
+                <div id="distributors-grid" class="grid md:grid-cols-2 gap-8">
+                    <!-- Dinámico -->
+                </div>
+            </section>
+
+            <section id="faqSection" class="mt-32">
+                <h3 class="text-2xl font-black text-secondary mb-12 tracking-tight">Preguntas Frecuentes</h3>
+                <div id="faq-container" class="grid gap-4 max-w-2xl">
+                    <!-- Dinámico -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- //#region LOGICA DE NEGOCIO (EL CORAZÓN) -->
+    <script>
+        const APP_CONFIG = {
+            SHEETS: {
+                PRICES: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1411473006&single=true&output=csv',
+                NAV: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1582460222&single=true&output=csv',
+                AUTH: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1372762576&single=true&output=csv',
+                AUTHOR: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=2047819342&single=true&output=csv',
+                VIDEO: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1360742312&single=true&output=csv',
+                BANNER: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=593525669&single=true&output=csv',
+                FAQ: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1434563192&single=true&output=csv',
+                DIST: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=486540156&single=true&output=csv'
+            },
+            PROXY: 'https://corsproxy.io/?',
+            PROXY_BACKUP: 'https://corsproxy.io/?'
+        };
+
+        const STATE = { prices: [], nav: [], faq: [], dist: [], currentView: 'catalog', isPro: localStorage.getItem('mh_pro_v2') === 'true', userName: localStorage.getItem('mh_user_v2') || '' };
+
+        const escapeHtml = (unsafe) => {
+            return String(unsafe)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        };
+
+        const UIHandlers = {
+            init() {
+                if (STATE.isPro) document.body.classList.add('professional-mode');
+                this.updateGreeting();
+                const inp = document.getElementById('mainSearch');
+                if (inp) {
+                    let searchTimeout;
+                    inp.addEventListener('input', (e) => {
+                        clearTimeout(searchTimeout);
+                        searchTimeout = setTimeout(() => {
+                            const q = e.target.value.toLowerCase().trim();
+                            let hasResults = false;
+
+                            document.querySelectorAll('.catalog-card').forEach(card => {
+                                // Sanitización implícita: Buscamos sobre textContent, no innerHTML
+                                const hasMatch = card.innerText.toLowerCase().includes(q);
+                                card.classList.toggle('hidden', !hasMatch);
+
+                                if (hasMatch) {
+                                    hasResults = true;
+                                    card.querySelectorAll('tr').forEach(tr => {
+                                        if (tr.closest('thead')) return;
+                                        tr.style.display = tr.innerText.toLowerCase().includes(q) ? '' : 'none';
+                                    });
+                                }
+                            });
+
+                            // Manejo de "Sin Resultados"
+                            const noResultsMsg = document.getElementById('noResultsMessage');
+                            if (!hasResults && q !== '') {
+                                if (!noResultsMsg) {
+                                    const msg = document.createElement('div');
+                                    msg.id = 'noResultsMessage';
+                                    msg.className = 'text-center p-8 text-slate-400 font-medium animate-fade-in';
+                                    msg.innerHTML = `<i data-lucide="search-x" class="w-12 h-12 mx-auto mb-2 opacity-50"></i><p>No encontramos productos que coincidan con "${escapeHtml(q)}"</p>`;
+                                    document.getElementById('tables-container').appendChild(msg);
+                                    if (window.lucide) window.lucide.createIcons();
+                                }
+                            } else {
+                                noResultsMsg?.remove();
+                            }
+                        }, 150); // Debounce 150ms
+                    });
+                }
+            },
+            updateGreeting() {
+                const hour = new Date().getHours();
+                const greet = hour < 12 ? "Buenos días" : hour < 18 ? "Buenas tardes" : "Buenas noches";
+                const gt = document.getElementById('greetingText');
+                if (gt) gt.textContent = `${greet}${STATE.userName ? ', ' + STATE.userName : ''}`;
+                document.getElementById('userGreeting')?.classList.toggle('hidden', !STATE.isPro);
+            },
+            toggleSidebar: () => {
+                document.getElementById('mainSidebar').classList.toggle('open');
+                document.getElementById('mobileOverlay').classList.toggle('hidden');
+            },
+
+            // LÓGICA DE ACORDEÓN PURA Y SIMPLE
+            toggleAccordion: (btn) => {
+                const targetNav = btn.nextElementSibling;
+                // Comportamiento "Exclusivo" Limpio: Cierra los demás, abre el seleccionado
+                document.querySelectorAll('#sidebar-menu nav').forEach(nav => {
+                    if (nav !== targetNav) nav.classList.add('hidden');
+                });
+                targetNav.classList.toggle('hidden');
+
+                // Refrescar iconos (si existen)
+                if (window.lucide) window.lucide.createIcons();
+            },
+
+            closeBanner: () => {
+                const wrapper = document.getElementById('bannerWrapper');
+                wrapper.classList.add('collapsed');
+                setTimeout(() => wrapper.remove(), 200);
+            },
+            showPasswordModal: () => document.getElementById('passwordModal').classList.remove('hidden'),
+            closeModal: () => document.getElementById('passwordModal').classList.add('hidden'),
+            validateLogin: async () => {
+                const passInput = document.getElementById('professionalPassword');
+                const pass = passInput.value.trim();
+
+                // Feedback de carga en el botón
+                const btn = passInput.parentElement.querySelector('button');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="animate-pulse">Verificando...</span>';
+
+                try {
+                    const auth = await DataService.fetchCSV(APP_CONFIG.SHEETS.AUTH);
+
+                    // Búsqueda flexible en columnas probables (por si el header cambia en el Sheet)
+                    const user = auth.find(r => {
+                        const p = (r.password || r.clave || r.contrasena || r.contraseña || "").toString().trim();
+                        // Comparación estricta pero insensible a espacios
+                        return p === pass;
+                    });
+
+                    if (user || pass === 'MH2026') {
+                        localStorage.setItem('mh_pro_v2', 'true');
+                        localStorage.setItem('mh_user_v2', user?.nombre || user?.usuario || 'Administrador');
+                        location.reload();
+                    } else {
+                        alert("Contraseña incorrecta");
+                        btn.innerHTML = originalText;
+                        passInput.value = "";
+                        passInput.focus();
+                    }
+                } catch (e) {
+                    console.error("Error Auth:", e);
+                    // Fallback: Si falla internet pero la clave maestra es correcta, entra
+                    if (pass === 'MH2026') {
+                        localStorage.setItem('mh_pro_v2', 'true');
+                        localStorage.setItem('mh_user_v2', 'Administrador');
+                        location.reload();
+                    } else {
+                        alert("Error de conexión al verificar credenciales");
+                        btn.innerHTML = originalText;
+                    }
+                }
+            },
+            logout: () => { localStorage.clear(); location.reload(); },
+
+            // NAVEGACIÓN MANUAL (SIMPLE)
+            initNavigation() {
+                // Delegación de eventos estándar
+                document.addEventListener('click', (e) => {
+                    const link = e.target.closest('.sidebar-link[data-tid]');
+                    if (link) {
+                        e.preventDefault();
+                        const tid = link.getAttribute('data-tid');
+
+                        // Scroll directo sin complicaciones
+                        const targetId = `sec-${tid}`;
+                        let target = document.getElementById(targetId);
+                        if (!target) target = document.querySelector(`section[id*="${tid}"]`); // Fallback mínimo necesario
+
+                        if (target) {
+                            // Ajuste para el header fijo
+                            const offsetPosition = target.getBoundingClientRect().top + window.pageYOffset - 80;
+                            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                        }
+
+                        // UX Básico: Marcar activo inmediatamente
+                        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+
+                        // En móvil cerrar sidebar
+                        if (window.innerWidth < 1024) UIHandlers.toggleSidebar();
+                    }
+                });
+            },
+
+            initObserver() {
+                // OBSERVER COMPLETAMENTE PASIVO (Solo visualización)
+                // No toca el DOM ni abre acordeones. Solo dice "Estás aquí".
+                const obs = new IntersectionObserver((entries) => {
+                    entries.forEach(e => {
+                        if (e.isIntersecting) {
+                            // Limpiar estado activo anterior
+                            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+
+                            // Activar el link correspondiente a la sección visible
+                            const tid = e.target.id.replace('sec-', '');
+                            const link = document.querySelector(`.sidebar-link[data-tid="${tid}"]`);
+                            if (link) link.classList.add('active');
+                        }
+                    });
+                }, { rootMargin: '-20% 0px -60% 0px' }); // Zona de detección central
+
+                document.querySelectorAll('section[id]').forEach(s => obs.observe(s));
+            }
+        };
+
+        const Navigation = {
+            toggle() { this.goTo(STATE.currentView === 'catalog' ? 'contact' : 'catalog'); },
+            goTo(view) {
+                STATE.currentView = view;
+                document.getElementById('view-catalog').classList.toggle('hidden', view !== 'catalog');
+                document.getElementById('view-contact').classList.toggle('hidden', view !== 'contact');
+                document.getElementById('sidebar-catalog-view').classList.toggle('hidden', view !== 'catalog');
+                document.getElementById('sidebar-contact-view').classList.toggle('hidden', view !== 'contact');
+                const btnText = document.getElementById('navButtonText');
+                const btnIcon = document.querySelector('#navToggleButton i');
+                if (view === 'contact') {
+                    btnText.textContent = 'Ver Catálogo';
+                    btnIcon.setAttribute('data-lucide', 'list');
+                } else {
+                    btnText.textContent = 'Sedes y Contacto';
+                    btnIcon.setAttribute('data-lucide', 'map-pin');
+                }
+                if (window.lucide) window.lucide.createIcons();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        };
+
+        const DataService = {
+            async fetchCSV(url) {
+                try {
+                    // RETRY LOGIC (3 intentos)
+                    for (let i = 0; i < 3; i++) {
+                        try {
+                            const controller = new AbortController();
+                            const id = setTimeout(() => controller.abort(), 8000);
+                            const resp = await fetch(APP_CONFIG.PROXY + encodeURIComponent(url), { signal: controller.signal });
+                            clearTimeout(id);
+                            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+                            const text = await resp.text();
+                            return this.parseCSV(text);
+                        } catch (e) {
+                            console.warn(`Intento ${i + 1} fallido`, e);
+                            if (i === 2) {
+                                // Backup Proxy
+                                const resp = await fetch(APP_CONFIG.PROXY_BACKUP + encodeURIComponent(url));
+                                const text = await resp.text();
+                                return this.parseCSV(text);
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.error("Fallo Total", e);
+                    // No alertar, fallar silenciosamente o devolver vacío para no bloquear UI
+                    return [];
+                }
+            },
+            parseCSV(text) {
+                if (!text || !text.trim()) return [];
+
+                // DETECCIÓN DINÁMICA DE SEPARADOR (Coma, Punto y Coma o Tabulador)
+                const firstLine = text.split('\n')[0];
+                let sep = ',';
+                if (firstLine.includes('\t')) sep = '\t';
+                else if (firstLine.includes(';')) sep = ';';
+
+                const rows = [];
+                let currentRow = [];
+                let currentVal = '';
+                let insideQuotes = false;
+
+                for (let i = 0; i < text.length; i++) {
+                    const char = text[i];
+                    const nextChar = text[i + 1];
+
+                    if (char === '"') {
+                        if (insideQuotes && nextChar === '"') {
+                            currentVal += '"';
+                            i++;
+                        } else {
+                            insideQuotes = !insideQuotes;
+                        }
+                    } else if (char === sep && !insideQuotes) {
+                        currentRow.push(currentVal);
+                        currentVal = '';
+                    } else if ((char === '\r' || char === '\n') && !insideQuotes) {
+                        if (char === '\r' && nextChar === '\n') i++;
+                        // Solo pushear si hay datos o si no es una línea vacía al final
+                        if (currentVal !== '' || currentRow.length > 0) {
+                            currentRow.push(currentVal);
+                            rows.push(currentRow);
+                        }
+                        currentRow = [];
+                        currentVal = '';
+                    } else {
+                        currentVal += char;
+                    }
+                }
+                if (currentVal !== '' || currentRow.length > 0) {
+                    currentRow.push(currentVal);
+                    rows.push(currentRow);
+                }
+
+                if (rows.length < 2) return [];
+
+                // NORMALIZACIÓN DE CABECERAS: tabla_id, tablas_id -> tabla_id
+                const headers = rows[0].map(h => {
+                    let cleaned = h.trim().toLowerCase().replace(/^"|"$/g, '');
+                    if (cleaned === 'tablas_id') return 'tabla_id';
+                    return cleaned;
+                });
+
+                return rows.slice(1).map(values => {
+                    const row = {};
+                    headers.forEach((h, i) => {
+                        let val = values[i] || "";
+                        if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
+                        row[h] = val.trim();
+                    });
+                    return row;
+                });
+            },
+            normalizeYT(url) {
+                if (!url) return '';
+                const id = url.match(/(?:v=|\/embed\/|youtu\.be\/|\/v\/|\/e\/|watch\?v%3D)([^#\&\?]*).*/);
+                return id ? `https://www.youtube.com/embed/${id[1]}` : url;
+            },
+            slugify(text) {
+                if (!text) return "unknown";
+                return text
+                    .toString()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, '-')
+                    .replace(/^-+|-+$/g, '')
+                    .trim();
+            }
+        };
+
+        const RenderEngine = {
+            renderAll() {
+                this.renderCatalog();
+                this.renderContactItems();
+                if (window.lucide) window.lucide.createIcons();
+            },
+            renderCatalog() {
+                try {
+                    const sidebar = document.getElementById('sidebar-menu');
+                    const panel = document.getElementById('tables-container');
+                    if (!sidebar || !panel) return;
+
+                    // Estructura de Árbol Preservando Orden
+                    // Usamos Maps para mantener el orden de inserción garantizado
+                    const tree = new Map();
+
+                    STATE.nav.forEach(row => {
+                        const l1 = (row.nivel_1 || "").trim();
+                        if (!l1) return;
+
+                        if (!tree.has(l1)) tree.set(l1, { meta: row, agps: new Map() });
+                        const l1Node = tree.get(l1);
+
+                        const agp = (row.agrupador || "").trim(); // Clave vacía es válida
+                        if (!l1Node.agps.has(agp)) l1Node.agps.set(agp, { meta: row, n2s: new Map() });
+                        const agpNode = l1Node.agps.get(agp);
+
+                        const l2 = (row.nivel_2 || "").trim();
+                        if (!agpNode.n2s.has(l2)) agpNode.n2s.set(l2, { meta: row, items: [] });
+                        const l2Node = agpNode.n2s.get(l2);
+
+                        l2Node.items.push(row);
+                    });
+
+                    let sHtml = ''; let pHtml = '';
+
+                    // RENDERIZADO DEL ÁRBOL
+                    tree.forEach((l1Data, l1Nav) => {
+                        // MAPEO DE ICONOS POR CATEGORÍA
+                        const icons = {
+                            "Linea MH": "microscope",
+                            "Homeopatia": "leaf",
+                            "Oligoelementos": "atom",
+                            "Exclusivos": "star",
+                            "Farmacia": "flask-conical"
+                        };
+                        const iconName = icons[DataService.slugify(l1Nav).replace(/-/g, '')] || "box";
+
+                        // SIDEBAR NIVEL 1: Estilo Drive/Figma
+                        sHtml += `<div class="sidebar-label-l1 mt-6">
+                            <span>${l1Nav}</span>
+                        </div>`;
+
+                        // SUBTÍTULOS CONTEXTUALES DINÁMICOS
+                        // Variable para rasterar el último subtítulo impreso
+                        let lastSubtitulo = "";
+
+                        // Verificar subtítulo inicial del bloque
+                        const firstSub = Array.from(l1Data.agps.values())[0]?.meta?.subtitulo;
+                        if (firstSub && firstSub !== 'undefined') {
+                            sHtml += `<div class="mt-2 mb-2 pl-4 text-[10px] font-black tracking-widest text-slate-400 opacity-80">${firstSub}</div>`;
+                            lastSubtitulo = firstSub;
+                        }
+
+                        pHtml += `<div class="mt-20">
+                            <!-- Título N1 Largo (Columna E) -->
+                            <h2 class="text-4xl font-black text-secondary border-l-8 border-primary pl-6 mb-2 tracking-tighter">${l1Data.meta.nivel_1_titulo || l1Nav}</h2>
+                            <p class="text-sm text-slate-400 font-medium ml-10 mb-16">${l1Data.meta.nivel_1_descripcion || ''}</p>`;
+
+                        // Iterar Agrupadores
+                        l1Data.agps.forEach((agpData, agpNav) => {
+
+                            // Verificar si este agrupador tiene un nuevo subtítulo que mostrar
+                            const currentSub = agpData.meta.subtitulo;
+                            if (currentSub && currentSub !== 'undefined' && currentSub !== lastSubtitulo) {
+                                sHtml += `<div class="mt-6 mb-2 pl-4 text-[10px] font-black tracking-widest text-slate-400 opacity-80">${currentSub}</div>`;
+                                lastSubtitulo = currentSub;
+                            }
+
+                            pHtml += `<div class="mb-20 ml-10">`;
+
+                            // Si hay agrupador (ej: Línea MH)
+                            if (agpNav) {
+                                pHtml += `<!-- AGRUPADOR -->
+                                <div class="mb-8 pb-2 border-b border-slate-100">
+                                    <h3 class="text-xl font-bold text-emerald-600 mb-1 flex items-center gap-2">${agpData.meta.agrupador_titulo || agpNav}</h3>
+                                    <p class="text-xs text-slate-500 font-medium max-w-3xl">${agpData.meta.agrupador_descripcion || ''}</p>
+                                </div>`;
+
+                                // SIDEBAR AGRUPADOR (Botón Acordeón)
+                                sHtml += `<div class="mb-1">
+                                    <button class="w-full flex justify-start items-center gap-2 px-4 py-2 text-xs font-bold text-slate-800 hover:bg-slate-50 rounded-lg transition-all group" onclick="UIHandlers.toggleAccordion(this)">
+                                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-300 group-hover:text-primary transition-colors"></i>
+                                        <span class="text-left tracking-wide">${agpNav}</span>
+                                    </button>
+                                    <nav class="hidden mt-1 sidebar-accordion-content space-y-1">`; // Aquí aplicamos la clase de la línea
+                            } else {
+                                sHtml += `<div class="mb-1 space-y-1 mt-2">`;
+                            }
+
+                            // Iterar Nivel 2 (Items/Links)
+                            agpData.n2s.forEach((l2Data, l2Nav) => {
+                                // Determinamos si este Nivel 2 es el destino final (no tiene hijos N3)
+                                const hasN3 = l2Data.items.some(m => !!m.nivel_3);
+                                const l2Tid = DataService.slugify((agpNav || l1Nav) + "-" + l2Nav);
+
+                                // Si NO tiene hijos N3, este div recibe el ID para que el título sea visible al navegar
+                                const wrapperId = !hasN3 ? `id="sec-${l2Tid}"` : "";
+
+                                pHtml += `<div class="mb-24 scroll-mt-32" ${wrapperId}>`;
+
+                                if (l2Nav) {
+                                    const displayTitle = l2Data.meta.nivel_2_titulo || l2Nav;
+                                    pHtml += `<h4 class="text-3xl font-black text-secondary mb-3">${displayTitle}</h4>
+                                    <p class="text-sm text-slate-400 font-medium mb-8">${l2Data.meta.nivel_2_descripcion || ''}</p>`;
+                                }
+
+                                if (hasN3 && l2Nav) {
+                                    sHtml += `<div class="sidebar-n2-parent">${l2Nav}</div>`;
+                                    sHtml += `<div class="sidebar-n3-group">`;
+                                }
+
+                                // AGRUPACIÓN POR TID
+                                const groupedByTid = new Map();
+                                l2Data.items.forEach(meta => {
+                                    const labelShort = meta.nivel_3 || meta.nivel_2 || "unknown";
+                                    const uniqueKey = (agpNav || l1Nav) + "-" + labelShort;
+                                    const tid = DataService.slugify(uniqueKey);
+
+                                    // DEBUG: Rastrear ID de Ungüentos
+                                    if (labelShort.toLowerCase().includes('ung')) {
+                                        console.log('📌 Ungüentos ID Generado:', tid);
+                                    }
+
+                                    if (!groupedByTid.has(tid)) groupedByTid.set(tid, { meta, allRows: [] });
+                                    groupedByTid.get(tid).allRows.push(meta);
+                                });
+
+                                groupedByTid.forEach((group, tid) => {
+                                    const meta = group.meta;
+                                    const labelShort = meta.nivel_3 || meta.nivel_2 || "unknown";
+                                    // LÓGICA DE ICONOS SIDEBAR 2026:
+                                    // Si estamos DENTRO de un agrupador (agpNav existe), es un item hijo -> Texto Limpio.
+                                    // Si NO hay agrupador (agpNav vacío), es un item principal independiente -> Con Icono.
+
+                                    if (agpNav) {
+                                        // HIJO DE AGRUPADOR: Texto limpio sin puntos ni iconos
+                                        sHtml += `<a href="#sec-${tid}" data-tid="${tid}" class="sidebar-link child-link">${labelShort}</a>`;
+                                    } else {
+                                        // ITEM INDEPENDIENTE: Con Icono Temático
+                                        const n2Icons = {
+                                            "esenciasflorales": "flower-2",
+                                            "oligoelementos": "atom",
+                                            "oligoelementosk7": "atom",
+                                            "alimentosfuncionales": "apple",
+                                            "cbd": "droplets",
+                                            "aceitesesenciales": "sparkles",
+                                            "oficinales": "flask-conical", // Agregado para Oficinales
+                                            "multipotenias": "layers",    // Agregado para Multipotencias
+                                            "magistrales": "scroll"       // Agregado para Magistrales
+                                        };
+                                        const iconSlug = DataService.slugify(labelShort).replace(/-/g, '');
+                                        // Búsqueda aproximada para atrapar singulares/plurales
+                                        const matchedKey = Object.keys(n2Icons).find(k => iconSlug.includes(k) || k.includes(iconSlug));
+                                        const iconName = n2Icons[matchedKey] || "circle"; // Fallback a círculo si no hay icono específico
+
+                                        const iconHtml = `<i data-lucide="${iconName}" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>`;
+
+                                        sHtml += `<a href="#sec-${tid}" data-tid="${tid}" class="sidebar-link group">
+                                            ${iconHtml}
+                                            <span>${labelShort}</span>
+                                        </a>`;
+                                    }
+
+                                    // Buscar precios para este grupo
+                                    const filterId = (meta.tabla_id || meta.nivel_3 || meta.nivel_2 || "").toLowerCase().trim();
+                                    const precios = filterId ? STATE.prices.filter(p => {
+                                        const pId = (p.tabla_id || "").toLowerCase().trim();
+                                        return pId === filterId || pId === DataService.slugify(filterId);
+                                    }) : [];
+
+                                    // Solo pasamos el ID si es una sub-sección (N3), si es N2 ya está en el wrapper
+                                    const targetId = hasN3 ? tid : "";
+                                    pHtml += this.createTable(meta, precios, targetId);
+                                });
+
+                                if (hasN3 && l2Nav) {
+                                    sHtml += `</div>`; // Cierre del grupo indentado N3
+                                }
+                                pHtml += `</div>`; // Cierre del contenedor de precios del grupo
+                            });
+
+                            sHtml += agpNav ? `</nav></div>` : `</div>`; // Cierre del acordeón Agrupador
+                            pHtml += `</div>`; // Cierre del bloque de agrupador en el panel
+                        });
+                        pHtml += `</div>`; // Cierre del bloque Nivel 1 en el panel
+                    });
+
+
+                    if (sHtml === '') {
+                        panel.innerHTML = `<div class="p-20 text-center animate-fade-in">
+                            <i data-lucide="database-zap" class="w-16 h-16 mx-auto mb-4 text-slate-200"></i>
+                            <p class="text-slate-400 font-bold text-lg">No se pudo cargar la estructura del catálogo</p>
+                            <p class="text-slate-300 text-sm mt-2">Es posible que la conexión con Google Sheets esté bloqueada o los datos estén vacíos.</p>
+                            <button onclick="location.reload()" class="mt-8 px-6 py-3 bg-emerald-500 text-white rounded-full font-bold shadow-lg hover:shadow-emerald-500/20 transition-all">Reintentar Conexión</button>
+                        </div>`;
+                        if (window.lucide) window.lucide.createIcons();
+                    } else {
+                        sidebar.innerHTML = sHtml;
+                        panel.innerHTML = pHtml;
+                        this.initObserver();
+                    }
+                } catch (err) {
+                    console.error("Error Crítico de Renderizado:", err);
+                    document.getElementById('tables-container').innerHTML = `<div class="p-8 m-8 bg-red-50 border border-red-100 rounded-3xl text-center">
+                        <p class="text-red-500 font-black mb-2 uppercase tracking-widest text-xs">Error de Sistema</p>
+                        <p class="text-secondary font-medium italic text-sm">"${err.message}"</p>
+                        <p class="text-slate-400 text-[10px] mt-4 font-bold">Por favor, contacte a soporte técnico.</p>
+                    </div>`;
+                }
+            },
+
+            createTable(meta, items, tid) {
+                // Solo generamos el ID de sección si se nos pasa explícitamente (para evitar duplicados con el wrapper)
+                const sectionId = tid ? `id="sec-${tid}"` : "";
+
+                const notas = [...new Set(items.map(i => i.notas).filter(n => n && n.trim().length > 0))];
+                const showTitle = !!meta.nivel_3;
+                const titleLong = meta.nivel_3_titulo || meta.nivel_3;
+
+                return `<section ${sectionId} class="mb-12" style="scroll-margin-top: 120px;">
+                    ${showTitle ? `<h5 class="text-xl font-black text-secondary mb-3 pl-3 border-l-4 border-emerald-500">${titleLong}</h5>
+                                   <p class="text-xs text-slate-400 mb-6 font-bold tracking-tight pl-3">${meta.nivel_3_descripcion || ''}</p>` : ''}
+
+                    ${items.length ? `<div class="data-grid-container bg-white shadow-sm">
+                        <table class="data-grid w-full">
+                            <thead>
+                                <tr>
+                                    <th class="pl-6">Producto</th>
+                                    <th class="text-right professional-only text-emerald-600">Precio farmacia</th>
+                                    <th class="text-right pr-6">Precio público</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${items.map(p => `
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    <td class="pl-6 product-name">
+                                        <div class="font-medium text-secondary text-sm">${p.producto}</div>
+                                        <div class="text-[10px] text-slate-400 font-bold tracking-tight">${p.presentacion || ''}</div>
+                                    </td>
+                                    <td class="text-right professional-only font-bold text-emerald-600" data-label="Farmacia">${this.formatPrice(p.precio_farmacia)}</td>
+                                    <td class="text-right font-black text-secondary pr-6" data-label="Público">${this.formatPrice(p.precio_publico)}</td>
+                                </tr>`).join('')}
+                            </tbody>
+                        </table>
+                    </div>` : '<p class="text-xs text-slate-400 italic pl-4">Catálogo en actualización</p>'}
+
+                    ${notas.length ? `<div class="mt-4 mx-2 p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-[11px] font-black text-slate-700 uppercase tracking-widest mb-2"><i data-lucide="info" class="w-3.5 h-3.5 inline mr-1 text-emerald-500"></i> Notas:</p>
+                        <ul class="list-disc pl-5 text-xs text-slate-600 font-medium space-y-1">${notas.map(n => `<li>${n}</li>`).join('')}</ul>
+                    </div>` : ''}
+                </section>`;
+            },
+            renderContactItems() {
+                const distGrid = document.getElementById('distributors-grid');
+                if (distGrid && STATE.dist.length) {
+                    distGrid.innerHTML = STATE.dist.map(d => `<div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all"><i data-lucide="building"></i></div>
+                            <div><h4 class="font-black text-secondary uppercase tracking-tight text-sm">${d.sede || d.nombre}</h4><p class="text-[9px] text-primary font-black uppercase tracking-widest">${d.departamento || ''}</p></div>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-8 font-medium leading-relaxed">${d.direccion || 'Consulte ubicación'}</p>
+                        <a href="https://wa.me/${(d.whatsapp || "").replace(/\D/g, '')}" target="_blank" class="flex items-center gap-3 text-primary font-black text-[10px] uppercase tracking-widest hover:gap-5 transition-all">WhatsApp <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                    </div>`).join('');
+                }
+                const faqCont = document.getElementById('faq-container');
+                if (faqCont && STATE.faq.length) {
+                    faqCont.innerHTML = STATE.faq.map(f => `<div class="bg-white p-6 rounded-3xl border border-slate-100"><p class="font-bold text-sm text-secondary">${f.pregunta}</p><p class="text-xs text-slate-400 mt-2 font-medium">${f.respuesta}</p></div>`).join('');
+                }
+            },
+            formatPrice: (v) => {
+                if (!v || v === '-') return '-';
+                const str = String(v).replace(/\D/g, '');
+                return str ? `$ ${parseInt(str).toLocaleString('es-CO')}` : '-';
+            },
+            initObserver() {
+                // OBSERVER MEJORADO: Margen ajustado para detectar mejor el centro de la pantalla
+                const obs = new IntersectionObserver((es) => {
+                    // SI ES SCROLL MANUAL O INTERACCIÓN EN SIDEBAR, IGNORAR AL OBSERVER
+                    if (UIHandlers.isManualScroll || UIHandlers.isInteracting) return;
+
+                    es.forEach(e => {
+                        if (e.isIntersecting) {
+                            // Quitar active de todo
+                            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+                            // Poner active al correspondiente
+                            const link = document.querySelector(`.sidebar-link[data-tid="${e.target.id.replace('sec-', '')}"]`);
+                            if (link) {
+                                link.classList.add('active');
+                                // ELIMINADO: Auto-apertura de acordeón desde el Observer.
+                                // Causa conflicto cuando el usuario explora el menú mientras ve otra sección.
+                            }
+                        }
+                    });
+                }, {
+                    root: null, // viewport
+                    rootMargin: '-20% 0px -60% 0px', // Zona activa en el centro-superior de la pantalla
+                    threshold: 0
+                });
+
+                document.querySelectorAll('section[id]').forEach(s => obs.observe(s));
+            }
+        };
+
+
+
+        document.addEventListener('DOMContentLoaded', async () => {
+
+            UIHandlers.init();
+            UIHandlers.initNavigation(); // Activar el nuevo motor de clicks
+
+            // Sincronización Inteligente: Cargar Caché -> Renderizar -> Fetch Background -> Actualizar
+            const keys = {
+                prices: 'mh_cache_prices',
+                nav: 'mh_cache_nav',
+                faq: 'mh_cache_faq',
+                dist: 'mh_cache_dist'
+            };
+
+            // 1. Renderizado Inmediato desde Caché (si existe)
+            try {
+                const cachedPrices = localStorage.getItem(keys.prices);
+                const cachedNav = localStorage.getItem(keys.nav);
+                const cachedFaq = localStorage.getItem(keys.faq);
+                const cachedDist = localStorage.getItem(keys.dist);
+
+                if (cachedPrices && cachedNav) {
+                    STATE.prices = JSON.parse(cachedPrices);
+                    STATE.nav = JSON.parse(cachedNav);
+                    STATE.faq = cachedFaq ? JSON.parse(cachedFaq) : [];
+                    STATE.dist = cachedDist ? JSON.parse(cachedDist) : [];
+                    console.log('⚡ Renderizado inicial (Caché)');
+                    RenderEngine.renderAll();
+                }
+            } catch (e) { console.error('Error leyendo caché', e); }
+
+            // 2. Fetch Background (Estrategia Stale-While-Revalidate)
+            // Carga de recursos secundarios (no bloqueantes)
+            DataService.fetchCSV(APP_CONFIG.SHEETS.AUTHOR).then(d => {
+                if (d && d[0]) {
+                    const l = document.getElementById('author-link');
+                    l.textContent = d[0].nombre || ""; l.href = d[0].url || "#";
+                    document.getElementById('author-credit').classList.remove('opacity-0');
+                }
+            });
+            DataService.fetchCSV(APP_CONFIG.SHEETS.BANNER).then(d => {
+                if (d && d[0] && d[0].mensaje) {
+                    document.getElementById('bannerText').textContent = d[0].mensaje;
+                    document.getElementById('bannerWrapper').classList.remove('hidden');
+                }
+            });
+            DataService.fetchCSV(APP_CONFIG.SHEETS.VIDEO).then(d => {
+                if (d && d[0] && d[0].url) {
+                    const embed = DataService.normalizeYT(d[0].url);
+                    document.getElementById('videoContainer').innerHTML = `<iframe class="w-full h-full" src="${embed}" frameborder="0" allowfullscreen></iframe>`;
+                }
+            });
+
+            try {
+                const [p, n, f, dist] = await Promise.all([
+                    DataService.fetchCSV(APP_CONFIG.SHEETS.PRICES),
+                    DataService.fetchCSV(APP_CONFIG.SHEETS.NAV),
+                    DataService.fetchCSV(APP_CONFIG.SHEETS.FAQ),
+                    DataService.fetchCSV(APP_CONFIG.SHEETS.DIST)
+                ]);
+
+                // Actualizar Estado y Caché
+                if (p.length) { STATE.prices = p; localStorage.setItem(keys.prices, JSON.stringify(p)); }
+                if (n.length) { STATE.nav = n; localStorage.setItem(keys.nav, JSON.stringify(n)); }
+                if (f.length) { STATE.faq = f; localStorage.setItem(keys.faq, JSON.stringify(f)); }
+                if (dist.length) { STATE.dist = dist; localStorage.setItem(keys.dist, JSON.stringify(dist)); }
+
+                // Actualizar UI con datos frescos si llegaron
+                if (p.length && n.length) {
+                    console.log('🔄 Datos actualizados desde la nube');
+                    RenderEngine.renderAll();
+                } else {
+                    alert("¡Atención! No se pudieron descargar los datos de Google Sheets. Verifica tu conexión a internet.");
+                    console.error("Fetch fallido: p.length=" + p.length + ", n.length=" + n.length);
+                }
+            } catch (error) {
+                console.error('Error en sincronización:', error);
+                if (STATE.prices.length === 0) {
+                    document.getElementById('tables-container').innerHTML = `<div class="p-8 text-center text-red-500 font-bold">Error de conexión. Intente recargar.</div>`;
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
