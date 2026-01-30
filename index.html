@@ -16,7 +16,21 @@
         content="Consulta nuestra lista de precios actualizada y red de sedes en tiempo real.">
     <meta property="og:image" content="img/logo-mundo-homeopatico.webp">
 
-    <!-- //#region INFRAESTRUCTURA EXTERNA -->
+    <!-- 
+    ★ ARQUITECTURA MONOLÍTICA ESTRUCTURADA ★
+    Este proyecto está diseñado intencionalmente como un SOLO ARCHIVO (index.html) para maximizar 
+    la compatibilidad con GitHub Pages, facilitar el mantenimiento por IA y eliminar fricción de despliegue.
+    
+    ESTRUCTURA DE REGIONES (Usar "Fold" en el editor):
+    1. INFRAESTRUCTURA (Meta & Libs)
+    2. SISTEMA DE DISEÑO (CSS Scoped)
+    3. ESTRUCTURA DE INTERFAZ (HTML Semántico)
+    4. LÓGICA DE NEGOCIO (JS Modular)
+    
+    NO SEPARAR EN ARCHIVOS EXTERNOS sin una justificación técnica crítica (>3000 líneas).
+    -->
+
+    <!-- //#region 1. INFRAESTRUCTURA PROYECTO -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
@@ -25,7 +39,39 @@
     <!-- //#endregion -->
 
     <style>
-        /* //#region VARIABLES Y DISEÑO MATEMÁTICO (LA PIEL) */
+        /* 
+        ==========================================================================
+        ★ SISTEMA DE DISEÑO & ESTANDARIZACIÓN (FUENTE ÚNICA DE VERDAD) ★
+        ==========================================================================
+        
+        IMPORTANTE PARA AGENTES DE IA Y DESARROLLADORES:
+        Este proyecto utiliza un sistema de DESIGN TOKENS definido en :root. 
+        NO utilizes valores "hardcoded" (ej. 24px, #ccc, 10px padding) directamente en las clases.
+        SIEMPRE usa las variables semánticas definidas a continuación.
+        
+        LÓGICA DE VARIABLES:
+        1. Branding & Colores: --primary, --secondary, etc.
+        2. tokens de Componentes (--p-*): Padding específico para Header, Sidebar, Tablas.
+        3. tokens Visuales: --border-*, --radius-*, --shadow-*.
+        4. Tipografía: --fw-*, --lh-*.
+
+        Si necesitas cambiar el espaciado de una tabla, NO edites la clase .data-grid.
+        EDITA la variable --p-table-cell en :root.
+        ==========================================================================
+        
+        ARQUITECTURA & REGLAS DE COHERENCIA:
+        1. SEPARACIÓN DE RESPONSABILIDADES:
+           - HTML: Solo estructura y semántica (ej: .main-header). NO usar utilidades de estilo si existe una clase semántica.
+           - CSS: Controla TODO el aspecto visual y el layout. Responde a estados (.is-open, .active).
+           - JS: Controla la lógica y el estado. Solo añade/quita clases de estado, NO inyecta estilos inline ni clases de utilidad.
+        
+        2. ESTADOS:
+           - Usar .is-open, .is-active, .has-error para variantes.
+           - Evitar style.display = 'none' en JS; usar clases de estado.
+        ==========================================================================
+        */
+
+        /* //#region 2. SISTEMA DE DISEÑO (CSS) */
         :root {
             /* Branding: Abstracción de colores del logo */
             --primary: #10b981;
@@ -37,17 +83,85 @@
 
             /* Escala de Grises y Superficies */
             --slate-50: #f8fafc;
+            --bg-secondary: #f8fafc;
+            --border-color: #cbd5e1;
+            /* slate-300 for better contrast */
             --slate-100: #f1f5f9;
             --slate-200: #e2e8f0;
             --slate-400: #94a3b8;
+            --text-primary: #0f172a;
 
             /* Grid System (Medidas Matemáticas de imagen adjunta) */
-            --header-h: 80px;
-            /* Heading Panel Height */
             --sidebar-w: 280px;
             /* Navigation Area Width */
             --radius: 24px;
             /* Radio de curvatura estándar */
+
+            /* SISTEMA DE ESPACIADO ESTANDARIZADO (Escala 4px/8px) */
+            --space-xs: 0.25rem;
+            /* 4px */
+            --space-s: 0.5rem;
+            /* 8px */
+            --space-m: 1rem;
+            /* 16px */
+            --space-l: 1.5rem;
+            /* 24px */
+            --space-xl: 2rem;
+            /* 32px */
+            --space-xxl: 4rem;
+            /* 64px */
+
+            /* SISTEMA TIPOGRÁFICO ESTANDARIZADO */
+            --font-xs: 10px;
+            --font-sm: 13px;
+            /* Sidebar & Metadata */
+            --font-base: 16px;
+            /* Body text */
+            --font-lg: 18px;
+            /* Subtitles */
+            --font-xl: 24px;
+            /* Section Titles */
+            --font-display: 3.75rem;
+            /* 60px - Hero Titles */
+            --header-h: 80px;
+            /* Altura Estándar Dashboard (Más compacta que 96/112) */
+
+            /* TOKENS SEMÁNTICOS (Estandarización de Componentes) */
+            --p-header-v: 0.8rem;
+            --p-header-h: clamp(1rem, 5%, 2rem);
+            --p-sidebar: 2rem;
+            /* Espacio superior sidebar */
+            --p-nav-item-v: 0.75rem;
+            --p-nav-item-h: 1rem;
+
+            --p-card: 2.5rem;
+            /* Padding interno de tarjetas */
+
+            /* Alineación Maestra */
+            --align-offset: 24px;
+
+            /* TOKENS DE BORDES (Estandarización Visual) */
+            --border-color-soft: var(--slate-200);
+            --border-color-strong: #747775;
+            --border-width-std: 1px;
+
+            /* TOKENS DE TIPOGRAFÍA (Peso e Interlineado) */
+            --fw-bold: 700;
+            --lh-title: 1.2;
+
+            /* TOKENS DE TABLAS */
+            --p-table-cell: 12px 16px;
+
+            /* TOKENS DE RADIO (Curvatura) */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 16px;
+            --radius-full: 999px;
+
+            /* TOKENS DE ELEVACIÓN (Sombras) */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         body {
@@ -59,65 +173,106 @@
             overflow-x: hidden;
         }
 
-        /* Estructura SPA */
+        .app-layout {
+            display: block;
+            /* Layout bloque para soporte fixed */
+            width: 100%;
+            min-height: 100vh;
+            background: var(--slate-50);
+        }
+
+        /* Estructura SPA Global */
         .main-header {
             height: var(--header-h);
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(12px);
+            background: #fff;
             border-bottom: 1px solid var(--slate-200);
-            position: sticky;
+            /* Línea sutil de separación */
+            position: fixed;
             top: 0;
-            z-index: 100;
-        }
-
-        .app-layout {
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            /* Capa superior absoluta */
             display: flex;
-            max-width: 1440px;
-            margin: 0 auto;
-            min-height: calc(100vh - var(--header-h));
-        }
-
-        .main-content {
-            flex-grow: 1;
-            padding: 2rem;
-            padding-bottom: 60vh;
-            /* Permite que el último ítem llegue al tope y se seleccione */
-            max-width: 1400px;
-            margin: 0 auto;
+            align-items: center;
+            padding: 0;
+            box-shadow: var(--shadow-sm);
+            /* Sombra suave para elevación */
         }
 
         .main-sidebar {
             width: var(--sidebar-w);
-            background: #fff;
-            border-right: 1px solid var(--slate-200);
             height: calc(100vh - var(--header-h));
-            position: sticky;
+            position: fixed;
             top: var(--header-h);
+            /* Anclado bajo el header */
+            left: 0;
+            background: #fff;
+            border-right: var(--border-width-std) solid var(--border-color-soft);
             overflow-y: auto;
-            flex-shrink: 0;
-            padding: 1.5rem 2rem;
-            /* Alineado verticalmente con px-8 del Header */
-            overscroll-behavior: contain;
-            -ms-overflow-style: none;
-            /* Ocultar scrollbar IE */
-            scrollbar-width: none;
-            /* Ocultar scrollbar Firefox */
+            overflow-x: hidden;
+            z-index: 90;
+            /* Bajo el header */
+            padding: var(--p-sidebar) 0;
+            /* Padding vertical interno */
+
+            display: flex;
+            flex-direction: column;
+            padding-left: 0;
+            /* Reset for precise control */
+            padding-right: 0;
         }
 
         .main-sidebar::-webkit-scrollbar {
-            display: none;
-            /* Ocultar scrollbar Chrome/Safari */
+            width: 4px;
         }
 
-        .sidebar-link {
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        .main-sidebar::-webkit-scrollbar-track {
+            background: transparent;
         }
 
-        /* Banner Dinámico Fluido (Comportamiento solicitado) */
+        .main-sidebar::-webkit-scrollbar-thumb {
+            background: var(--slate-200);
+            border-radius: var(--radius-full);
+        }
+
+        .main-sidebar::-webkit-scrollbar-thumb:hover {
+            background: var(--slate-300);
+        }
+
+        /* Alineación Maestra Sidebar (Coordenada X=40px) */
+        /* El logo en header tiene px-10 (40px). 
+           Los items del sidebar tienen padding interno de 12px.
+           Necesitamos 28px de margen externo + 12px padding interno = 40px visuales.
+        */
+        #sidebar-catalog-view,
+        #sidebar-contact-view {
+            padding: 0 28px;
+            /* 28px + 12px de item = 40px alineado con logo */
+        }
+
+        .main-content-wrapper {
+            margin-left: var(--sidebar-w);
+            /* Espacio para sidebar */
+            margin-top: var(--header-h);
+            /* Espacio para header */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Ajuste de Scroll para Anclas */
+        html {
+            scroll-padding-top: calc(var(--header-h) + 20px);
+        }
+
+        /* Banner Dinámico Fluido */
         .banner-wrapper {
             position: sticky;
             top: var(--header-h);
-            z-index: 90;
+            /* Sigue debajo del header contextual */
+            z-index: 30;
             background: #fffbeb;
             border-bottom: 1px solid #fef3c7;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -133,24 +288,72 @@
             pointer-events: none;
         }
 
-        /* Botones Proporción 1:2 (Medida matemática) */
+        /* DISEÑO DEFINITIVO BOTÓN SLOT (Referencia: "Continue ->") */
         .btn-base {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
+            justify-content: space-between;
+            /* Texto izquierda, Slot derecha */
+            gap: 0.8em;
+            /* Separación visual entre texto y slot */
             border-radius: 999px;
             font-weight: 700;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            /* Lógica de Padding Asimétrico "Flush" Inteligente */
+            --button-height: 2.8em;
+            height: var(--button-height);
+
+            /* Valores por defecto */
+            padding: 0.35em;
+        }
+
+        /* CASO 1: Icono a la DERECHA (Contacto ->) */
+        .btn-base:has(> i:last-child),
+        .btn-base:has(> svg:last-child) {
+            padding-left: 1.5em;
+            /* Aire texto */
+            padding-right: 0.35em;
+            /* Flush icono */
+        }
+
+        /* Fallback para navegadores viejos que no soporten :has (opcional, pero buena práctica) */
+        .btn-base i:last-child {
+            margin-left: auto;
+        }
+
+        /* CASO 2: Icono a la IZQUIERDA (<- Catálogo) */
+        .btn-base:has(> i:first-child),
+        .btn-base:has(> svg:first-child) {
+            padding-left: 0.35em;
+            /* Flush icono */
+            padding-right: 1.5em;
+            /* Aire texto */
+        }
+
+        /* Slot del Icono (Cápsula Lateral) */
+        .btn-base i,
+        .btn-base svg {
+            /* El slot ocupa casi toda la altura del botón */
+            width: 2.1em;
+            height: 2.1em;
+
+            padding: 0.55em;
+            /* Icono centrado con aire dentro del slot */
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Contraste fuerte como en la ref */
+            border-radius: 50%;
+            stroke-width: 2.5px;
+            flex-shrink: 0;
+            display: block;
+            transition: all 0.3s ease;
         }
 
         .btn-primary {
-            padding: 0.75rem 1.5rem;
             background: var(--secondary);
             color: white;
-            font-size: 11px;
-            text-transform: uppercase;
+            font-size: var(--font-sm);
+            /* Ligeramente más grande para balance */
             letter-spacing: 0.05em;
         }
 
@@ -160,35 +363,69 @@
             box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.3);
         }
 
+        .btn-primary:hover i {
+            background-color: rgba(0, 0, 0, 0.2);
+            transform: rotate(-15deg) scale(1.05);
+            /* Micro-interacción dinámica */
+        }
+
         /* Sidebar Links e Iconografía */
         .sidebar-label-l1 {
-            font-size: 13px;
-            font-weight: 800;
-            color: var(--secondary);
-            /* Negro suavizado institucional */
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 0 1rem;
-            margin: 1.5rem 0 0.5rem;
-            height: 32px;
+            gap: 12px;
+            padding: 12px;
+            /* Padding uniforme */
+            font-size: var(--font-sm);
+            font-weight: 600;
+            color: var(--secondary);
+            /* Sin márgenes extraños, solo flujo natural */
+        }
+
+        #sidebar-menu>.sidebar-label-l1:first-child {
+            margin-top: 0;
+            /* El primero va pegado arriba */
+        }
+
+        .sidebar-subtitle-context {
+            font-size: var(--font-sm);
+            color: #64748b;
+            /* Slate 500 para diferenciar de links */
+            font-weight: 500;
+            padding: 4px 12px;
+            /* Menos altura que un link clickeable */
+            margin: 4px 8px 2px 0;
         }
 
         .sidebar-link {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 8px 16px;
-            margin-right: 8px;
-            font-size: 13px;
+            padding: 8px 12px;
+            /* Compacto */
+            margin: 2px 0 2px 0;
+            /* Sin margen lateral, el padre controla el padding */
+            font-size: var(--font-sm);
             font-weight: 500;
-            color: #1e293b;
-            /* Slate 800: Negro menos intenso para mejor UI */
+            color: #334155;
+            /* Slate 700 */
             text-decoration: none;
             cursor: pointer;
-            border-radius: 0 999px 999px 0;
+            border-radius: 6px;
+            /* Estilo Figma: Rectángulo redondeado consistente */
             transition: all 0.15s ease;
             position: relative;
+        }
+
+        /* AJUSTE ÓPTICO DE TEXTO (Optical Center Fix) */
+        .sidebar-link span,
+        .sidebar-item-accordion span {
+            line-height: 1;
+            /* Reset de altura de línea para evitar espacios fantasma */
+            margin-top: 1.5px;
+            /* Empuje óptico hacia abajo para centrar con el icono */
+            display: inline-block;
+            /* Necesario para que margin-top funcione bien */
         }
 
         .sidebar-link:hover {
@@ -197,28 +434,72 @@
         }
 
         .sidebar-link.active {
-            background: #f0fdf4;
-            /* Verde muy suave */
-            color: #10b981;
-            /* Primary Green */
+            background: #e2e8f0;
+            /* Slate 200: Sombreado más acentuado */
+            color: var(--secondary);
             font-weight: 700;
+        }
+
+        .sidebar-link i,
+        .sidebar-item-accordion i {
+            width: 20px;
+            /* Ancho fijo: Columna de Iconos */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        /* Botón Acordeón (Estilo Homologado a Link) */
+        .sidebar-item-accordion {
+            width: 100%;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            gap: 12px;
+            /* Mismo gap que sidebar-link */
+            padding: 8px 12px;
+            /* Mismo padding */
+            /* Mismo padding */
+            margin: 2px 0 2px 0;
+            font-size: var(--font-sm);
+            font-weight: 500;
+            color: #334155;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .sidebar-item-accordion:hover {
+            background: var(--slate-100);
+            color: var(--secondary);
         }
 
         /* Jerarquía de Línea Vertical (Items dentro de Acordeón) */
         .sidebar-accordion-content {
+            display: none;
+            /* Por defecto oculto (State Management) */
             border-left: 1px solid var(--slate-200);
-            margin-left: 26px;
-            /* Alineado con el chevron/texto del padre */
-            padding-left: 10px;
+            margin-left: 22px;
+            /* (12px padding + 10px mitad icono) */
+            padding-left: 14px;
             margin-bottom: 8px;
         }
 
+        .sidebar-accordion-content.is-open {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
         .sidebar-link.child-link {
-            height: 32px;
-            font-size: 12.5px;
+            min-height: 36px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            font-size: var(--font-sm);
             color: var(--slate-500);
-            border-radius: 4px;
-            /* Border radius más sutil para hijos */
+            border-radius: var(--radius-sm);
         }
 
         .sidebar-link.child-link.active {
@@ -229,29 +510,39 @@
 
         /* Estilo de Cabecera para N2 con hijos */
         .sidebar-n2-parent {
-            padding: 0.5rem 1rem 0.2rem 2.6rem;
-            font-size: 11px;
+            padding: var(--space-s) 0 var(--space-xs) 0;
+            /* Estandarizado: 8px top, 4px bottom */
+            font-size: var(--font-sm);
             font-weight: 800;
             color: var(--slate-400);
-            text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
         /* Data Displays: Jerarquía H1-H5 */
         .catalog-card {
             background: white;
-            border-radius: var(--radius);
+            border-radius: var(--radius-lg);
             border: 1px solid var(--slate-200);
-            padding: 2.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+            padding: var(--p-card);
+            box-shadow: var(--shadow-sm);
         }
 
-        .data-grid-container {
-            border-radius: 0;
-            /* Drive es más plano en los bordes de tabla */
-            border: none;
-            background: transparent;
-            margin-top: 1rem;
+        .data-grid-container,
+        .notes-container {
+            border-radius: var(--radius-md);
+            /* Unificado */
+            border: 1px solid #e0e0e0;
+            /* Unificado */
+            background: white;
+            margin-top: 0.5rem;
+            /* Pegado al título */
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .notes-container {
+            padding: 1rem;
+            /* Padding interno para notas */
         }
 
         .data-grid {
@@ -261,9 +552,9 @@
 
         .data-grid th {
             background: white;
-            padding: 10px 16px;
+            padding: var(--p-table-cell);
             text-align: left;
-            font-size: 13px;
+            font-size: var(--font-sm);
             font-weight: 500;
             color: #5f6368;
             /* Gris de Etiquetas Google */
@@ -273,10 +564,10 @@
         }
 
         .data-grid td {
-            padding: 12px 16px;
+            padding: var(--p-table-cell);
             border-bottom: 1px solid #c7c7c7;
             /* Línea de fila visible y definida */
-            font-size: 14px;
+            font-size: var(--font-sm);
             color: #202124;
             vertical-align: middle;
         }
@@ -286,8 +577,7 @@
         }
 
         .data-grid tr:hover td {
-            background-color: #f8f9fa;
-            /* Hover oficial Drive */
+            background-color: var(--slate-100);
             cursor: pointer;
         }
 
@@ -303,11 +593,281 @@
             color: #202124;
         }
 
+        /* BARRA DE PROGRESO SUPERIOR (Estilo YouTube/GitHub) */
+        .top-progress-bar {
+            position: absolute;
+            /* Cambiado a Absolute dentro del header */
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+            z-index: 200;
+            width: 0;
+            opacity: 0;
+            pointer-events: none;
+            box-shadow: 0 1px 4px rgba(16, 185, 129, 0.4);
+            /* Transición solo para opacidad y cierre */
+            transition: opacity 0.3s ease;
+        }
+
+
+        @keyframes progressLoading {
+            0% {
+                width: 0%;
+            }
+
+            10% {
+                width: 15%;
+            }
+
+            30% {
+                width: 45%;
+            }
+
+            60% {
+                width: 75%;
+            }
+
+            100% {
+                width: 95%;
+            }
+        }
+
+        .top-progress-bar.loading {
+            opacity: 1;
+            /* Animación de 2.5s que se queda en el 95% (forwards) */
+            animation: progressLoading 2.5s cubic-bezier(0.2, 0.5, 0.2, 1) forwards;
+        }
+
+        .top-progress-bar.complete {
+            width: 100% !important;
+            opacity: 0;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        /* 
+           MATH BUTTONS: Alineación Óptica Avanzada 
+           Referencia: Technology Checkmark Image
+        */
+        .btn-math {
+            --py: 0.65rem;
+            /* Padding vertical base (ajustable) */
+            --font-size: 0.875rem;
+            /* o var(--font-sm) */
+
+            /* Fórmula Mágica: Calcula el padding lateral basado en la geometría de la fuente */
+            /* 1lh = Line Height, 1cap = Cap Height (Altura de mayúscula) */
+            /* Fallback para 1cap si no soportado: 0.7em */
+            --px: calc(var(--py) + (1.5em - 0.7em) / 2);
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            /* Espacio entre texto e icono */
+
+            font-size: var(--font-size);
+            line-height: 1.5;
+            /* 1lh */
+            padding: var(--py) var(--px);
+
+            border-radius: 0.5rem;
+            /*Rounded-lg*/
+            font-weight: 600;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.01em;
+        }
+
+        /* Icono a la derecha: Ajuste matemático para equidistancia al borde */
+        /* Margen negativo para anular el exceso de px y dejar solo py de espacio visual */
+        .btn-math.icon-right i,
+        .btn-math.icon-right svg {
+            margin-right: calc(var(--py) - var(--px));
+            /* A veces el gap suma, así que ajustamos sutilmente */
+            margin-left: 0.25rem;
+        }
+
+        /* Icono a la izquierda */
+        .btn-math.icon-left i,
+        .btn-math.icon-left svg {
+            margin-left: calc(var(--py) - var(--px));
+            margin-right: 0.25rem;
+        }
+
+        /* Variantes de Color (Abstracción) */
+        /* Variantes de Color para Botones Matemáticos */
+        .btn-emerald {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-emerald:hover {
+            background-color: #059669;
+            /* emerald-600 */
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px -1px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-slate {
+            background-color: var(--slate-200);
+            color: var(--slate-600);
+        }
+
+        .btn-slate:hover {
+            background-color: #cbd5e1;
+            /* slate-300 */
+            color: var(--slate-800);
+        }
+
+        .btn-emerald-soft {
+            background-color: #d1fae5;
+            /* emerald-100 */
+            color: #065f46;
+            /* emerald-800 */
+        }
+
+        .btn-emerald-soft:hover {
+            background-color: #a7f3d0;
+            /* emerald-200 */
+        }
+
+        /* Botón Oscuro -> Verde (Estilo "Como Antes" + Math) */
+        .btn-dark-pill {
+            background-color: var(--secondary);
+            /* Dark default */
+            color: white;
+            border-radius: 9999px;
+            /* Pill shape (redondeado como antes) */
+            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.1);
+        }
+
+        .btn-dark-pill:hover {
+            background-color: var(--primary);
+            /* Green on hover */
+            box-shadow: 0 6px 12px -2px rgba(16, 185, 129, 0.3);
+            /* Green glow */
+            transform: translateY(-1px);
+        }
+
+        /* RENDERIZADOR SEMÁNTICO (Clases para JS) */
+
+
+        .section-container {
+            margin-top: 3rem;
+            /* Reduced from 5rem */
+        }
+
+        .section-title-l1 {
+            font-size: 1.75rem;
+            /* Mobile first: 28px */
+            font-weight: 900;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+            letter-spacing: -0.05em;
+        }
+
+        @media (min-width: 768px) {
+            .section-title-l1 {
+                font-size: 2.25rem;
+                /* Desktop: 36px */
+            }
+        }
+
+        .section-desc-l1 {
+            font-size: var(--font-sm);
+            color: #64748b;
+            font-weight: 500;
+            margin-left: 0;
+            padding-left: var(--align-offset);
+            /* 24px Exactos */
+            margin-bottom: 1.5rem;
+            /* Compactado de 2rem */
+            max-width: 90%;
+            /* Ampliado para aprovechar ventana */
+            line-height: 1.6;
+        }
+
+        .group-container {
+            margin-bottom: 1.5rem;
+            /* Compactado de 2rem */
+            margin-left: 0;
+            padding-left: var(--align-offset);
+            /* 24px Exactos */
+        }
+
+        .group-header {
+            margin-bottom: 0.75rem;
+            /* Compactado de 1rem */
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid var(--slate-100);
+            margin-right: 2rem;
+        }
+
+        .group-title {
+            font-size: 1.125rem;
+            /* 18px Estandarizado */
+            font-weight: 500;
+            /* No Bold */
+            color: var(--secondary);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Subtítulos Intermedios (Contextuales) - ESTILO LIMPIO */
+        .subtitulo-container {
+            margin-bottom: 1.5rem;
+            padding-left: var(--align-offset);
+            /* 24px Exactos */
+            margin-top: -0.5rem;
+        }
+
+        .subtitulo-title {
+            font-size: 1.125rem;
+            /* 18px Estandarizado */
+            font-weight: 500;
+            /* No Bold */
+            color: var(--secondary);
+            margin-bottom: 0.25rem;
+            letter-spacing: 0.05em;
+            /* Removed uppercase */
+            opacity: 0.9;
+        }
+
+        .subtitulo-desc {
+            font-size: var(--font-sm);
+            color: #64748b;
+            line-height: 1.6;
+            max-width: 90%;
+            /* Ampliado para aprovechar ventana */
+            font-weight: 500;
+        }
+
+        .l2-container {
+            margin-bottom: 2rem;
+            margin-top: 2rem;
+            /* Proximidad mejorada: Antes 4rem */
+            scroll-margin-top: 8rem;
+        }
+
+        .l2-title {
+            font-size: 1.875rem;
+            font-weight: 900;
+            color: var(--secondary);
+            margin-bottom: 0.25rem;
+            /* Pegado a su contenido */
+        }
+
         .distributor-card {
             background: linear-gradient(135deg, #065f46 0%, #10b981 100%);
             color: white;
             padding: 1.5rem;
-            border-radius: var(--radius);
+            border-radius: var(--radius-lg);
             margin-top: auto;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -346,7 +906,6 @@
                 font-weight: 800;
                 color: var(--slate-400);
                 font-size: 0.6rem;
-                text-transform: uppercase;
             }
 
             .data-grid td:first-child {
@@ -391,136 +950,437 @@
             display: none !important;
         }
 
+        /* Ajuste Dinámico para Sidebar cuando hay Banner */
+        body.has-banner .main-sidebar {
+            top: calc(var(--header-h) + 48px);
+            /* 80px + altura aprox banner */
+        }
+
+        @media (max-width: 1024px) {
+            body.has-banner .main-sidebar {
+                top: 0;
+                /* En móvil el sidebar es overlay completo */
+            }
+        }
+
         /* //#endregion */
+
+        /* //#region Componentes Estandarizados */
+        .search-container {
+            position: relative;
+            margin-bottom: var(--space-m);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: var(--space-s) var(--space-m) var(--space-s) 2.5rem;
+            background: var(--slate-100);
+            border: var(--border-width-std) solid var(--border-color-soft);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-sm);
+            font-weight: 500;
+            outline: none;
+            transition: all 0.2s;
+            color: var(--secondary);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+            background: white;
+        }
+
+        /* SEARCH DROPDOWN (Predictivo) */
+        .search-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-color-soft);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            margin-top: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 50;
+            display: none;
+        }
+
+        .search-dropdown:not(.hidden) {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--slate-50);
+            transition: background-color 0.2s;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background-color: var(--slate-50);
+        }
+
+        .search-highlight {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* COMPONENTES ATÓMICOS */
+        .user-greeting {
+            margin-left: var(--space-xl);
+            display: flex;
+            align-items: center;
+            gap: var(--space-s);
+            padding: var(--space-xs) var(--space-m);
+            background: var(--slate-50);
+            border-radius: var(--radius-full);
+            border: var(--border-width-std) solid var(--slate-100);
+        }
+
+        .user-greeting span {
+            font-size: var(--font-sm);
+            font-weight: 500;
+            color: var(--secondary);
+            letter-spacing: -0.01em;
+        }
+
+        .logout-btn {
+            color: var(--slate-400);
+            transition: color 0.2s;
+        }
+
+        .logout-btn:hover {
+            color: var(--secondary);
+        }
+
+        .category-divider {
+            height: 1px;
+            background: var(--border-color-soft);
+            margin-bottom: var(--space-s);
+            margin-left: calc(-1 * var(--p-sidebar));
+            width: var(--sidebar-w);
+        }
+
+        .contact-card {
+            background: white;
+            padding: 1.5rem;
+            /* Equivalent to p-6 */
+            border-radius: var(--radius-md);
+            border: 1px solid var(--slate-100);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            /* Ensure uniform height in grid */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card:hover {
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
+            /* Modern soft shadow */
+            transform: translateY(-4px);
+            border-color: var(--emerald-200);
+        }
+
+        /* Decorative top accent on hover */
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+
+        .contact-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .contact-card-icon {
+            width: 2.75rem;
+            height: 2.75rem;
+            background: var(--slate-50);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--slate-400);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .contact-card:hover .contact-card-icon {
+            background: var(--emerald-50);
+            color: var(--primary);
+        }
+
+        /* //#endregion */
+        /* YOUTUBE FACADE (Mejora de rendimiento) */
+        .youtube-facade {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            background-color: #000;
+            border-radius: inherit;
+            /* Heredar borde del contenedor */
+        }
+
+        .youtube-facade img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+
+        .youtube-facade:hover img {
+            opacity: 0.8;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 68px;
+            height: 48px;
+            background-color: rgba(33, 33, 33, 0.8);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .play-button::before {
+            content: "";
+            border-style: solid;
+            border-width: 10px 0 10px 18px;
+            border-color: transparent transparent transparent white;
+        }
+
+        .youtube-facade:hover .play-button {
+            background-color: #f00;
+            /* YouTube Red */
+        }
+
+        /* RENDERIZADOR DE LISTAS DINÁMICAS (PILLS) */
+        .special-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .list-pill {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: default;
+        }
+
+        .list-pill::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .list-pill:hover {
+            background: white;
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+        }
+
+        /* ESTILOS DE NOTAS INTELIGENTES (Smart Grid Notes) */
+        .note-text {
+            font-size: var(--font-sm);
+            color: #4b5563;
+            /* slate-600 */
+            line-height: 1.6;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-grid-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 8px 24px;
+            /* Gap vertical 8px, Horizontal 24px */
+            list-style: none;
+            padding: 0;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .note-grid-list li {
+            position: relative;
+            padding-left: 14px;
+            font-size: var(--font-xs);
+            /* 11px aprox según tokens, o hardcodeamos 12px si muy chico */
+            font-size: 12px;
+            color: #334155;
+            /* slate-700 */
+            font-weight: 500;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .note-grid-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            /* Verde */
+            font-weight: bold;
+            font-size: 1.2em;
+            line-height: 1;
+            top: 0px;
+        }
     </style>
 </head>
 
 <body>
-
-    <header class="main-header">
-        <div class="flex items-center h-full px-8 max-w-[1440px] mx-auto w-full">
-            <button onclick="UIHandlers.toggleSidebar()"
-                class="lg:hidden mr-4 p-2 text-slate-500 hover:bg-slate-100 rounded-xl transition-all">
-                <i data-lucide="menu"></i>
-            </button>
-            <a href="#" onclick="Navigation.goTo('catalog')"
-                class="flex items-center gap-4 transition-transform active:scale-95">
-                <img src="img/logo-mundo-homeopatico.webp" alt="Logo" class="h-10 w-auto"
-                    onerror="this.src='https://placehold.co/120x40?text=MH+LOGO'">
-                <h1 class="font-black text-xl tracking-tighter text-secondary ml-2">Mundo Homeopático</h1>
-            </a>
-
-            <!-- Saludo Dinámico (Feedback de Antigravity) -->
-            <div id="userGreeting"
-                class="hidden ml-8 flex items-center gap-3 px-4 py-1.5 bg-emerald-50 rounded-full border border-emerald-100">
-                <span id="greetingText"
-                    class="text-[10px] font-black text-emerald-700 uppercase tracking-widest"></span>
-                <button onclick="UIHandlers.logout()" class="text-emerald-300 hover:text-emerald-600"><i
-                        data-lucide="log-out" class="w-3 h-3"></i></button>
-            </div>
-
-            <div class="flex-grow"></div>
-
-            <button onclick="Navigation.toggle()" id="navToggleButton"
-                class="btn-base btn-primary shadow-xl uppercase tracking-widest">
-                <i data-lucide="map-pin" class="w-4 h-4"></i> <span id="navButtonText">Sedes y Contacto</span>
-            </button>
-        </div>
-    </header>
-
-    <div id="bannerWrapper" class="banner-wrapper hidden">
-        <div
-            class="max-w-[1440px] mx-auto px-8 py-3.5 flex items-center gap-4 text-amber-900 text-[10px] font-black uppercase tracking-widest animate-fade-in">
-            <i data-lucide="megaphone" class="w-4 h-4 flex-shrink-0 text-amber-500"></i>
-            <p id="bannerText" class="flex-grow text-center"></p>
-            <button onclick="UIHandlers.closeBanner()" class="p-2 hover:bg-amber-100 rounded-full transition-colors">
-                <i data-lucide="x" class="w-4 h-4"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- MODAL DE ACCESO (Recuperado) -->
-    <div id="passwordModal"
-        class="fixed inset-0 bg-secondary/80 backdrop-blur-sm z-[300] hidden flex items-center justify-center p-4 animate-fade-in">
-        <div class="bg-white rounded-[2rem] p-8 w-full max-w-sm shadow-2xl transform scale-100">
-            <div class="text-center mb-6">
-                <div
-                    class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="lock" class="w-8 h-8"></i>
-                </div>
-                <h3 class="text-xl font-black text-secondary">Acceso Profesional</h3>
-                <p class="text-xs text-slate-400 mt-2 font-medium">Ingrese su clave de distribuidor autorizado</p>
-            </div>
-
-            <input type="password" id="professionalPassword" placeholder="Contraseña"
-                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-center font-bold tracking-widest mb-4 focus:ring-4 focus:ring-emerald-500/20 outline-none transition-all"
-                onkeypress="if(event.key === 'Enter') UIHandlers.validateLogin()">
-
-            <div class="grid gap-3">
-                <button onclick="UIHandlers.validateLogin()"
-                    class="btn-base btn-primary w-full justify-center shadow-lg shadow-emerald-500/30">
-                    Ingresar
-                </button>
-                <button onclick="UIHandlers.closeModal()"
-                    class="text-xs font-bold text-slate-400 hover:text-slate-600 p-2 uppercase tracking-widest">
-                    Cancelar
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- //#region 3. ESTRUCTURA DE INTERFAZ (HTML) -->
 
     <div class="app-layout">
-        <!-- SIDEBAR ÚNICO SPA -->
-        <aside id="mainSidebar" class="main-sidebar">
+        <!-- HEADER GLOBAL FIXED -->
+        <header class="main-header">
+            <div class="header-content px-10 w-full flex justify-between items-center h-full">
+                <!-- IZQUIERDA: Identidad + Toggle -->
+                <div class="flex items-center gap-4">
+                    <!-- Logo Principal (Traído del Sidebar) -->
+                    <a href="#" onclick="Navigation.goTo('catalog')"
+                        class="flex items-center gap-3 transition-opacity hover:opacity-80">
+                        <img src="img/logo-mundo-homeopatico.webp" alt="Logo" class="h-10 w-auto"
+                            onerror="this.src='https://placehold.co/120x40?text=MH LOGO'">
+                        <h1 class="font-black text-xl tracking-tight text-secondary leading-none">Mundo<br>Homeopático
+                        </h1>
+                    </a>
+
+                    <!-- Toggle Móvil -->
+                    <button onclick="UIHandlers.toggleSidebar()" class="btn-mobile-toggle md:hidden ml-4">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
+
+                <!-- DERECHA: Navegación Superior -->
+                <div class="flex items-center gap-6">
+                    <!-- Saludo User -->
+                    <div id="userGreeting"
+                        class="hidden flex items-center gap-2 text-sm font-medium text-slate-600 animate-fade-in">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span id="greetingText"></span>
+                    </div>
+
+                    <!-- Botón Navegación (Math Optimized + Dark Pill) -->
+                    <button id="navToggleButton" onclick="Navigation.toggle()"
+                        class="btn-math btn-dark-pill icon-right">
+                        <span id="navButtonText">Contacto</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Barra de Progreso Global (Adherida al header) -->
+            <div id="topProgressBar" class="top-progress-bar"></div>
+        </header>
+
+        <!-- SIDEBAR FIXED -->
+        <aside id="mainSidebar" class="main-sidebar pb-10">
+
+
             <!-- VISTA: CATÁLOGO -->
             <div id="sidebar-catalog-view" class="flex flex-col h-full animate-fade-in">
-                <div class="flex-grow">
-                    <div class="mb-4">
-                        <div class="relative">
-                            <i data-lucide="search" class="absolute left-4 top-3.5 w-4 h-4 text-slate-300"></i>
-                            <input type="text" id="mainSearch" placeholder="¿Qué necesitas?"
-                                class="w-full pl-11 pr-4 py-3.5 bg-slate-100 rounded-2xl outline-none focus:ring-4 focus:ring-emerald-500/10 text-sm font-medium transition-all">
-                        </div>
+                <!-- Zona Superior: Buscador y Accesos -->
+                <div class="flex-shrink-0">
+                    <div class="search-container relative">
+                        <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-slate-400"></i>
+                        <input type="text" id="mainSearch" placeholder="Buscar..."
+                            class="search-input w-full pl-10 pr-4 py-3 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all shadow-sm hover:border-slate-400"
+                            autocomplete="off">
+                        <!-- Dropdown de Resultados Predictivos -->
+                        <div id="searchDropdown" class="search-dropdown hidden animate-fade-in"></div>
                     </div>
-                    <button onclick="document.getElementById('passwordModal').classList.remove('hidden')"
-                        class="w-full bg-emerald-50 text-emerald-700 p-4 rounded-xl font-black text-[10px] flex justify-center items-center gap-2 hover:bg-emerald-100 transition-all mb-4 tracking-widest border border-emerald-100 text-center leading-tight">
-                        <i data-lucide="key" class="w-4 h-4 flex-shrink-0"></i> <span>Acceso Distribuidores</span>
-                    </button>
-                    <!-- LÍNEA DIVISORIA ESTRATÉGICA (Separación Utilidad vs Contenido) -->
-                    <!-- LÍNEA DIVISORIA ESTRATÉGICA (Ancho Completo Absoluto) -->
-                    <div class="w-full bg-slate-100 mb-6 h-px"></div>
-
-                    <nav id="sidebar-menu" class="space-y-1"></nav>
                 </div>
+
+                <button onclick="UIHandlers.showPasswordModal()"
+                    class="btn-math btn-slate icon-left w-full justify-start mt-4 mb-4">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                    <span>Distribuidores</span>
+                </button>
+
+                <div class="category-divider flex-shrink-0"></div>
+
+                <!-- Zona de Navegación (Scrollable) -->
+                <nav id="sidebar-menu" class="space-y-1 flex-grow"></nav>
             </div>
 
             <!-- VISTA: CONTACTO (CONTEXTUAL) -->
-            <div id="sidebar-contact-view" class="flex flex-col h-full hidden animate-fade-in">
-                <div class="flex-grow px-1">
-                    <p class="sidebar-label-l1">Explorar Sedes</p>
-                    <nav class="space-y-1">
-                        <a href="#view-contact" onclick="UIHandlers.toggleSidebar()" class="sidebar-link active"><i
-                                data-lucide="building" class="w-4 h-4"></i> Sedes Principales</a>
-                        <a href="#distributorsSection" onclick="UIHandlers.toggleSidebar()" class="sidebar-link"><i
-                                data-lucide="truck" class="w-4 h-4"></i> Red de Distribuidores</a>
-                        <a href="#videoSection" onclick="UIHandlers.toggleSidebar()" class="sidebar-link"><i
-                                data-lucide="play-circle" class="w-4 h-4"></i> Calidad Farmacéutica</a>
-                    </nav>
-                    <div class="distributor-card mt-12 animate-fade-in shadow-lg">
-                        <h5 class="font-black text-xs tracking-widest mb-2">Se Distribuidor</h5>
-                        <p class="text-[10px] opacity-80 leading-relaxed mb-5 font-medium text-white/90">Únete a nuestra
-                            red nacional de farmacias autorizadas.</p>
-                        <a href="https://wa.me/573176680750" target="_blank"
-                            class="flex items-center justify-center gap-2 w-full py-3 bg-white text-emerald-600 rounded-xl font-black text-[10px] uppercase transition-transform active:scale-95 shadow-sm">
-                            <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp Directo
+            <div id="sidebar-contact-view" class="hidden flex-col h-full animate-fade-in">
+                <!-- CTA Card: Diseñada para ocupar el mismo espacio vertical que (Buscador + Botón Login) -->
+                <div class="flex-shrink-0 mb-6">
+                    <div class="distributor-promo-card p-5 bg-emerald-50/50 border border-emerald-100/60 rounded-xl">
+                        <h3 class="font-bold text-lg text-emerald-900 mb-1">Sé distribuidor</h3>
+                        <p class="text-xs text-emerald-700/80 mb-4 leading-relaxed">Únete a nuestra red de aliados
+                            certificados.</p>
+
+                        <!-- SLOT 2: Botón WhatsApp (Alineado) -->
+                        <a id="btn-whatsapp-sidebar" href="https://wa.me/573176680750" target="_blank"
+                            class="btn-math btn-emerald w-full justify-center shadow-sm">
+                            <i data-lucide="message-circle" class="w-4 h-4"></i>
+                            <span>WhatsApp</span>
                         </a>
                     </div>
                 </div>
+
+                <div class="category-divider"></div>
+
+                <!-- Menú de Navegación de Contacto -->
+                <nav class="space-y-1 flex-grow overflow-y-auto">
+                    <div class="sidebar-label-l1 mt-4">Nuestras sedes</div>
+                    <a href="#headquarters" class="sidebar-link group"
+                        onclick="document.querySelector('.bg-gradient-to-br')?.scrollIntoView({behavior:'smooth'})">
+                        <i data-lucide="map-pin"
+                            class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
+                        <span>Sedes principales</span>
+                    </a>
+                    <a href="#distributors" class="sidebar-link group"
+                        onclick="document.getElementById('distributors-grid')?.scrollIntoView({behavior:'smooth'})">
+                        <i data-lucide="store"
+                            class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
+                        <span>Distribuidores</span>
+                    </a>
+                </nav>
             </div>
 
-            <!-- Pie de Autoría -->
-            <div id="author-credit" class="sidebar-footer mt-12 pt-6 opacity-0 transition-opacity duration-1000">
-                <p class="text-[9px] font-black text-slate-300 uppercase tracking-[0.3em] text-center leading-loose">
+            <!-- Pie de Autoría (Común a ambas vistas) -->
+            <div id="author-credit"
+                class="sidebar-footer mt-auto pt-6 opacity-0 transition-opacity duration-1000 flex-shrink-0">
+                <p class="text-[9px] font-black text-slate-300 tracking-[0.3em] text-center leading-loose">
                     Desarrollado por<br>
                     <a id="author-link" href="#" target="_blank"
                         class="text-slate-400 hover:text-emerald-500 transition-colors font-bold border-b border-transparent hover:border-emerald-500"></a>
@@ -528,50 +1388,156 @@
             </div>
         </aside>
 
-        <!-- PANEL CENTRAL SPA -->
-        <main id="view-catalog" class="flex-grow p-8 lg:p-16 min-w-0">
-            <div class="mb-16 animate-fade-in">
-                <h2 class="text-6xl font-black tracking-tighter mb-3 text-secondary">Lista de Precios</h2>
-                <p class="text-slate-400 font-medium italic text-sm">Catálogo 2026</p>
-            </div>
-            <div id="tables-container" class="space-y-32">
-                <div class="h-64 bg-white rounded-[3rem] animate-pulse border border-slate-100 mb-10"></div>
-            </div>
-        </main>
-
-        <main id="view-contact" class="flex-grow p-8 lg:p-16 min-w-0 hidden">
-            <div class="mb-16 animate-fade-in">
-                <h2 class="text-6xl font-black tracking-tighter mb-3 text-secondary">Sedes y Atención</h2>
-                <p class="text-slate-400 font-medium italic text-sm">Presencia regional y garantía farmacéutica
-                    certificada.</p>
+        <!-- WRAPPER DE CONTENIDO (Offset por Header y Sidebar) -->
+        <div class="main-content-wrapper">
+            <!-- Barra de Progreso Global -->
+            <div id="bannerWrapper" class="banner-wrapper collapsed">
+                <div
+                    class="w-full px-10 py-3.5 flex items-center gap-4 text-amber-900 text-[10px] font-black tracking-widest animate-fade-in">
+                    <i data-lucide="megaphone" class="w-4 h-4 flex-shrink-0 text-amber-500"></i>
+                    <p id="bannerText" class="flex-grow text-center"></p>
+                    <button onclick="UIHandlers.closeBanner()"
+                        class="p-2 hover:bg-amber-100 rounded-full transition-colors">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
             </div>
 
-            <section id="videoSection" class="mb-24 scroll-mt-24">
-                <div id="videoContainer"
-                    class="aspect-video w-full rounded-[3rem] bg-slate-200 overflow-hidden shadow-2xl border-8 border-white animate-fade-in">
+            <!-- PANEL CENTRAL SPA -->
+            <!-- Fix Footer: Flex Column para empujar footer -->
+            <main id="view-catalog" class="flex-grow p-6 lg:p-10 min-w-0 flex flex-col">
+                <div class="mb-6 animate-fade-in">
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Catálogo de
+                        productos</h2>
+                    <p class="text-slate-400 font-medium text-sm">Catálogo 2026</p>
                 </div>
-            </section>
+                <!-- Contenedor crece para ocupar espacio -->
+                <div id="tables-container" class="space-y-32 flex-grow">
+                    <div class="h-64 bg-white rounded-[3rem] animate-pulse border border-slate-100 mb-10"></div>
+                </div>
+            </main>
 
-            <section id="distributorsSection" class="scroll-mt-24">
-                <h3 class="text-2xl font-black text-secondary mb-12 tracking-tight flex items-center gap-3">
-                    <i data-lucide="map-pin" class="text-primary"></i> Nuestros Distribuidores
-                </h3>
-                <div id="distributors-grid" class="grid md:grid-cols-2 gap-8">
-                    <!-- Dinámico -->
+            <main id="view-contact" class="hidden flex-grow p-6 lg:p-10 min-w-0 flex flex-col">
+                <div class="mb-6 animate-fade-in">
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Sedes y Contacto
+                    </h2>
+                    <p class="text-slate-400 font-medium text-sm">Red nacional de distribución</p>
                 </div>
-            </section>
 
-            <section id="faqSection" class="mt-32">
-                <h3 class="text-2xl font-black text-secondary mb-12 tracking-tight">Preguntas Frecuentes</h3>
-                <div id="faq-container" class="grid gap-4 max-w-2xl">
-                    <!-- Dinámico -->
+                <div class="flex-grow">
+                    <section id="videoSection" class="mb-16 scroll-mt-24">
+                        <div class="mb-6">
+                            <h3 class="text-2xl md:text-3xl font-black text-secondary tracking-tight mb-2">Excelencia en
+                                la
+                                elaboración
+                                homeopática</h3>
+                            <p class="section-desc-l1">Procesos secuenciales
+                                limpios y fórmulas innovadoras bajo estándares farmacéuticos internacionales.</p>
+                        </div>
+                        <div id="videoContainer"
+                            class="aspect-video w-full rounded-[2rem] bg-slate-200 overflow-hidden shadow-2xl border-4 border-white animate-fade-in">
+                            <!-- Aquí se inyectará el iframe si es necesario, o placeholder -->
+                            <div class="w-full h-full flex items-center justify-center text-slate-400 bg-slate-100">
+                                <i data-lucide="play" class="w-12 h-12 opacity-50"></i>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="distributorsSection" class="scroll-mt-24 mb-16">
+                        <h3 class="text-2xl font-black text-secondary mb-8 tracking-tight flex items-center gap-3">
+                            <i data-lucide="map-pin" class="text-primary"></i> Sedes principales
+                        </h3>
+                        <div id="distributors-grid" class="grid md:grid-cols-2 gap-6">
+                            <!-- Dinámico: RenderEngine llenará esto -->
+                        </div>
+                    </section>
+
+                    <section id="faqSection" class="mt-16 mb-16">
+                        <h3 class="text-2xl font-black text-secondary mb-8 tracking-tight">Preguntas frecuentes</h3>
+                        <div id="faq-container" class="grid gap-4 w-full">
+                            <!-- Dinámico: RenderEngine llenará esto -->
+                        </div>
+                    </section>
                 </div>
-            </section>
-        </main>
+            </main>
+
+            <!-- FOOTER GLOBAL UNIFICADO (Fuera del padding del main) -->
+            <footer class="mt-auto border-t border-slate-200 bg-white py-6 px-10">
+                <div class="w-full flex flex-col md:flex-row justify-between items-center gap-8">
+                    <!-- Bloque Izquierdo: Copyright -->
+                    <div class="flex items-center gap-4 text-slate-400">
+                        <img src="img/logo-mundo-homeopatico.webp" alt="Logo"
+                            class="h-8 opacity-40 grayscale hover:grayscale-0 transition-all cursor-pointer">
+                        <div class="text-left">
+                            <p class="text-[11px] font-bold tracking-tight">Mundo Homeopático © 2026</p>
+                            <p class="text-[10px] text-slate-400 hidden md:block">Precios sujetos a cambios.</p>
+                        </div>
+                    </div>
+
+                    <!-- Bloque Derecho: Redes -->
+                    <div class="flex justify-center gap-6">
+                        <a href="https://wa.me/573176680750" target="_blank" title="WhatsApp"
+                            class="text-slate-400 hover:text-emerald-500 transition-colors transform hover:scale-110">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://www.instagram.com/mundohomeopatico" target="_blank" title="Instagram"
+                            class="text-slate-400 hover:text-pink-500 transition-colors transform hover:scale-110">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://www.mhmundohomeopatico.com" target="_blank" title="Sitio Web"
+                            class="text-slate-400 hover:text-secondary transition-colors transform hover:scale-110">
+                            <i data-lucide="globe" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- //#endregion -->
+
+    <!-- //#region 4. LÓGICA DE NEGOCIO (JS) -->
+    <!-- MODAL DE ACCESO PROFESIONAL (Distribuidores) -->
+    <div id="passwordModal"
+        class="hidden fixed inset-0 z-[2000] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+        <div class="bg-white rounded-[2rem] p-10 max-w-md w-full shadow-2xl border border-slate-100 mx-4">
+            <div class="text-center mb-8">
+                <div
+                    class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="lock" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-black text-secondary tracking-tight">Acceso restringido</h3>
+                <p class="text-slate-400 text-sm font-medium mt-2">Ingrese su contraseña de distribuidor para ver
+                    precios de farmacia.</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="relative">
+                    <i data-lucide="key-round" class="absolute left-4 top-4 w-5 h-5 text-slate-300"></i>
+                    <input type="password" id="professionalPassword" placeholder="Contraseña..."
+                        class="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all font-medium"
+                        onkeyup="if(event.key==='Enter') UIHandlers.validateLogin()">
+                </div>
+
+                <div class="flex gap-3 pt-4">
+                    <button onclick="UIHandlers.closeModal()"
+                        class="flex-1 py-4 px-6 bg-slate-100 text-slate-600 font-bold rounded-2xl hover:bg-slate-200 transition-all">
+                        Cancelar
+                    </button>
+                    <button onclick="UIHandlers.validateLogin()"
+                        class="flex-[2] py-4 px-6 bg-emerald-500 text-white font-bold rounded-2xl shadow-lg shadow-emerald-500/20 hover:bg-emerald-600 hover:-translate-y-0.5 transition-all">
+                        Acceder
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- //#region LOGICA DE NEGOCIO (EL CORAZÓN) -->
+    <!-- Overlay Móvil -->
+    <div id="mobileOverlay" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[150] md:hidden"
+        onclick="UIHandlers.toggleSidebar()"></div>
+
     <script>
+
         const APP_CONFIG = {
             SHEETS: {
                 PRICES: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1411473006&single=true&output=csv',
@@ -584,7 +1550,27 @@
                 DIST: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=486540156&single=true&output=csv'
             },
             PROXY: 'https://corsproxy.io/?',
-            PROXY_BACKUP: 'https://corsproxy.io/?'
+            PROXY_BACKUP: 'https://corsproxy.io/?',
+            ICONS: {
+                CATEGORY: {
+                    "lineamh": "microscope",
+                    "homeopatia": "leaf",
+                    "oligoelementos": "atom",
+                    "exclusivos": "star",
+                    "farmacia": "flask-conical"
+                },
+                ITEM: {
+                    "esenciasflorales": "flower-2",
+                    "oligoelementos": "atom",
+                    "oligoelementosk7": "atom",
+                    "alimentosfuncionales": "apple",
+                    "cbd": "droplets",
+                    "aceitesesenciales": "sparkles",
+                    "oficinales": "flask-conical",
+                    "multipotenias": "layers",
+                    "magistrales": "scroll"
+                }
+            }
         };
 
         const STATE = { prices: [], nav: [], faq: [], dist: [], currentView: 'catalog', isPro: localStorage.getItem('mh_pro_v2') === 'true', userName: localStorage.getItem('mh_user_v2') || '' };
@@ -598,51 +1584,254 @@
                 .replace(/'/g, "&#039;");
         };
 
+        const Formatters = {
+            formatPhone(phone) {
+                if (!phone) return '';
+                const cleaned = String(phone).replace(/\D/g, '');
+                if (cleaned.length === 10) {
+                    return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)} ${cleaned.slice(6)}`;
+                }
+                return String(phone);
+            },
+            whatsapp(phone) {
+                if (!phone) return '';
+                const cleaned = String(phone).replace(/\D/g, '');
+                if (cleaned.startsWith('57')) return cleaned;
+                if (cleaned.length === 10) return '57' + cleaned;
+                return cleaned;
+            }
+        };
+
         const UIHandlers = {
+            isInteracting: false,
+            isManualScroll: false,
+            interactionTimeout: null,
+
             init() {
                 if (STATE.isPro) document.body.classList.add('professional-mode');
                 this.updateGreeting();
+
+                // Configurar Buscador con Debounce
                 const inp = document.getElementById('mainSearch');
                 if (inp) {
                     let searchTimeout;
                     inp.addEventListener('input', (e) => {
+                        const q = e.target.value.toLowerCase().trim();
                         clearTimeout(searchTimeout);
-                        searchTimeout = setTimeout(() => {
-                            const q = e.target.value.toLowerCase().trim();
-                            let hasResults = false;
+                        searchTimeout = setTimeout(() => this.search(q), 150);
+                    });
 
-                            document.querySelectorAll('.catalog-card').forEach(card => {
-                                // Sanitización implícita: Buscamos sobre textContent, no innerHTML
-                                const hasMatch = card.innerText.toLowerCase().includes(q);
-                                card.classList.toggle('hidden', !hasMatch);
+                    // Cerrar dropdown al hacer click fuera
+                    document.addEventListener('click', (e) => {
+                        if (!inp.parentElement.contains(e.target)) {
+                            this.toggleDropdown(false);
+                        }
+                    });
 
-                                if (hasMatch) {
-                                    hasResults = true;
-                                    card.querySelectorAll('tr').forEach(tr => {
-                                        if (tr.closest('thead')) return;
-                                        tr.style.display = tr.innerText.toLowerCase().includes(q) ? '' : 'none';
-                                    });
-                                }
-                            });
-
-                            // Manejo de "Sin Resultados"
-                            const noResultsMsg = document.getElementById('noResultsMessage');
-                            if (!hasResults && q !== '') {
-                                if (!noResultsMsg) {
-                                    const msg = document.createElement('div');
-                                    msg.id = 'noResultsMessage';
-                                    msg.className = 'text-center p-8 text-slate-400 font-medium animate-fade-in';
-                                    msg.innerHTML = `<i data-lucide="search-x" class="w-12 h-12 mx-auto mb-2 opacity-50"></i><p>No encontramos productos que coincidan con "${escapeHtml(q)}"</p>`;
-                                    document.getElementById('tables-container').appendChild(msg);
-                                    if (window.lucide) window.lucide.createIcons();
-                                }
-                            } else {
-                                noResultsMsg?.remove();
-                            }
-                        }, 150); // Debounce 150ms
+                    // Reactivar dropdown al hacer focus si hay texto
+                    inp.addEventListener('focus', () => {
+                        if (inp.value.trim().length > 0) this.search(inp.value.toLowerCase().trim());
                     });
                 }
             },
+
+            // BÚSQUEDA PRO ENFOCADA (Títulos y Productos SOLAMENTE)
+            search(q) {
+                if (q.length === 0) {
+                    // Restaurar todo
+                    document.querySelectorAll('.catalog-card').forEach(c => c.classList.remove('hidden'));
+                    document.querySelectorAll('tr').forEach(tr => tr.style.display = '');
+                    this.toggleDropdown(false);
+                    document.getElementById('noResultsMessage')?.remove();
+                    return;
+                }
+
+                const matches = [];
+                let hasResults = false;
+
+                // 1. Mapa de Coincidencias por Sección (Para mostrar/ocultar contenedores padre)
+                const visibleSections = new Set();
+
+                // 2. Búsqueda eficiente en los DATOS (STATE.prices)
+                // Esto es mucho más rápido y preciso que buscar en el DOM
+                STATE.prices.forEach(p => {
+                    if (!p) return;
+
+                    // Criterios de Búsqueda Estrictos (Solo Títulos y Producto)
+                    const textCriterias = [
+                        p.producto,
+                        p.nivel_1,
+                        p.nivel_2,
+                        p.nivel_3 // Títulos de categorías
+                    ];
+
+                    const isMatch = textCriterias.some(t => t && t.toLowerCase().includes(q));
+
+                    if (isMatch) {
+                        // Guardar para el Dropdown
+                        // Priorizamos mostrar el Producto si coincide, si no, la Categoría que coincidió
+                        let matchName = p.producto;
+                        let matchType = 'Producto';
+
+                        if (!p.producto.toLowerCase().includes(q)) {
+                            // Si no coincidió el producto, fue una categoría
+                            matchName = [p.nivel_3, p.nivel_2, p.nivel_1].find(t => t && t.toLowerCase().includes(q)) || matchName;
+                            matchType = 'Categoría';
+                        }
+
+                        // Añadir a resultados del dropdown (si no es duplicado conceptual)
+                        matches.push({
+                            id: p.id, // ID único del producto/fila
+                            name: matchName,
+                            section: p.nivel_3 || p.nivel_2 || 'Catálogo',
+                            type: matchType
+                        });
+
+                        // Marcar ID para visualización
+                        visibleSections.add(p.id);
+                    }
+                });
+
+                // 3. Actualizar DOM basado en resultados
+                // Primero ocultamos todo
+                document.querySelectorAll('.catalog-card').forEach(card => card.classList.add('hidden'));
+
+                // Luego mostramos lo relevante
+                if (visibleSections.size > 0) {
+                    hasResults = true;
+
+                    // Recorrer todas las tablas y filas para filtrar
+                    document.querySelectorAll('.catalog-card').forEach(card => {
+                        let cardHasVisibleRows = false;
+
+                        card.querySelectorAll('tbody tr').forEach(tr => {
+                            // Hack: Obtenemos el ID del producto inyectado en un atributo data (si existiera) o inferimos
+                            // Como no tenemos ID en el TR en este renderizado simple, buscamos por texto EXACTO del producto
+                            const prodNameEl = tr.querySelector('.product-name div:first-child');
+                            if (!prodNameEl) return;
+
+                            const prodName = prodNameEl.textContent.trim();
+                            // Buscar si este producto está en nuestra lista de matches (por nombre, ya que por ID es difícil sincronizar con el DOM actual)
+                            const isRowMatch = matches.some(m => m.name === prodName && m.type === 'Producto');
+
+                            // O si la categoría de la tarjeta coincidió (matches de tipo Categoría) -> mostrar todo el bloque
+                            const sectionTitle = card.querySelector('h5')?.textContent || '';
+                            const isSectionMatch = matches.some(m => m.type === 'Categoría' && sectionTitle.includes(m.name));
+
+                            if (isRowMatch || isSectionMatch) {
+                                tr.style.display = '';
+                                cardHasVisibleRows = true;
+                            } else {
+                                tr.style.display = 'none';
+                            }
+                        });
+
+                        if (cardHasVisibleRows) {
+                            card.classList.remove('hidden');
+                        }
+                    });
+                }
+
+                // 4. Mensaje "Sin Resultados"
+                const noResultsMsg = document.getElementById('noResultsMessage');
+                if (!hasResults) {
+                    if (!noResultsMsg) {
+                        const msg = document.createElement('div');
+                        msg.id = 'noResultsMessage';
+                        msg.className = 'text-center p-8 text-slate-400 font-medium animate-fade-in';
+                        msg.innerHTML = `<i data-lucide="search-x" class="w-12 h-12 mx-auto mb-2 opacity-50"></i><p>No encontramos coincidencias para "${escapeHtml(q)}"</p>`;
+                        document.getElementById('tables-container').appendChild(msg);
+                        if (window.lucide) window.lucide.createIcons();
+                    }
+                } else {
+                    noResultsMsg?.remove();
+                }
+
+                // 5. Actualizar Dropdown (Deduplicado)
+                // Filtramos duplicados para que el dropdown no muestre 50 veces "Arnica" si hay 50 presentaciones
+                const seen = new Set();
+                const uniqueMatches = [];
+                matches.forEach(m => {
+                    const key = m.name + m.section;
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        uniqueMatches.push(m);
+                    }
+                });
+
+                this.updateSearchDropdown(uniqueMatches, q);
+            },
+
+            // FUNCIONES DEL DROPDOWN PREDICTIVO
+            toggleDropdown(show) {
+                const d = document.getElementById('searchDropdown');
+                if (d) show ? d.classList.remove('hidden') : d.classList.add('hidden');
+            },
+
+            updateSearchDropdown(items, query) {
+                const dropdown = document.getElementById('searchDropdown');
+                if (!dropdown) return;
+
+                const limit = 6;
+                const shown = items.slice(0, limit);
+
+                if (shown.length === 0) {
+                    this.toggleDropdown(false);
+                    return;
+                }
+
+                let html = shown.map(item => {
+                    const regex = new RegExp(`(${query})`, 'gi');
+                    const highlightedName = item.name.replace(regex, '<span class="search-highlight">$1</span>');
+
+                    return `<div class="search-result-item" onclick="UIHandlers.scrollToElement(this)">
+                        <div class="text-[11px] font-bold text-slate-700 leading-tight pointer-events-none">${highlightedName}</div>
+                        <div class="hidden item-name">${item.name}</div>
+                    </div>`;
+                }).join('');
+
+                if (items.length > limit) {
+                    html += `<div class="p-2 text-[10px] text-center text-emerald-600 font-bold bg-emerald-50 cursor-default">
+                        +${items.length - limit} resultados más...
+                    </div>`;
+                }
+
+                dropdown.innerHTML = html;
+                this.toggleDropdown(true);
+            },
+
+            scrollToElement(sender) {
+                const targetName = sender.querySelector('.item-name')?.textContent;
+                if (!targetName) return;
+
+                // Buscar el elemento en el DOM visible
+                // Preferimos una fila de tabla (tbody tr) que contenga el nombre exacto
+                const rows = Array.from(document.querySelectorAll('tbody tr'));
+                const targetEl = rows.find(r => {
+                    const nameDiv = r.querySelector('.product-name div:first-child');
+                    return nameDiv && nameDiv.textContent === targetName;
+                });
+
+                if (targetEl) {
+                    this.toggleDropdown(false);
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Highlight visual
+                    targetEl.classList.add('bg-emerald-100');
+                    setTimeout(() => targetEl.classList.remove('bg-emerald-100'), 2000);
+
+                    if (window.innerWidth < 1024) this.toggleSidebar();
+                } else {
+                    // Fallback: Si es una categoría, buscar el título
+                    const headers = Array.from(document.querySelectorAll('h5'));
+                    const targetHeader = headers.find(h => h.textContent.includes(targetName));
+                    if (targetHeader) {
+                        this.toggleDropdown(false);
+                        targetHeader.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        if (window.innerWidth < 1024) this.toggleSidebar();
+                    }
+                }
+            },
+
             updateGreeting() {
                 const hour = new Date().getHours();
                 const greet = hour < 12 ? "Buenos días" : hour < 18 ? "Buenas tardes" : "Buenas noches";
@@ -657,21 +1846,47 @@
 
             // LÓGICA DE ACORDEÓN PURA Y SIMPLE
             toggleAccordion: (btn) => {
-                const targetNav = btn.nextElementSibling;
-                // Comportamiento "Exclusivo" Limpio: Cierra los demás, abre el seleccionado
-                document.querySelectorAll('#sidebar-menu nav').forEach(nav => {
-                    if (nav !== targetNav) nav.classList.add('hidden');
-                });
-                targetNav.classList.toggle('hidden');
+                // Búsqueda ROBUSTA del contenido del acordeón
+                const content = btn.parentElement.querySelector('.sidebar-accordion-content');
+                const isOpen = content.classList.contains('is-open');
 
-                // Refrescar iconos (si existen)
+                // Pausar Observer para evitar conflicto de scroll
+                UIHandlers.isInteracting = true;
+
+                // 1. Cerrar todos los acordeones (Comportamiento Exclusivo)
+                document.querySelectorAll('.sidebar-accordion-content').forEach(nav => {
+                    nav.classList.remove('is-open');
+                });
+                document.querySelectorAll('.sidebar-item-accordion').forEach(b => {
+                    b.querySelector('.lucide-chevron-down')?.classList.remove('rotate-180');
+                    b.classList.remove('bg-slate-100', 'text-secondary');
+                });
+
+                // 2. Si estaba cerrado, abrir SOLO este
+                if (!isOpen) {
+                    content.classList.add('is-open');
+                    btn.querySelector('.lucide-chevron-down')?.classList.add('rotate-180');
+                    btn.classList.add('bg-slate-100', 'text-secondary');
+
+                    // Scroll suave eliminado para evitar "pestañeo" visual
+                    // La interacción es más natural si el menú no salta bajo el puntero
+                }
+
+                // 3. Refrescar iconos
                 if (window.lucide) window.lucide.createIcons();
+
+                // 4. Reactivar Observer tras la transición
+                clearTimeout(UIHandlers.interactionTimeout);
+                UIHandlers.interactionTimeout = setTimeout(() => {
+                    UIHandlers.isInteracting = false;
+                }, 1000);
             },
 
             closeBanner: () => {
                 const wrapper = document.getElementById('bannerWrapper');
-                wrapper.classList.add('collapsed');
-                setTimeout(() => wrapper.remove(), 200);
+                if (wrapper) wrapper.classList.add('collapsed');
+                localStorage.setItem('mh_banner_closed', 'true');
+                document.body.classList.remove('has-banner');
             },
             showPasswordModal: () => document.getElementById('passwordModal').classList.remove('hidden'),
             closeModal: () => document.getElementById('passwordModal').classList.add('hidden'),
@@ -679,19 +1894,43 @@
                 const passInput = document.getElementById('professionalPassword');
                 const pass = passInput.value.trim();
 
-                // Feedback de carga en el botón
+                // Feedback de carga
                 const btn = passInput.parentElement.querySelector('button');
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '<span class="animate-pulse">Verificando...</span>';
 
                 try {
-                    const auth = await DataService.fetchCSV(APP_CONFIG.SHEETS.AUTH);
+                    // ESTRATEGIA HÍBRIDA: Memoria (Rápida) -> Red (Fallback)
+                    let auth = STATE.auth;
 
-                    // Búsqueda flexible en columnas probables (por si el header cambia en el Sheet)
+                    // Si por alguna razón no cargó al inicio, intentamos cargarla ahora
+                    if (!auth || auth.length === 0) {
+                        try {
+                            auth = await DataService.fetchCSV(APP_CONFIG.SHEETS.AUTH);
+                            STATE.auth = auth; // Guardar para futuro
+                        } catch (err) { console.warn("Fallo carga auth on-demand", err); }
+                    }
+
+                    // ESCENARIO 1: Modo Offline / Bloqueo Local / Base Vacía
+                    if (!auth || auth.length === 0) {
+                        console.warn("⚠️ Base de datos de usuarios no disponible. Usando mecanismo offline.");
+
+                        if (pass === 'MH2026') {
+                            localStorage.setItem('mh_pro_v2', 'true');
+                            localStorage.setItem('mh_user_v2', 'Administrador Offline');
+                            location.reload();
+                        } else {
+                            alert("MODO OFFLINE: Conexión limitada. Por favor use la clave maestra o recargue la página cuando tenga mejor señal.");
+                            btn.innerHTML = originalText;
+                        }
+                        return;
+                    }
+
+                    // ESCENARIO 2: Validación en Memoria (Instantánea)
+                    // Búsqueda insensible a mayúsculas/minúsculas
                     const user = auth.find(r => {
                         const p = (r.password || r.clave || r.contrasena || r.contraseña || "").toString().trim();
-                        // Comparación estricta pero insensible a espacios
-                        return p === pass;
+                        return p.toLowerCase() === pass.toLowerCase();
                     });
 
                     if (user || pass === 'MH2026') {
@@ -699,22 +1938,19 @@
                         localStorage.setItem('mh_user_v2', user?.nombre || user?.usuario || 'Administrador');
                         location.reload();
                     } else {
-                        alert("Contraseña incorrecta");
-                        btn.innerHTML = originalText;
-                        passInput.value = "";
-                        passInput.focus();
+                        // Pequeño delay artificial para deterred fuerza bruta y dar peso a la UI
+                        setTimeout(() => {
+                            alert("La contraseña ingresada no es válida.");
+                            btn.innerHTML = originalText;
+                            passInput.value = "";
+                            passInput.focus();
+                        }, 500);
                     }
+
                 } catch (e) {
-                    console.error("Error Auth:", e);
-                    // Fallback: Si falla internet pero la clave maestra es correcta, entra
-                    if (pass === 'MH2026') {
-                        localStorage.setItem('mh_pro_v2', 'true');
-                        localStorage.setItem('mh_user_v2', 'Administrador');
-                        location.reload();
-                    } else {
-                        alert("Error de conexión al verificar credenciales");
-                        btn.innerHTML = originalText;
-                    }
+                    console.error("Error Auth Crítico:", e);
+                    alert("Error verificando credenciales. Intente nuevamente.");
+                    btn.innerHTML = originalText;
                 }
             },
             logout: () => { localStorage.clear(); location.reload(); },
@@ -730,13 +1966,26 @@
 
                         // Scroll directo sin complicaciones
                         const targetId = `sec-${tid}`;
+                        // Búsqueda EXACTA por ID. Eliminamos fallback 'fuzzy' para evitar conflictos de nombres parecidos.
                         let target = document.getElementById(targetId);
-                        if (!target) target = document.querySelector(`section[id*="${tid}"]`); // Fallback mínimo necesario
 
                         if (target) {
-                            // Ajuste para el header fijo
-                            const offsetPosition = target.getBoundingClientRect().top + window.pageYOffset - 80;
-                            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                            // Ajuste Dinámico para el header fijo
+                            const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 80;
+                            const elementPosition = target.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerH - 20; // 20px extra de aire
+
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: "smooth"
+                            });
+
+                            // FEEDBACK VISUAL: Resaltar la sección destino
+                            // Esto confirma al usuario que "Especiales" o "Cuidado Capilar" ha sido localizado
+                            target.classList.add('bg-emerald-50/50', 'transition-colors', 'duration-500');
+                            setTimeout(() => {
+                                target.classList.remove('bg-emerald-50/50');
+                            }, 1500);
                         }
 
                         // UX Básico: Marcar activo inmediatamente
@@ -749,152 +1998,211 @@
                 });
             },
 
-            initObserver() {
-                // OBSERVER COMPLETAMENTE PASIVO (Solo visualización)
-                // No toca el DOM ni abre acordeones. Solo dice "Estás aquí".
-                const obs = new IntersectionObserver((entries) => {
-                    entries.forEach(e => {
-                        if (e.isIntersecting) {
-                            // Limpiar estado activo anterior
-                            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            // FAQ ACORDEÓN EXCLUSIVO (Lógica migrada de proyecto modular)
+            toggleFaq(button) {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('[data-lucide="chevron-down"]');
+                const isHidden = content.classList.contains('hidden');
 
-                            // Activar el link correspondiente a la sección visible
-                            const tid = e.target.id.replace('sec-', '');
-                            const link = document.querySelector(`.sidebar-link[data-tid="${tid}"]`);
-                            if (link) link.classList.add('active');
-                        }
-                    });
-                }, { rootMargin: '-20% 0px -60% 0px' }); // Zona de detección central
+                // 1. Cerrar TODOS los items primero
+                document.querySelectorAll('.faq-answer-container').forEach(c => c.classList.add('hidden'));
+                document.querySelectorAll('.faq-trigger [data-lucide="chevron-down"]').forEach(i => i.style.transform = 'rotate(0deg)');
+                document.querySelectorAll('.faq-trigger').forEach(b => b.setAttribute('aria-expanded', 'false'));
 
-                document.querySelectorAll('section[id]').forEach(s => obs.observe(s));
-            }
+                // 2. Abrir SOLO el seleccionado si estaba cerrado
+                if (isHidden) {
+                    content.classList.remove('hidden');
+                    if (icon) icon.style.transform = 'rotate(180deg)';
+                    button.setAttribute('aria-expanded', 'true');
+                }
+            },
+
+            // CONTROL DE BARRA DE CARGA
+            showLoading(active) {
+                const bar = document.getElementById('topProgressBar');
+                if (!bar) return;
+
+                if (active) {
+                    bar.classList.remove('complete');
+                    // Forzar reflow para reiniciar la animación si se llama seguido
+                    void bar.offsetWidth;
+                    bar.classList.add('loading');
+                } else {
+                    bar.classList.remove('loading');
+                    bar.classList.add('complete');
+
+                    // Resetear después de la animación de desaparición
+                    setTimeout(() => {
+                        bar.classList.remove('complete');
+                        bar.style.width = '0';
+                    }, 500);
+                }
+            },
+
+            // CARGA DIFERIDA DE VIDEO (Click-to-Load)
+            loadVideo(btn, videoId) {
+                const container = btn.closest('.youtube-facade');
+                if (!container) return;
+
+                // Reemplazar fachada con iframe real
+                container.innerHTML = `<iframe class="w-full h-full" 
+                    src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
+                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen></iframe>`;
+            },
+
         };
 
         const Navigation = {
-            toggle() { this.goTo(STATE.currentView === 'catalog' ? 'contact' : 'catalog'); },
-            goTo(view) {
-                STATE.currentView = view;
-                document.getElementById('view-catalog').classList.toggle('hidden', view !== 'catalog');
-                document.getElementById('view-contact').classList.toggle('hidden', view !== 'contact');
-                document.getElementById('sidebar-catalog-view').classList.toggle('hidden', view !== 'catalog');
-                document.getElementById('sidebar-contact-view').classList.toggle('hidden', view !== 'contact');
-                const btnText = document.getElementById('navButtonText');
-                const btnIcon = document.querySelector('#navToggleButton i');
-                if (view === 'contact') {
-                    btnText.textContent = 'Ver Catálogo';
-                    btnIcon.setAttribute('data-lucide', 'list');
+            toggle() {
+                // Lógica de Toggle simplificada
+                if (STATE.currentView === 'catalog') this.goTo('contact');
+                else this.goTo('catalog');
+            },
+            goTo(viewId) {
+                // Actualizar Estado
+                STATE.currentView = viewId;
+
+                // Referencias DOM
+                const views = {
+                    catalog: document.getElementById('view-catalog'),
+                    contact: document.getElementById('view-contact')
+                };
+                const sidebars = {
+                    catalog: document.getElementById('sidebar-catalog-view'),
+                    contact: document.getElementById('sidebar-contact-view')
+                };
+                const btn = document.getElementById('navToggleButton');
+
+                // Hard-Switch de Vistas
+                // Cambiar visibilidad de vistas y sidebars
+                if (viewId === 'contact') {
+                    views.catalog.classList.add('hidden');
+                    views.contact.classList.remove('hidden');
+                    sidebars.catalog.classList.add('hidden');
+                    sidebars.contact.classList.remove('hidden');
                 } else {
-                    btnText.textContent = 'Sedes y Contacto';
-                    btnIcon.setAttribute('data-lucide', 'map-pin');
+                    views.contact.classList.add('hidden');
+                    views.catalog.classList.remove('hidden');
+                    sidebars.contact.classList.add('hidden');
+                    sidebars.catalog.classList.remove('hidden');
                 }
+
+                // Actualizar Botón (Solo texto para evitar saltos)
+                const navButtonText = document.getElementById('navButtonText');
+                if (navButtonText) {
+                    navButtonText.textContent = (viewId === 'contact') ? 'Catálogo' : 'Contacto';
+                }
+
+                // Actualizar ícono si fuera necesario (aquí es el mismo, pero lo mantenemos robusto)
                 if (window.lucide) window.lucide.createIcons();
+
+                // Refrescar iconos tras inyectar nuevo HTML
+                if (window.lucide) window.lucide.createIcons();
+
+                document.getElementById('mainSidebar').classList.remove('open');
+                document.getElementById('mobileOverlay').classList.add('hidden');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         };
 
         const DataService = {
+            // Lista de Proxies para Failover (Rotación)
+            proxies: [
+                url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+                url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+                url => `https://thingproxy.freeboard.io/fetch/${url}`
+            ],
+
             async fetchCSV(url) {
-                try {
-                    // RETRY LOGIC (3 intentos)
-                    for (let i = 0; i < 3; i++) {
-                        try {
-                            const controller = new AbortController();
-                            const id = setTimeout(() => controller.abort(), 8000);
-                            const resp = await fetch(APP_CONFIG.PROXY + encodeURIComponent(url), { signal: controller.signal });
-                            clearTimeout(id);
-                            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-                            const text = await resp.text();
-                            return this.parseCSV(text);
-                        } catch (e) {
-                            console.warn(`Intento ${i + 1} fallido`, e);
-                            if (i === 2) {
-                                // Backup Proxy
-                                const resp = await fetch(APP_CONFIG.PROXY_BACKUP + encodeURIComponent(url));
-                                const text = await resp.text();
-                                return this.parseCSV(text);
-                            }
+                // Estrategia: Sequential Failover con Timeout
+                for (let i = 0; i < this.proxies.length; i++) {
+                    const proxyFn = this.proxies[i];
+                    const fetchUrl = proxyFn(url);
+
+                    try {
+                        console.log(`📡 Conectando vía Proxy ${i + 1}...`);
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s Timeout generoso
+
+                        const response = await fetch(fetchUrl, { signal: controller.signal });
+                        clearTimeout(timeoutId);
+
+                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                        const text = await response.text();
+
+                        // Validación básica (evitar páginas de error de proxy disfrazadas de 200 OK)
+                        if (!text || text.length < 50 || text.includes('<!DOCTYPE html>')) {
+                            throw new Error('Respuesta inválida (posible error de proxy)');
+                        }
+
+                        return this.parseCSV(text);
+
+                    } catch (error) {
+                        console.warn(`⚠️ Falló Proxy ${i + 1}:`, error.message);
+                        if (i === this.proxies.length - 1) {
+                            console.error('❌ Todos los proxies fallaron. Verifica conexión.');
+                            return [];
                         }
                     }
-                } catch (e) {
-                    console.error("Fallo Total", e);
-                    // No alertar, fallar silenciosamente o devolver vacío para no bloquear UI
-                    return [];
                 }
+                return [];
             },
-            parseCSV(text) {
-                if (!text || !text.trim()) return [];
 
-                // DETECCIÓN DINÁMICA DE SEPARADOR (Coma, Punto y Coma o Tabulador)
-                const firstLine = text.split('\n')[0];
-                let sep = ',';
-                if (firstLine.includes('\t')) sep = '\t';
-                else if (firstLine.includes(';')) sep = ';';
+            parseCSV(str) {
+                const arr = [];
+                let quote = false;
+                let col = 0, row = 0;
+                let c = 0;
 
-                const rows = [];
-                let currentRow = [];
-                let currentVal = '';
-                let insideQuotes = false;
+                // Pre-allocating rows
+                arr[row] = [];
+                arr[row][col] = "";
 
-                for (let i = 0; i < text.length; i++) {
-                    const char = text[i];
-                    const nextChar = text[i + 1];
+                for (c = 0; c < str.length; c++) {
+                    let cc = str[c], nc = str[c + 1];
+                    arr[row] = arr[row] || [];
+                    arr[row][col] = arr[row][col] || "";
 
-                    if (char === '"') {
-                        if (insideQuotes && nextChar === '"') {
-                            currentVal += '"';
-                            i++;
-                        } else {
-                            insideQuotes = !insideQuotes;
-                        }
-                    } else if (char === sep && !insideQuotes) {
-                        currentRow.push(currentVal);
-                        currentVal = '';
-                    } else if ((char === '\r' || char === '\n') && !insideQuotes) {
-                        if (char === '\r' && nextChar === '\n') i++;
-                        // Solo pushear si hay datos o si no es una línea vacía al final
-                        if (currentVal !== '' || currentRow.length > 0) {
-                            currentRow.push(currentVal);
-                            rows.push(currentRow);
-                        }
-                        currentRow = [];
-                        currentVal = '';
-                    } else {
-                        currentVal += char;
-                    }
-                }
-                if (currentVal !== '' || currentRow.length > 0) {
-                    currentRow.push(currentVal);
-                    rows.push(currentRow);
+                    if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+                    if (cc == '"') { quote = !quote; continue; }
+                    if (cc == ',' && !quote) { ++col; continue; }
+                    if (cc == '\r' && !quote && nc == '\n') { ++row; col = 0; ++c; continue; }
+                    if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+                    if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+                    arr[row][col] += cc;
                 }
 
-                if (rows.length < 2) return [];
-
-                // NORMALIZACIÓN DE CABECERAS: tabla_id, tablas_id -> tabla_id
-                const headers = rows[0].map(h => {
-                    let cleaned = h.trim().toLowerCase().replace(/^"|"$/g, '');
-                    if (cleaned === 'tablas_id') return 'tabla_id';
-                    return cleaned;
+                // Normalización de cabeceras
+                const headers = arr[0].map(h => {
+                    let clean = h.trim().toLowerCase().replace(/\s+/g, '_').replace(/^"|"$/g, '');
+                    if (clean === 'tablas_id') return 'tabla_id'; // Compatibilidad
+                    return clean;
                 });
 
-                return rows.slice(1).map(values => {
-                    const row = {};
+                return arr.slice(1).filter(r => r.length > 1).map(row => {
+                    const obj = {};
                     headers.forEach((h, i) => {
-                        let val = values[i] || "";
+                        let val = row[i] || "";
+                        // Limpieza extra de comillas envolventes si parser falló un poco
                         if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
-                        row[h] = val.trim();
+                        obj[h] = val.trim();
                     });
-                    return row;
+                    return obj;
                 });
             },
+
             normalizeYT(url) {
                 if (!url) return '';
                 const id = url.match(/(?:v=|\/embed\/|youtu\.be\/|\/v\/|\/e\/|watch\?v%3D)([^#\&\?]*).*/);
                 return id ? `https://www.youtube.com/embed/${id[1]}` : url;
             },
+
             slugify(text) {
                 if (!text) return "unknown";
-                return text
-                    .toString()
+                return text.toString()
+                    .replace(/\u00FC|\u00DC/g, 'u') // Manual 'ü' replacement for safety
                     .normalize("NFD")
                     .replace(/[\u0300-\u036f]/g, "")
                     .toLowerCase()
@@ -908,6 +2216,7 @@
             renderAll() {
                 this.renderCatalog();
                 this.renderContactItems();
+                this.renderFAQ();
                 if (window.lucide) window.lucide.createIcons();
             },
             renderCatalog() {
@@ -916,230 +2225,281 @@
                     const panel = document.getElementById('tables-container');
                     if (!sidebar || !panel) return;
 
-                    // Estructura de Árbol Preservando Orden
-                    // Usamos Maps para mantener el orden de inserción garantizado
-                    const tree = new Map();
-
-                    STATE.nav.forEach(row => {
-                        const l1 = (row.nivel_1 || "").trim();
-                        if (!l1) return;
-
-                        if (!tree.has(l1)) tree.set(l1, { meta: row, agps: new Map() });
-                        const l1Node = tree.get(l1);
-
-                        const agp = (row.agrupador || "").trim(); // Clave vacía es válida
-                        if (!l1Node.agps.has(agp)) l1Node.agps.set(agp, { meta: row, n2s: new Map() });
-                        const agpNode = l1Node.agps.get(agp);
-
-                        const l2 = (row.nivel_2 || "").trim();
-                        if (!agpNode.n2s.has(l2)) agpNode.n2s.set(l2, { meta: row, items: [] });
-                        const l2Node = agpNode.n2s.get(l2);
-
-                        l2Node.items.push(row);
-                    });
-
-                    let sHtml = ''; let pHtml = '';
-
-                    // RENDERIZADO DEL ÁRBOL
-                    tree.forEach((l1Data, l1Nav) => {
-                        // MAPEO DE ICONOS POR CATEGORÍA
-                        const icons = {
-                            "Linea MH": "microscope",
-                            "Homeopatia": "leaf",
-                            "Oligoelementos": "atom",
-                            "Exclusivos": "star",
-                            "Farmacia": "flask-conical"
-                        };
-                        const iconName = icons[DataService.slugify(l1Nav).replace(/-/g, '')] || "box";
-
-                        // SIDEBAR NIVEL 1: Estilo Drive/Figma
-                        sHtml += `<div class="sidebar-label-l1 mt-6">
-                            <span>${l1Nav}</span>
-                        </div>`;
-
-                        // SUBTÍTULOS CONTEXTUALES DINÁMICOS
-                        // Variable para rasterar el último subtítulo impreso
-                        let lastSubtitulo = "";
-
-                        // Verificar subtítulo inicial del bloque
-                        const firstSub = Array.from(l1Data.agps.values())[0]?.meta?.subtitulo;
-                        if (firstSub && firstSub !== 'undefined') {
-                            sHtml += `<div class="mt-2 mb-2 pl-4 text-[10px] font-black tracking-widest text-slate-400 opacity-80">${firstSub}</div>`;
-                            lastSubtitulo = firstSub;
+                    // 1. CAPTURA DE ESTADO PREVIO (Persistencia Acordeones)
+                    const openGroups = new Set();
+                    document.querySelectorAll('.sidebar-item-accordion').forEach(btn => {
+                        if (btn.querySelector('.rotate-180') || btn.getAttribute('aria-expanded') === 'true') {
+                            const label = btn.querySelector('span')?.textContent.trim();
+                            if (label) openGroups.add(label);
                         }
-
-                        pHtml += `<div class="mt-20">
-                            <!-- Título N1 Largo (Columna E) -->
-                            <h2 class="text-4xl font-black text-secondary border-l-8 border-primary pl-6 mb-2 tracking-tighter">${l1Data.meta.nivel_1_titulo || l1Nav}</h2>
-                            <p class="text-sm text-slate-400 font-medium ml-10 mb-16">${l1Data.meta.nivel_1_descripcion || ''}</p>`;
-
-                        // Iterar Agrupadores
-                        l1Data.agps.forEach((agpData, agpNav) => {
-
-                            // Verificar si este agrupador tiene un nuevo subtítulo que mostrar
-                            const currentSub = agpData.meta.subtitulo;
-                            if (currentSub && currentSub !== 'undefined' && currentSub !== lastSubtitulo) {
-                                sHtml += `<div class="mt-6 mb-2 pl-4 text-[10px] font-black tracking-widest text-slate-400 opacity-80">${currentSub}</div>`;
-                                lastSubtitulo = currentSub;
-                            }
-
-                            pHtml += `<div class="mb-20 ml-10">`;
-
-                            // Si hay agrupador (ej: Línea MH)
-                            if (agpNav) {
-                                pHtml += `<!-- AGRUPADOR -->
-                                <div class="mb-8 pb-2 border-b border-slate-100">
-                                    <h3 class="text-xl font-bold text-emerald-600 mb-1 flex items-center gap-2">${agpData.meta.agrupador_titulo || agpNav}</h3>
-                                    <p class="text-xs text-slate-500 font-medium max-w-3xl">${agpData.meta.agrupador_descripcion || ''}</p>
-                                </div>`;
-
-                                // SIDEBAR AGRUPADOR (Botón Acordeón)
-                                sHtml += `<div class="mb-1">
-                                    <button class="w-full flex justify-start items-center gap-2 px-4 py-2 text-xs font-bold text-slate-800 hover:bg-slate-50 rounded-lg transition-all group" onclick="UIHandlers.toggleAccordion(this)">
-                                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-300 group-hover:text-primary transition-colors"></i>
-                                        <span class="text-left tracking-wide">${agpNav}</span>
-                                    </button>
-                                    <nav class="hidden mt-1 sidebar-accordion-content space-y-1">`; // Aquí aplicamos la clase de la línea
-                            } else {
-                                sHtml += `<div class="mb-1 space-y-1 mt-2">`;
-                            }
-
-                            // Iterar Nivel 2 (Items/Links)
-                            agpData.n2s.forEach((l2Data, l2Nav) => {
-                                // Determinamos si este Nivel 2 es el destino final (no tiene hijos N3)
-                                const hasN3 = l2Data.items.some(m => !!m.nivel_3);
-                                const l2Tid = DataService.slugify((agpNav || l1Nav) + "-" + l2Nav);
-
-                                // Si NO tiene hijos N3, este div recibe el ID para que el título sea visible al navegar
-                                const wrapperId = !hasN3 ? `id="sec-${l2Tid}"` : "";
-
-                                pHtml += `<div class="mb-24 scroll-mt-32" ${wrapperId}>`;
-
-                                if (l2Nav) {
-                                    const displayTitle = l2Data.meta.nivel_2_titulo || l2Nav;
-                                    pHtml += `<h4 class="text-3xl font-black text-secondary mb-3">${displayTitle}</h4>
-                                    <p class="text-sm text-slate-400 font-medium mb-8">${l2Data.meta.nivel_2_descripcion || ''}</p>`;
-                                }
-
-                                if (hasN3 && l2Nav) {
-                                    sHtml += `<div class="sidebar-n2-parent">${l2Nav}</div>`;
-                                    sHtml += `<div class="sidebar-n3-group">`;
-                                }
-
-                                // AGRUPACIÓN POR TID
-                                const groupedByTid = new Map();
-                                l2Data.items.forEach(meta => {
-                                    const labelShort = meta.nivel_3 || meta.nivel_2 || "unknown";
-                                    const uniqueKey = (agpNav || l1Nav) + "-" + labelShort;
-                                    const tid = DataService.slugify(uniqueKey);
-
-                                    // DEBUG: Rastrear ID de Ungüentos
-                                    if (labelShort.toLowerCase().includes('ung')) {
-                                        console.log('📌 Ungüentos ID Generado:', tid);
-                                    }
-
-                                    if (!groupedByTid.has(tid)) groupedByTid.set(tid, { meta, allRows: [] });
-                                    groupedByTid.get(tid).allRows.push(meta);
-                                });
-
-                                groupedByTid.forEach((group, tid) => {
-                                    const meta = group.meta;
-                                    const labelShort = meta.nivel_3 || meta.nivel_2 || "unknown";
-                                    // LÓGICA DE ICONOS SIDEBAR 2026:
-                                    // Si estamos DENTRO de un agrupador (agpNav existe), es un item hijo -> Texto Limpio.
-                                    // Si NO hay agrupador (agpNav vacío), es un item principal independiente -> Con Icono.
-
-                                    if (agpNav) {
-                                        // HIJO DE AGRUPADOR: Texto limpio sin puntos ni iconos
-                                        sHtml += `<a href="#sec-${tid}" data-tid="${tid}" class="sidebar-link child-link">${labelShort}</a>`;
-                                    } else {
-                                        // ITEM INDEPENDIENTE: Con Icono Temático
-                                        const n2Icons = {
-                                            "esenciasflorales": "flower-2",
-                                            "oligoelementos": "atom",
-                                            "oligoelementosk7": "atom",
-                                            "alimentosfuncionales": "apple",
-                                            "cbd": "droplets",
-                                            "aceitesesenciales": "sparkles",
-                                            "oficinales": "flask-conical", // Agregado para Oficinales
-                                            "multipotenias": "layers",    // Agregado para Multipotencias
-                                            "magistrales": "scroll"       // Agregado para Magistrales
-                                        };
-                                        const iconSlug = DataService.slugify(labelShort).replace(/-/g, '');
-                                        // Búsqueda aproximada para atrapar singulares/plurales
-                                        const matchedKey = Object.keys(n2Icons).find(k => iconSlug.includes(k) || k.includes(iconSlug));
-                                        const iconName = n2Icons[matchedKey] || "circle"; // Fallback a círculo si no hay icono específico
-
-                                        const iconHtml = `<i data-lucide="${iconName}" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>`;
-
-                                        sHtml += `<a href="#sec-${tid}" data-tid="${tid}" class="sidebar-link group">
-                                            ${iconHtml}
-                                            <span>${labelShort}</span>
-                                        </a>`;
-                                    }
-
-                                    // Buscar precios para este grupo
-                                    const filterId = (meta.tabla_id || meta.nivel_3 || meta.nivel_2 || "").toLowerCase().trim();
-                                    const precios = filterId ? STATE.prices.filter(p => {
-                                        const pId = (p.tabla_id || "").toLowerCase().trim();
-                                        return pId === filterId || pId === DataService.slugify(filterId);
-                                    }) : [];
-
-                                    // Solo pasamos el ID si es una sub-sección (N3), si es N2 ya está en el wrapper
-                                    const targetId = hasN3 ? tid : "";
-                                    pHtml += this.createTable(meta, precios, targetId);
-                                });
-
-                                if (hasN3 && l2Nav) {
-                                    sHtml += `</div>`; // Cierre del grupo indentado N3
-                                }
-                                pHtml += `</div>`; // Cierre del contenedor de precios del grupo
-                            });
-
-                            sHtml += agpNav ? `</nav></div>` : `</div>`; // Cierre del acordeón Agrupador
-                            pHtml += `</div>`; // Cierre del bloque de agrupador en el panel
-                        });
-                        pHtml += `</div>`; // Cierre del bloque Nivel 1 en el panel
                     });
 
+                    // 2. FASE DE ARQUITECTO: CONSTRUIR LA JERARQUÍA
+                    const tree = this.buildHierarchy(STATE.nav);
 
+                    let sHtml = '';
+                    let pHtml = '';
+
+                    // 3. FASE DE PINTOR: RENDERIZADO RECURSIVO
+                    tree.forEach(section => {
+                        // Header Sección
+                        sHtml += `<div class="sidebar-label-l1">${section.title}</div>`;
+
+                        pHtml += `<div class="section-container">
+                                    <h2 class="section-title-l1">${section.displayTitle}</h2>
+                                    <p class="section-desc-l1">${section.desc}</p>`;
+
+                        // Iterar hijos (Subtítulos, Grupos, Items)
+                        section.children.forEach(node => {
+
+                            // SUBTÍTULO
+                            if (node.type === 'subtitle') {
+                                sHtml += `<div class="sidebar-subtitle-context">${node.title}</div>`;
+                                pHtml += `<div class="subtitulo-container">
+                                            <h3 class="subtitulo-title">${node.title}</h3>
+                                            ${node.desc ? `<p class="subtitulo-desc">${node.desc}</p>` : ''}
+                                          </div>`;
+                            }
+
+                            // AGRUPADOR (Accordion)
+                            else if (node.type === 'group') {
+                                const isOpen = openGroups.has(node.title);
+                                const openClass = isOpen ? 'is-open' : '';
+                                const rotateClass = isOpen ? 'rotate-180' : '';
+                                const activeClass = isOpen ? 'bg-slate-100 text-secondary' : '';
+
+                                // Sidebar: Botón Acordeón
+                                sHtml += `<div class="mb-1">
+                                    <button class="sidebar-item-accordion group ${activeClass}" aria-expanded="${isOpen}" onclick="UIHandlers.toggleAccordion(this)">
+                                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-300 group-hover:text-primary transition-colors ${rotateClass}"></i>
+                                        <span class="text-left tracking-wide">${node.title}</span>
+                                    </button>
+                                    <nav class="mt-1 sidebar-accordion-content space-y-1 ${openClass}">`;
+
+                                node.items.forEach(item => {
+                                    sHtml += `<a href="#sec-${item.id}" data-tid="${item.id}" class="sidebar-link child-link">${item.label}</a>`;
+                                });
+                                sHtml += `</nav></div>`;
+
+                                // Panel: Contenedor Grupo
+                                pHtml += `<div class="group-container">
+                                            <div class="group-header">
+                                                <h3 class="group-title">${node.title}</h3>
+                                                <p class="text-xs text-slate-500 font-medium max-w-3xl">${node.desc}</p>
+                                            </div>`;
+                                node.items.forEach(item => {
+                                    pHtml += this.renderItemPanel(item);
+                                });
+                                pHtml += `</div>`;
+                            }
+
+                            // ITEM SUELTO
+                            else if (node.type === 'item') {
+                                const iconSlug = DataService.slugify(node.label).replace(/-/g, '');
+                                const matchedKey = Object.keys(APP_CONFIG.ICONS.ITEM).find(k => iconSlug.includes(k) || k.includes(iconSlug));
+                                const iconName = APP_CONFIG.ICONS.ITEM[matchedKey] || "circle";
+
+                                sHtml += `<div class="mb-1 space-y-1 mt-2">
+                                            <a href="#sec-${node.id}" data-tid="${node.id}" class="sidebar-link group">
+                                                <i data-lucide="${iconName}" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
+                                                <span>${node.label}</span>
+                                            </a>
+                                          </div>`;
+                                pHtml += this.renderItemPanel(node);
+                            }
+                        });
+
+                        pHtml += `</div>`; // Cierre section-container
+                    });
+
+                    // 4. INYECCIÓN FINAL
                     if (sHtml === '') {
-                        panel.innerHTML = `<div class="p-20 text-center animate-fade-in">
-                            <i data-lucide="database-zap" class="w-16 h-16 mx-auto mb-4 text-slate-200"></i>
-                            <p class="text-slate-400 font-bold text-lg">No se pudo cargar la estructura del catálogo</p>
-                            <p class="text-slate-300 text-sm mt-2">Es posible que la conexión con Google Sheets esté bloqueada o los datos estén vacíos.</p>
-                            <button onclick="location.reload()" class="mt-8 px-6 py-3 bg-emerald-500 text-white rounded-full font-bold shadow-lg hover:shadow-emerald-500/20 transition-all">Reintentar Conexión</button>
-                        </div>`;
-                        if (window.lucide) window.lucide.createIcons();
+                        panel.innerHTML = `<div class="p-20 text-center animate-fade-in text-slate-400">Cargando catálogo...</div>`;
+                        // Si falló algo grave silenciosamente, forzamos recarga segura
+                        setTimeout(() => location.reload(), 2000);
                     } else {
                         sidebar.innerHTML = sHtml;
                         panel.innerHTML = pHtml;
                         this.initObserver();
                     }
+
                 } catch (err) {
-                    console.error("Error Crítico de Renderizado:", err);
-                    document.getElementById('tables-container').innerHTML = `<div class="p-8 m-8 bg-red-50 border border-red-100 rounded-3xl text-center">
-                        <p class="text-red-500 font-black mb-2 uppercase tracking-widest text-xs">Error de Sistema</p>
-                        <p class="text-secondary font-medium italic text-sm">"${err.message}"</p>
-                        <p class="text-slate-400 text-[10px] mt-4 font-bold">Por favor, contacte a soporte técnico.</p>
-                    </div>`;
+                    console.error("Error Crítico UI:", err);
+                    document.getElementById('tables-container').innerHTML = `<div class="p-8 text-center text-red-500">Error de Sistema: ${err.message}</div>`;
                 }
             },
 
-            createTable(meta, items, tid) {
-                // Solo generamos el ID de sección si se nos pasa explícitamente (para evitar duplicados con el wrapper)
-                const sectionId = tid ? `id="sec-${tid}"` : "";
+            // --- FASE 1: EL ARQUITECTO (Construcción Jerárquica corregida) ---
+            buildHierarchy(rows) {
+                const tree = [];
 
-                const notas = [...new Set(items.map(i => i.notas).filter(n => n && n.trim().length > 0))];
+                // Estados persistentes del recorrido
+                let activeSection = null;
+                let activeSubtitle = null;
+                let activeGroup = null;
+
+                rows.forEach(row => {
+                    const l1 = (row.nivel_1 || "").trim();
+                    if (!l1) return;
+
+                    // 1. NIVEL 1 (SECCIÓN)
+                    // Si cambia la sección, reseteamos ABSOLUTAMENTE TODO
+                    if (!activeSection || activeSection.rawTitle !== l1) {
+                        activeSection = {
+                            type: 'section',
+                            title: l1.charAt(0).toUpperCase() + l1.slice(1).toLowerCase(),
+                            rawTitle: l1,
+                            displayTitle: row.nivel_1_titulo || l1,
+                            desc: row.nivel_1_descripcion || '',
+                            children: []
+                        };
+                        tree.push(activeSection);
+
+                        // Reset de hijos
+                        activeSubtitle = null;
+                        activeGroup = null;
+                    }
+
+                    // 2. NIVEL SUBTÍTULO
+                    const sub = (row.subtitulo || "").trim();
+                    // Si hay subtítulo y es diferente al activo, creamos uno nuevo
+                    if (sub && sub !== 'undefined') {
+                        if (!activeSubtitle || activeSubtitle.title !== sub) {
+                            activeSubtitle = {
+                                type: 'subtitle',
+                                title: sub,
+                                desc: row.subtitulo_descripcion || ''
+                            };
+                            activeSection.children.push(activeSubtitle);
+
+                            // IMPORTANTE: Cambio de subtítulo implica resetear grupo
+                            activeGroup = null;
+                        }
+                    } else if (!sub) {
+                        // Si la fila NO tiene subtítulo, limpiamos el estado activo
+                        activeSubtitle = null;
+                        // Opcional: ¿Debería resetear grupo? Depende de si un grupo puede cruzar fronteras de subtítulos vacíos.
+                        // Por seguridad asumimos que sí.
+                    }
+
+                    // 3. NIVEL AGRUPADOR (ACORDEÓN)
+                    const agp = (row.agrupador || "").trim();
+                    if (agp) {
+                        // Si hay grupo y es diferente al activo, creamos uno nuevo
+                        if (!activeGroup || activeGroup.title !== agp) {
+                            activeGroup = {
+                                type: 'group',
+                                title: agp,
+                                desc: row.agrupador_descripcion || '',
+                                items: []
+                            };
+                            activeSection.children.push(activeGroup);
+                        }
+                    } else {
+                        // Si no hay grupo, el item va suelto
+                        activeGroup = null;
+                    }
+
+                    // 4. NIVEL ITEM (HOJA)
+                    const titleShort = row.nivel_3 || row.nivel_2 || "Item";
+                    const rawId = row.tabla_id || (agp || sub || l1) + "-" + titleShort;
+                    const cleanId = DataService.slugify(rawId);
+
+                    const itemNode = {
+                        type: 'item',
+                        id: cleanId,
+                        label: titleShort,
+                        originalRow: row,
+                        tablaId: row.tabla_id
+                    };
+
+                    // Asignación: Si hay grupo activo, va al grupo. Si no, directo a la sección.
+                    if (activeGroup) {
+                        activeGroup.items.push(itemNode);
+                    } else {
+                        activeSection.children.push(itemNode);
+                    }
+                });
+
+                return tree;
+            },
+
+            // --- HELPER DE RENDERIZADO VISUAL ---
+            renderItemPanel(node) {
+                const row = node.originalRow;
+
+                // Filtrado de Precios ESTRICTO (Igualdad exacta con tabla_id)
+                let precios = [];
+                if (row.tabla_id) {
+                    const target = row.tabla_id.toLowerCase().trim();
+                    precios = STATE.prices.filter(p => (p.tabla_id || "").toLowerCase().trim() === target);
+                } else {
+                    // Fallback LEGACY: Solo si no hay tabla_id explícito
+                    // Usamos slugify para coincidencia aproximada, pero esto no debería ocurrir en data nueva
+                    const filterName = node.label.toLowerCase();
+                    precios = STATE.prices.filter(p => (p.tabla_id || "").toLowerCase().includes(DataService.slugify(filterName)));
+                }
+
+                let html = `<div id="sec-${node.id}" class="l2-container mb-10">`;
+
+                // Título del Item Nivel 2 (si existe)
+                const dispTitle = row.nivel_2_titulo || row.nivel_2;
+                if (dispTitle) {
+                    html += `<h4 class="l2-title">${dispTitle}</h4>
+                             <p class="text-sm text-slate-400 font-medium mb-4">${row.nivel_2_descripcion || ''}</p>`;
+                }
+
+                html += this.createTable(row, precios);
+                html += `</div>`;
+                return html;
+            },
+
+            createTable(meta, items) {
+                // NOTA: El ID de sección se maneja en renderItemPanel. Esta función solo genera la tabla.
+
+                // LÓGICA DE PARSEO DE NOTAS AVANZADO (Smart Grid + Blocks)
+                const rawNotas = items.map(i => i.notas).filter(n => n && n.trim().length > 0);
+
+                // Procesamiento de Bloques HTML
+                const processedBlocks = [];
+
+                rawNotas.forEach(raw => {
+                    // 1. Separar por Bloques (^)
+                    // El símbolo ^ actúa como un "Enter" fuerte, separando párrafos o listas
+                    const blocks = raw.split('^').map(b => b.trim()).filter(b => b.length > 0);
+
+                    blocks.forEach(block => {
+                        // 2. Detectar Listas (|)
+                        if (block.includes('|')) {
+                            // Es una lista: Separamos items por pipe
+                            const listItems = block.split('|').map(i => i.trim()).filter(i => i.length > 0);
+
+                            if (listItems.length > 0) {
+                                // Renderizar como Grid List
+                                const listHtml = `<ul class="note-grid-list">
+                                    ${listItems.map(item => `<li>${item}</li>`).join('')}
+                                </ul>`;
+                                processedBlocks.push(listHtml);
+                            }
+                        } else {
+                            // Es texto normal: Renderizar como párrafo
+                            processedBlocks.push(`<p class="note-text">${block}</p>`);
+                        }
+                    });
+                });
+
+                // Deduplicar bloques idénticos (por si varios productos tienen la misma nota base)
+                const uniqueBlocks = [...new Set(processedBlocks)];
+
                 const showTitle = !!meta.nivel_3;
                 const titleLong = meta.nivel_3_titulo || meta.nivel_3;
 
-                return `<section ${sectionId} class="mb-12" style="scroll-margin-top: 120px;">
-                    ${showTitle ? `<h5 class="text-xl font-black text-secondary mb-3 pl-3 border-l-4 border-emerald-500">${titleLong}</h5>
-                                   <p class="text-xs text-slate-400 mb-6 font-bold tracking-tight pl-3">${meta.nivel_3_descripcion || ''}</p>` : ''}
+                return `<section class="mb-8">
+                    ${showTitle ? `<h5 class="text-xl font-black text-secondary mb-3 section-title-n3">${titleLong}</h5>
+                                   <p class="text-xs text-slate-400 mb-6 font-bold tracking-tight">${meta.nivel_3_descripcion || ''}</p>` : ''}
 
-                    ${items.length ? `<div class="data-grid-container bg-white shadow-sm">
-                        <table class="data-grid w-full">
+                    ${items.length ? `<div class="data-grid-container">
+                        <table class="data-grid">
                             <thead>
                                 <tr>
                                     <th class="pl-6">Producto</th>
@@ -1149,7 +2509,7 @@
                             </thead>
                             <tbody>
                                 ${items.map(p => `
-                                <tr class="hover:bg-slate-50 transition-colors">
+                                <tr class="hover:bg-slate-100 transition-colors">
                                     <td class="pl-6 product-name">
                                         <div class="font-medium text-secondary text-sm">${p.producto}</div>
                                         <div class="text-[10px] text-slate-400 font-bold tracking-tight">${p.presentacion || ''}</div>
@@ -1161,33 +2521,199 @@
                         </table>
                     </div>` : '<p class="text-xs text-slate-400 italic pl-4">Catálogo en actualización</p>'}
 
-                    ${notas.length ? `<div class="mt-4 mx-2 p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
-                        <p class="text-[11px] font-black text-slate-700 uppercase tracking-widest mb-2"><i data-lucide="info" class="w-3.5 h-3.5 inline mr-1 text-emerald-500"></i> Notas:</p>
-                        <ul class="list-disc pl-5 text-xs text-slate-600 font-medium space-y-1">${notas.map(n => `<li>${n}</li>`).join('')}</ul>
+                    ${uniqueBlocks.length ? `<div class="mt-4 notes-container">
+                        <p class="text-[11px] font-black text-slate-700 tracking-widest mb-3"><i data-lucide="info" class="w-3.5 h-3.5 inline mr-1 text-emerald-500"></i> Información adicional:</p>
+                        <div class="space-y-4">
+                            ${uniqueBlocks.join('')}
+                        </div>
                     </div>` : ''}
                 </section>`;
             },
+
             renderContactItems() {
-                const distGrid = document.getElementById('distributors-grid');
-                if (distGrid && STATE.dist.length) {
-                    distGrid.innerHTML = STATE.dist.map(d => `<div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
-                        <div class="flex items-center gap-4 mb-6">
-                            <div class="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all"><i data-lucide="building"></i></div>
-                            <div><h4 class="font-black text-secondary uppercase tracking-tight text-sm">${d.sede || d.nombre}</h4><p class="text-[9px] text-primary font-black uppercase tracking-widest">${d.departamento || ''}</p></div>
-                        </div>
-                        <p class="text-xs text-slate-500 mb-8 font-medium leading-relaxed">${d.direccion || 'Consulte ubicación'}</p>
-                        <a href="https://wa.me/${(d.whatsapp || "").replace(/\D/g, '')}" target="_blank" class="flex items-center gap-3 text-primary font-black text-[10px] uppercase tracking-widest hover:gap-5 transition-all">WhatsApp <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
-                    </div>`).join('');
+                const distContainer = document.getElementById('distributors-grid');
+                if (!distContainer) return;
+
+                if (!STATE.dist.length) {
+                    distContainer.innerHTML = '<p class="text-slate-400 italic col-span-2 text-center">Cargando la red de distribuidores...</p>';
+                    return;
                 }
+
+                // Helper local para Title Case
+                const toTitleCase = (str) => {
+                    return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+                };
+
+                // 1. Separar Sede Principal y Distribuidores
+                const headquarters = [];
+                const distributors = [];
+
+                STATE.dist.forEach(d => {
+                    // Detectar sede principal por nombre (insensible a mayúsculas)
+                    if (d.sede && d.sede.toLowerCase().includes('principal')) {
+                        headquarters.push(d);
+                    } else {
+                        distributors.push(d);
+                    }
+                });
+
+                let html = '';
+
+                // 2. Renderizar Sede Principal (Diseño Destacado Premium)
+                if (headquarters.length > 0) {
+                    // LÓGICA DE ACTUALIZACIÓN DEL SIDEBAR (Punto 11)
+                    // Tomamos la primera sede principal como la "Oficial" para el sidebar
+                    const mainHQ = headquarters[0];
+                    const mainWA = mainHQ.whatsapp_1; // Asumimos columna whatsapp_1
+
+                    if (mainWA) {
+                        const btnSidebar = document.getElementById('btn-whatsapp-sidebar');
+                        if (btnSidebar) {
+                            const cleanNum = Formatters.whatsapp(mainWA);
+                            const msg = encodeURIComponent("Hola Mundo Homeopático, requiero información sobre distribución y precios.");
+                            btnSidebar.href = `https://wa.me/${cleanNum}?text=${msg}`;
+                        }
+                    }
+
+                    headquarters.forEach(hq => {
+                        // Lógica de Logos Personalizados (Punto 8)
+                        let logoName = 'logo-mundo-homeopatico'; // Default
+                        const sedeLower = hq.sede.toLowerCase();
+
+                        if (sedeLower.includes('cafetero')) logoName = 'logo-mundo-homeopatico';
+                        else if (sedeLower.includes('atlantica') || sedeLower.includes('atlántica')) logoName = 'logo-biomedic';
+                        else if (sedeLower.includes('santander')) logoName = 'logo-mundo-homeopatico';
+                        else if (sedeLower.includes('cordoba') || sedeLower.includes('córdoba')) logoName = 'logo-eco-natural';
+
+                        html += `<div class="col-span-1 md:col-span-2 mb-8 animate-fade-in">
+                            <div class="bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 rounded-lg p-8 relative overflow-hidden group hover:shadow-lg transition-all">
+                                <!-- Decoración de fondo -->
+                                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-100 rounded-full blur-3xl -mr-16 -mt-16 opacity-50"></div>
+                                
+                                <div class="relative z-10 flex flex-col md:flex-row gap-8 items-start">
+                                    <div class="flex-shrink-0 bg-white p-4 rounded-lg shadow-sm border border-emerald-50">
+                                        <img src="img/${logoName}.webp" alt="Logo Sede" class="w-20 h-20 object-contain" onerror="this.src='https://placehold.co/80x80?text=MH'">
+                                    </div>
+                                    <div class="flex-grow">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-black capitalize tracking-wide rounded-full">Sede principal</span>
+                                            <h4 class="text-2xl font-black text-secondary tracking-tight">${toTitleCase(hq.sede)}</h4>
+                                        </div>
+                                        
+                                        <!-- UBICACIÓN FÍSICA AÑADIDA -->
+                                        ${hq.direccion ?
+                                `<p class="flex items-center gap-2 text-slate-500 mb-4 font-medium">
+                                            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-500"></i> ${hq.direccion}
+                                         </p>` : ''}
+                                        
+                                        <div class="flex flex-wrap gap-3 mt-6">
+                                            ${this.generateContactButtons(hq)}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                }
+
+                // 3. Renderizar Distribuidores (Business Card Moderno)
+                distributors.forEach(d => {
+                    html += `<div class="contact-card group animate-fade-in">
+                        <div class="flex items-start gap-4 mb-4">
+                            <div class="contact-card-icon">
+                                <i data-lucide="store" class="w-5 h-5 transition-colors"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-base text-secondary leading-tight mb-1">${toTitleCase(d.sede)}</h4>
+                                <p class="text-[11px] font-bold text-emerald-600 capitalize tracking-wide">${(d.departamento || 'Colombia').toLowerCase()}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2 mb-4 flex-grow">
+                            ${d.direccion ? `<p class="text-sm text-slate-500 flex items-start gap-2 leading-relaxed">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 mt-1 flex-shrink-0 opacity-40"></i>
+                                <span>${d.direccion}</span>
+                            </p>` : ''}
+                            ${d.horarios ? `<p class="text-xs text-slate-400 flex items-start gap-2 leading-relaxed">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 mt-0.5 flex-shrink-0 opacity-40"></i>
+                                <span>${d.horarios}</span>
+                            </p>` : ''}
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-50 mt-auto">
+                            ${this.generateContactButtons(d)}
+                        </div>
+                    </div>`;
+                });
+
+                distContainer.innerHTML = html;
+            },
+
+            // Helper para generar botones inteligentes (WhatsApp vs Teléfono vs Fijo)
+            generateContactButtons(data) {
+                let buttons = '';
+
+                // WhatsApps (Iteramos hasta 4 columnas posibles)
+                [1, 2, 3, 4].forEach(i => {
+                    const wa = data[`whatsapp_${i}`];
+                    if (wa) {
+                        buttons += `<a href="https://wa.me/${Formatters.whatsapp(wa)}" target="_blank"
+        class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-bold hover:bg-emerald-100 transition-colors transform hover:-translate-y-0.5">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> ${Formatters.formatPhone(wa)}
+                        </a>`;
+                    }
+                });
+
+                // Móviles (Llamada directa)
+                [1, 2].forEach(i => {
+                    const mob = data[`movil_${i}`];
+                    if (mob) {
+                        buttons += `<a href="tel:${mob}" class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-50 text-slate-600 rounded-lg text-xs font-bold hover:bg-slate-100 transition-colors">
+            <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> ${Formatters.formatPhone(mob)}
+                        </a>`;
+                    }
+                });
+
+                // Fijos (Solo visualización)
+                [1, 2].forEach(i => {
+                    const fix = data[`telefono_fijo_${i}`];
+                    if (fix) {
+                        buttons += `<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-100 text-slate-400 rounded-lg text-xs font-medium cursor-default">
+            <i data-lucide="phone" class="w-3.5 h-3.5"></i> ${fix}
+                        </div>`;
+                    }
+                });
+
+                return buttons;
+            },
+
+            renderFAQ() {
                 const faqCont = document.getElementById('faq-container');
                 if (faqCont && STATE.faq.length) {
-                    faqCont.innerHTML = STATE.faq.map(f => `<div class="bg-white p-6 rounded-3xl border border-slate-100"><p class="font-bold text-sm text-secondary">${f.pregunta}</p><p class="text-xs text-slate-400 mt-2 font-medium">${f.respuesta}</p></div>`).join('');
+                    // FAQ CONTROLADO: Botones + JS para comportamiento exclusivo
+                    faqCont.innerHTML = STATE.faq.map((f, index) => {
+                        const q = f.pregunta || f.Pregunta || f.PREGUNTA || "Pregunta pendiente";
+                        const a = f.respuesta || f.Respuesta || f.RESPUESTA || "Respuesta en proceso...";
+                        return `<div class="bg-white rounded-lg border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-md">
+                            <button onclick="UIHandlers.toggleFaq(this)" class="faq-trigger w-full flex justify-between items-center p-6 text-left" aria-expanded="false">
+                                <span class="font-bold text-sm text-secondary pr-4">${q}</span>
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-slate-300 transition-transform duration-300 flex-shrink-0"></i>
+                            </button>
+                            <div class="faq-answer-container hidden px-6 pb-6 pt-0">
+                                <div class="text-xs text-slate-500 font-medium leading-relaxed border-t border-slate-50 pt-4 animate-fade-in">
+                                    ${a}
+                                </div>
+                            </div>
+                        </div>`;
+                    }).join('');
+                } else if (faqCont) {
+                    faqCont.innerHTML = '<p class="text-slate-400 italic">Cargando preguntas frecuentes...</p>';
                 }
             },
             formatPrice: (v) => {
                 if (!v || v === '-') return '-';
                 const str = String(v).replace(/\D/g, '');
-                return str ? `$ ${parseInt(str).toLocaleString('es-CO')}` : '-';
+                return str ? `$ ${parseInt(str).toLocaleString('es-CO')} ` : '-';
             },
             initObserver() {
                 // OBSERVER MEJORADO: Margen ajustado para detectar mejor el centro de la pantalla
@@ -1200,7 +2726,7 @@
                             // Quitar active de todo
                             document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
                             // Poner active al correspondiente
-                            const link = document.querySelector(`.sidebar-link[data-tid="${e.target.id.replace('sec-', '')}"]`);
+                            const link = document.querySelector(`.sidebar - link[data - tid="${e.target.id.replace('sec-', '')}"]`);
                             if (link) {
                                 link.classList.add('active');
                                 // ELIMINADO: Auto-apertura de acordeón desde el Observer.
@@ -1233,6 +2759,9 @@
                 dist: 'mh_cache_dist'
             };
 
+            // Flag para evitar doble render
+            let hasRenderedFromCache = false;
+
             // 1. Renderizado Inmediato desde Caché (si existe)
             try {
                 const cachedPrices = localStorage.getItem(keys.prices);
@@ -1247,6 +2776,7 @@
                     STATE.dist = cachedDist ? JSON.parse(cachedDist) : [];
                     console.log('⚡ Renderizado inicial (Caché)');
                     RenderEngine.renderAll();
+                    hasRenderedFromCache = true;
                 }
             } catch (e) { console.error('Error leyendo caché', e); }
 
@@ -1260,24 +2790,44 @@
                 }
             });
             DataService.fetchCSV(APP_CONFIG.SHEETS.BANNER).then(d => {
-                if (d && d[0] && d[0].mensaje) {
-                    document.getElementById('bannerText').textContent = d[0].mensaje;
-                    document.getElementById('bannerWrapper').classList.remove('hidden');
+                if (localStorage.getItem('mh_banner_closed') === 'true') return;
+
+                const bannerTextEl = document.getElementById('bannerText');
+                if (d && d[0] && d[0].mensaje && bannerTextEl) {
+                    const bw = document.getElementById('bannerWrapper');
+                    bannerTextEl.textContent = d[0].mensaje;
+                    bw.classList.remove('collapsed');
+                    document.body.classList.add('has-banner');
                 }
             });
             DataService.fetchCSV(APP_CONFIG.SHEETS.VIDEO).then(d => {
                 if (d && d[0] && d[0].url) {
-                    const embed = DataService.normalizeYT(d[0].url);
-                    document.getElementById('videoContainer').innerHTML = `<iframe class="w-full h-full" src="${embed}" frameborder="0" allowfullscreen></iframe>`;
+                    const videoId = d[0].url.split('v=')[1]?.split('&')[0] || d[0].url.split('/').pop();
+                    if (!videoId) return;
+
+                    // Renderizar FACHADA (Imagen + Botón) en lugar de Iframe pesado
+                    const container = document.getElementById('videoContainer');
+                    if (container) {
+                        container.innerHTML = `
+            <div class="youtube-facade w-full h-full group" onclick="UIHandlers.loadVideo(this, '${videoId}')">
+                <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="Video de Calidad"
+                    onerror="this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'"> <!-- Fallback a HQ si no hay MaxRes -->
+                    <div class="play-button shadow-2xl"></div>
+            </div>`;
+                    }
                 }
             });
 
             try {
-                const [p, n, f, dist] = await Promise.all([
+                // Activar Barra de Carga Real
+                UIHandlers.showLoading(true);
+
+                const [p, n, f, dist, auth] = await Promise.all([
                     DataService.fetchCSV(APP_CONFIG.SHEETS.PRICES),
                     DataService.fetchCSV(APP_CONFIG.SHEETS.NAV),
                     DataService.fetchCSV(APP_CONFIG.SHEETS.FAQ),
-                    DataService.fetchCSV(APP_CONFIG.SHEETS.DIST)
+                    DataService.fetchCSV(APP_CONFIG.SHEETS.DIST),
+                    DataService.fetchCSV(APP_CONFIG.SHEETS.AUTH)
                 ]);
 
                 // Actualizar Estado y Caché
@@ -1285,12 +2835,20 @@
                 if (n.length) { STATE.nav = n; localStorage.setItem(keys.nav, JSON.stringify(n)); }
                 if (f.length) { STATE.faq = f; localStorage.setItem(keys.faq, JSON.stringify(f)); }
                 if (dist.length) { STATE.dist = dist; localStorage.setItem(keys.dist, JSON.stringify(dist)); }
+                if (auth && auth.length) { STATE.auth = auth; console.log('🔐 Accesos cargados'); }
 
-                // Actualizar UI con datos frescos si llegaron
+                // Finalizar Barra de Carga
+                UIHandlers.showLoading(false);
+
+                // Actualizar UI con datos frescos SOLO si no había caché
                 if (p.length && n.length) {
-                    console.log('🔄 Datos actualizados desde la nube');
-                    RenderEngine.renderAll();
-                } else {
+                    console.log('📦 Caché actualizada (silencioso)');
+                    // Solo re-renderizamos si es primera visita (sin caché previa)
+                    if (!hasRenderedFromCache) {
+                        RenderEngine.renderAll();
+                    }
+                } else if (!hasRenderedFromCache) {
+                    // Solo alertamos si no teníamos nada que mostrar
                     alert("¡Atención! No se pudieron descargar los datos de Google Sheets. Verifica tu conexión a internet.");
                     console.error("Fetch fallido: p.length=" + p.length + ", n.length=" + n.length);
                 }
