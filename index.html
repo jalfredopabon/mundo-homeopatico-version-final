@@ -122,52 +122,50 @@
             --font-display: 'Outfit', sans-serif;
             --font-body: 'Inter', sans-serif;
 
-            --font-xs: 11px;
-            /* Interreadable at small sizes */
-            --font-sm: 13px;
-            /* Sidebar & Metadata */
+            /* ESCALA TIPOGRÁFICA (Design Specs v2) */
+            --font-xs: 12px;
+            /* Sidebar Agrupadores / Table Headers */
+            --font-sm: 14px;
+            /* Sidebar N2/N3 / Table Content / Buttons */
             --font-base: 15px;
-            /* Body text (Inter se lee bien un poco más chico) */
+            /* Sidebar L1 / Precios */
+            --font-md: 16px;
+            /* Table Titles / Descripciones N1 */
             --font-lg: 18px;
-            /* Subtitles */
+            /* Agrupadores Panel Principal */
             --font-xl: 24px;
-            /* Section Titles */
+            /* Títulos N1 */
+            --font-2xl: 34px;
+            /* H1 Página Principal */
+
             --header-h: 80px;
 
-            /* TOKENS SEMÁNTICOS (Estandarización de Componentes) */
+            /* TOKENS SEMÁNTICOS */
             --p-header-v: 0.8rem;
             --p-header-h: clamp(1rem, 5%, 2rem);
             --p-sidebar: 2rem;
-            /* Espacio superior sidebar */
+
             --p-nav-item-v: 0.75rem;
             --p-nav-item-h: 1.25rem;
-            /* Aumentado padding horizontal visual */
 
             --p-card: 2.5rem;
-            /* Padding interno de tarjetas */
-
-            /* Alineación Maestra */
             --align-offset: 24px;
 
-            /* TOKENS DE BORDES (Estandarización Visual) */
             --border-color-soft: var(--slate-200);
             --border-color-strong: #747775;
             --border-width-std: 1px;
 
-            /* TOKENS DE TIPOGRAFÍA (Peso e Interlineado) */
             --fw-bold: 700;
             --lh-title: 1.2;
 
             /* TOKENS DE TABLAS */
             --p-table-cell: 12px 16px;
 
-            /* TOKENS DE RADIO (Curvatura) */
             --radius-sm: 4px;
             --radius-md: 8px;
             --radius-lg: 16px;
             --radius-full: 999px;
 
-            /* TOKENS DE ELEVACIÓN (Sombras) */
             --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -190,7 +188,6 @@
 
         .app-layout {
             display: block;
-            /* Layout bloque para soporte fixed */
             width: 100%;
             min-height: 100vh;
             background: var(--slate-50);
@@ -201,18 +198,15 @@
             height: var(--header-h);
             background: #fff;
             border-bottom: 1px solid var(--slate-200);
-            /* Línea sutil de separación */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            /* Capa superior absoluta */
             display: flex;
             align-items: center;
             padding: 0;
             box-shadow: var(--shadow-sm);
-            /* Sombra suave para elevación */
         }
 
         .main-sidebar {
@@ -220,24 +214,19 @@
             height: calc(100vh - var(--header-h));
             position: fixed;
             top: var(--header-h);
-            /* Anclado bajo el header */
             left: 0;
             background: #fff;
             border-right: var(--border-width-std) solid var(--border-color-soft);
             overflow-y: auto;
             overflow-x: hidden;
             z-index: 90;
-            /* Bajo el header */
             padding: 0.75rem 1.5rem;
-            /* Padding lateral añadido por solicitud */
             display: flex;
             flex-direction: column;
         }
 
-
         .main-sidebar::-webkit-scrollbar {
             width: 8px;
-            /* Más fino, similar al panel principal */
         }
 
         .main-sidebar::-webkit-scrollbar-track {
@@ -247,55 +236,40 @@
         .main-sidebar::-webkit-scrollbar-thumb {
             background: #c0c0c0;
             border-radius: 10px;
-            /* Puntas redondeadas */
         }
 
         .main-sidebar::-webkit-scrollbar-thumb:hover {
             background: #a0a0a0;
         }
 
-
-        /* Alineación Maestra Sidebar (Coordenada X=40px) */
-        /* El logo en header tiene px-10 (40px). 
-           Los items del sidebar tienen padding interno de 12px.
-           Necesitamos 28px de margen externo + 12px padding interno = 40px visuales.
-        */
         #sidebar-catalog-view,
         #sidebar-contact-view {
             padding: 0;
-            /* Reset total, el padding lo llevan los links */
         }
 
         .main-content-wrapper {
             margin-left: var(--sidebar-w);
-            /* Espacio para sidebar */
             margin-top: var(--header-h);
-            /* Espacio para header */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
-        /* Ajuste de Scroll para Anclas */
         html {
             scroll-padding-top: calc(var(--header-h) + 20px);
         }
 
-        /* Banner Dinámico Fluido (Integrado en Sidebar) */
         .banner-wrapper {
             position: relative;
-            /* Flow layout */
             display: block;
             background: #fffbeb;
             border-bottom: 1px solid #fef3c7;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             max-height: 400px;
-            /* Permitir más altura por wrapping de texto */
             overflow: hidden;
             opacity: 1;
             flex-shrink: 0;
-            /* No encoger en flex container */
         }
 
         .banner-wrapper.collapsed {
@@ -305,60 +279,42 @@
             pointer-events: none;
         }
 
-        /* DISEÑO DEFINITIVO BOTÓN SLOT (Referencia: "Continue ->") */
         .btn-base {
             display: inline-flex;
             align-items: center;
             justify-content: space-between;
-            /* Texto izquierda, Slot derecha */
             gap: 0.8em;
-            /* Separación visual entre texto y slot */
             border-radius: 999px;
             font-weight: 700;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            /* Lógica de Padding Asimétrico "Flush" Inteligente */
             --button-height: 2.8em;
             height: var(--button-height);
-
-            /* Valores por defecto */
             padding: 0.35em;
         }
 
-        /* CASO 1: Icono a la DERECHA (Contacto ->) */
         .btn-base:has(> i:last-child),
         .btn-base:has(> svg:last-child) {
             padding-left: 1.5em;
-            /* Aire texto */
             padding-right: 0.35em;
-            /* Flush icono */
         }
 
-        /* Fallback para navegadores viejos que no soporten :has (opcional, pero buena práctica) */
         .btn-base i:last-child {
             margin-left: auto;
         }
 
-        /* CASO 2: Icono a la IZQUIERDA (<- Catálogo) */
         .btn-base:has(> i:first-child),
         .btn-base:has(> svg:first-child) {
             padding-left: 0.35em;
-            /* Flush icono */
             padding-right: 1.5em;
-            /* Aire texto */
         }
 
-        /* Slot del Icono (Cápsula Lateral) */
         .btn-base i,
         .btn-base svg {
-            /* El slot ocupa casi toda la altura del botón */
             width: 2.1em;
             height: 2.1em;
-
             padding: 0.55em;
-            /* Icono centrado con aire dentro del slot */
             background-color: rgba(255, 255, 255, 0.2);
-            /* Contraste fuerte como en la ref */
             border-radius: 50%;
             stroke-width: 2.5px;
             flex-shrink: 0;
@@ -370,7 +326,6 @@
             background: var(--secondary);
             color: white;
             font-size: var(--font-sm);
-            /* Ligeramente más grande para balance */
             letter-spacing: 0.05em;
         }
 
@@ -383,23 +338,21 @@
         .btn-primary:hover i {
             background-color: rgba(0, 0, 0, 0.2);
             transform: rotate(-15deg) scale(1.05);
-            /* Micro-interacción dinámica */
         }
 
-        /* Sidebar Links e Iconografía */
-        /* Sidebar Labels (Nivel 1 - Encabezados de Categoría) */
-        /* Sidebar Labels (Nivel 1 - Encabezados de Categoría) */
+        /* Sidebar Labels */
         .sidebar-label-l1 {
             display: flex;
             align-items: center;
             padding: 0.5rem 0.75rem;
-            /* Alineado exactamente con el padding-left de los links */
-            margin-top: 1rem;
-            font-size: 11px;
-            font-weight: 700;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            margin-top: 1.5rem;
+            font-size: var(--font-base);
+            /* 15px */
+            font-weight: 600;
+            /* SemiBold */
+            color: var(--secondary);
+            text-transform: none;
+            letter-spacing: -0.01em;
             width: 100%;
         }
 
@@ -408,28 +361,27 @@
             border-top: none;
         }
 
-        /* REGLA L2 (Subtítulos): Normal y Alineado */
         .sidebar-subtitle-context {
             font-size: var(--font-sm);
-            color: var(--secondary);
-            font-weight: 700;
-            padding: 8px 0.75rem;
-            /* Alineado exactamente con links */
-            margin-top: 8px;
-            opacity: 0.8;
-            font-style: normal;
+            /* 14px */
+            color: #64748b;
+            font-weight: 500;
+            /* Medium */
+            padding: 4px 0.75rem;
+            margin-top: 4px;
+            margin-bottom: 2px;
+            text-transform: none;
         }
 
         .sidebar-link {
             display: flex;
             align-items: center;
             gap: 12px;
-            /* Aumentado gap para separar icono de texto */
             padding: 0.6rem 0.75rem;
-            /* Padding interno reducido para caber en grid */
             margin: 2px 0;
             width: 100%;
-            font-size: 13px;
+            font-size: var(--font-sm);
+            /* 14px */
             font-weight: 500;
             color: #334155;
             text-decoration: none;
@@ -449,20 +401,20 @@
             text-align: center;
         }
 
-        /* Botón Acordeón (Estilo Homologado a Link) */
         .sidebar-item-accordion {
             width: 100%;
             display: flex;
             justify-content: start;
             align-items: center;
             gap: 12px;
-            /* Mismo gap que sidebar-link */
             padding: 0.6rem 0.75rem;
-            /* Mismo padding */
             margin: 2px 0;
             font-size: var(--font-sm);
+            /* 14px */
             font-weight: 500;
-            color: #334155;
+            /* Medium (Igual N2) */
+            color: #64748b;
+            /* Slate-500 */
             background: transparent;
             border-radius: var(--radius-md);
             cursor: pointer;
@@ -474,28 +426,21 @@
             color: var(--secondary);
         }
 
-        /* Jerarquía de Línea Vertical (Items dentro de Acordeón) */
-        /* TECNOLOGÍA LIQUID: Transición suave 0fr -> 1fr */
         .sidebar-accordion-content {
             display: grid;
             grid-template-rows: 0fr;
             transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-            /* Línea vertical: Se maneja aquí pero se oculta visualmente cuando está cerrado usando transparencia */
             border-left: 1px solid transparent;
             margin-left: 22px;
             margin-bottom: 0;
-            /* Sin margen cuando está cerrado */
         }
 
         .sidebar-accordion-content.is-open {
             grid-template-rows: 1fr;
             border-left-color: var(--slate-200);
             margin-bottom: 8px;
-            /* Restaurar margen al abrir */
         }
 
-        /* Identación de hijos (W3Schools: Hierarchy via Padding) */
         .sidebar-accordion-inner {
             overflow: hidden;
             padding-left: 24px;
@@ -511,22 +456,20 @@
         }
 
         .sidebar-link.child-link {
-            font-size: 12px;
+            font-size: var(--font-xs);
+            /* 12px */
             color: #64748b;
             padding: 6px 12px;
         }
 
-        /* Estilo de Cabecera para N2 con hijos */
         .sidebar-n2-parent {
             padding: var(--space-s) 0 var(--space-xs) 0;
-            /* Estandarizado: 8px top, 4px bottom */
             font-size: var(--font-sm);
             font-weight: 800;
             color: var(--slate-400);
             letter-spacing: 0.05em;
         }
 
-        /* Data Displays: Jerarquía H1-H5 */
         .catalog-card {
             background: white;
             border-radius: var(--radius-lg);
@@ -538,19 +481,15 @@
         .data-grid-container,
         .notes-container {
             border-radius: var(--radius-md);
-            /* Unificado */
             border: 1px solid #e0e0e0;
-            /* Unificado */
             background: white;
             margin-top: 0.5rem;
-            /* Pegado al título */
             overflow: hidden;
             box-shadow: var(--shadow-sm);
         }
 
         .notes-container {
             padding: 1rem;
-            /* Padding interno para notas */
         }
 
         .data-grid {
@@ -562,22 +501,37 @@
             background: white;
             padding: var(--p-table-cell);
             text-align: left;
-            font-size: var(--font-sm);
-            font-weight: 500;
-            color: #5f6368;
-            /* Gris de Etiquetas Google */
-            text-transform: none;
+            font-size: var(--font-xs);
+            /* 12px */
+            font-weight: 700;
+            /* Bold */
+            color: #6B7280;
+            /* Gris Specs */
+            text-transform: uppercase;
             border-bottom: 1px solid #747775;
-            /* Header más fuerte (Google v3) */
+            /* Header Strong */
+            letter-spacing: 0.05em;
         }
 
         .data-grid td {
             padding: var(--p-table-cell);
             border-bottom: 1px solid #c7c7c7;
-            /* Línea de fila visible y definida */
             font-size: var(--font-sm);
+            /* 14px */
+            font-weight: 400;
+            /* Regular */
             color: #202124;
             vertical-align: middle;
+        }
+
+        /* PRICE CELL: Columna de precio destacada */
+        .data-grid td:nth-last-child(1),
+        .data-grid td.price-cell {
+            font-weight: 600;
+            /* SemiBold */
+            font-size: var(--font-base);
+            /* 15px */
+            color: #111827;
         }
 
         .data-grid tr:last-child td {
@@ -587,6 +541,11 @@
         .data-grid tr:hover td {
             background-color: var(--slate-100);
             cursor: pointer;
+        }
+
+        .data-grid th.text-right,
+        .data-grid td.text-right {
+            text-align: right;
         }
 
         .data-grid th.text-right,
