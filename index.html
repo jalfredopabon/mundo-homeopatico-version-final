@@ -35,8 +35,10 @@
 
     <!-- //#region 1. INFRAESTRUCTURA PROYECTO -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;700;900&display=swap"
         rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- //#endregion -->
@@ -116,20 +118,21 @@
             --space-xxl: 4rem;
             /* 64px */
 
-            /* SISTEMA TIPOGRÁFICO ESTANDARIZADO */
-            --font-xs: 10px;
+            /* SISTEMA TIPOGRÁFICO (Nueva Propuesta 2026: Outfit + Inter) */
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            --font-xs: 11px;
+            /* Interreadable at small sizes */
             --font-sm: 13px;
             /* Sidebar & Metadata */
-            --font-base: 16px;
-            /* Body text */
+            --font-base: 15px;
+            /* Body text (Inter se lee bien un poco más chico) */
             --font-lg: 18px;
             /* Subtitles */
             --font-xl: 24px;
             /* Section Titles */
-            --font-display: 3.75rem;
-            /* 60px - Hero Titles */
             --header-h: 80px;
-            /* Altura Estándar Dashboard (Más compacta que 96/112) */
 
             /* TOKENS SEMÁNTICOS (Estandarización de Componentes) */
             --p-header-v: 0.8rem;
@@ -171,12 +174,18 @@
         }
 
         body {
-            font-family: 'Atkinson Hyperlegible', sans-serif;
+            font-family: var(--font-body);
             background: var(--slate-50);
             color: var(--secondary);
             -webkit-font-smoothing: antialiased;
             scroll-behavior: smooth;
             overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        .font-display {
+            font-family: var(--font-display);
         }
 
         .app-layout {
@@ -1397,7 +1406,7 @@
                 <button onclick="UIHandlers.showPasswordModal()"
                     class="btn-math btn-slate icon-left w-full justify-start mt-4 mb-4">
                     <i data-lucide="users" class="w-5 h-5"></i>
-                    <span>Distribuidores</span>
+                    <span>Farmacias y médicos</span>
                 </button>
 
                 <div class="category-divider flex-shrink-0"></div>
@@ -1409,22 +1418,27 @@
             <!-- VISTA: CONTACTO (CONTEXTUAL) -->
             <div id="sidebar-contact-view" class="hidden flex-col h-full animate-fade-in">
                 <!-- SECCIÓN SUPERIOR (Matching Catalog) -->
-                <div class="flex-shrink-0">
-                    <!-- 1. Título "Nuestras redes" (Posición visual del Buscador) -->
-                    <div class="h-[46px] flex items-center mb-4 px-1">
-                        <span class="text-sm font-bold text-slate-500 tracking-wider">Nuestras redes</span>
-                    </div>
+                <!-- SECCIÓN SUPERIOR (Diseño Tarjeta Unificada) -->
+                <div class="flex-shrink-0 mb-6">
+                    <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                        <!-- Título -->
+                        <h3 class="text-sm font-bold text-slate-700 mb-3">Nuestras redes</h3>
 
-                    <!-- 2. Botones de Redes (Posición visual del Botón Distribuidores) -->
-                    <div class="grid grid-cols-2 gap-3 mb-4">
-                        <a href="https://www.instagram.com/mundohomeopatico/" target="_blank"
-                            class="btn-math btn-slate justify-center" aria-label="Instagram">
-                            <i data-lucide="instagram" class="w-5 h-5 text-pink-600"></i>
-                        </a>
-                        <a href="https://mundohomeopatico.com/" target="_blank"
-                            class="btn-math btn-slate justify-center" aria-label="Sitio Web">
-                            <i data-lucide="globe" class="w-5 h-5 text-blue-600"></i>
-                        </a>
+                        <!-- Botones de Redes -->
+                        <div class="grid grid-cols-2 gap-3">
+                            <a href="https://www.instagram.com/mundohomeopatico/" target="_blank"
+                                class="flex items-center justify-center p-3 rounded-xl bg-pink-50 hover:bg-pink-100 transition-colors border border-pink-100 group"
+                                aria-label="Instagram">
+                                <i data-lucide="instagram"
+                                    class="w-6 h-6 text-pink-600 group-hover:scale-110 transition-transform"></i>
+                            </a>
+                            <a href="https://mundohomeopatico.com/" target="_blank"
+                                class="flex items-center justify-center p-3 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-100 group"
+                                aria-label="Sitio Web">
+                                <i data-lucide="globe"
+                                    class="w-6 h-6 text-blue-600 group-hover:scale-110 transition-transform"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -1458,15 +1472,15 @@
                 <div class="flex-shrink-0 mt-auto mb-4">
                     <div
                         class="distributor-promo-card p-5 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl shadow-lg border border-emerald-500/30">
-                        <h3 class="font-bold text-lg text-white mb-2">Conviértete en Distribuidor</h3>
-                        <p class="text-xs text-emerald-50/90 mb-5 leading-relaxed">Únete a nuestra red y distribuye
-                            nuestros productos homeopáticos.</p>
+                        <h3 class="font-bold text-lg text-white mb-2">Se distribuidor</h3>
+                        <p class="text-xs text-emerald-50/90 mb-5 leading-relaxed">Distribuye nuestros productos
+                            homeopáticos.</p>
 
                         <a id="btn-whatsapp-sidebar" href="https://wa.me/573176680750" target="_blank"
                             class="flex items-center justify-center gap-2 w-full py-3 px-4 bg-emerald-900/30 hover:bg-emerald-900/50 text-white rounded-xl transition-all duration-300 font-medium text-sm backdrop-blur-sm shadow-inner group">
                             <i data-lucide="message-circle"
                                 class="w-4 h-4 text-emerald-200 group-hover:text-white transition-colors"></i>
-                            <span>Contáctanos por WhatsApp</span>
+                            <span>WhatsApp</span>
                         </a>
                     </div>
                 </div>
@@ -1600,8 +1614,7 @@
                     <i data-lucide="lock" class="w-8 h-8"></i>
                 </div>
                 <h3 class="text-2xl font-black text-secondary tracking-tight">Acceso restringido</h3>
-                <p class="text-slate-400 text-sm font-medium mt-2">Ingrese su contraseña de distribuidor para ver
-                    precios de farmacia.</p>
+                <p class="text-slate-400 text-sm font-medium mt-2">Por favor digite su contraseña</p>
             </div>
 
             <div class="space-y-4">
@@ -1676,6 +1689,12 @@
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
+        };
+
+        const renderText = (txt) => {
+            if (!txt) return '';
+            // Renderizado robusto de texto enriquecido (Seguro por escapeHtml primero)
+            return escapeHtml(txt).replace(/\^/g, '<br>').replace(/\\n/g, '<br>').trim();
         };
 
         const Formatters = {
@@ -2362,6 +2381,8 @@
             }
         };
 
+
+
         const RenderEngine = {
             renderAll() {
                 this.renderCatalog();
@@ -2504,9 +2525,9 @@
 
                 tree.forEach(section => {
                     // NIVEL 1: SECCIÓN
-                    html += `<div class="section-container mb-24">
-                                <h1 class="text-4xl font-black text-secondary mb-4 tracking-tighter">${section.displayTitle}</h1>
-                                <p class="text-slate-500 mb-10 text-lg font-light max-w-5xl leading-relaxed">${section.desc}</p>
+                    html += `<div class="section-container mb-24 w-full">
+                                <h1 class="text-4xl font-black text-secondary mb-4 tracking-tighter w-full">${renderText(section.displayTitle)}</h1>
+                                <p class="text-slate-500 mb-10 text-lg font-normal w-full max-w-none leading-relaxed">${renderText(section.desc)}</p>
                                 <div class="section-content">`;
 
                     section.children.forEach(node => {
@@ -2514,8 +2535,8 @@
                         if (node.type === 'subtitle') {
                             // CONTENEDOR FLUSH-LEFT (Sin Clases Custom)
                             html += `<div class="mb-16 pl-0 ml-0">
-                                        <h2 class="text-2xl font-bold text-slate-800 mb-6 pl-0 ml-0">${node.title}</h2>
-                                        ${node.desc ? `<p class="text-slate-500 mb-8 italic max-w-4xl pl-0 ml-0">${node.desc}</p>` : ''}`;
+                                        <h2 class="text-2xl font-bold text-slate-800 mb-6 pl-0 ml-0">${renderText(node.title)}</h2>
+                                        ${node.desc ? `<p class="text-slate-500 mb-8 font-normal w-full max-w-none pl-0 ml-0">${renderText(node.desc)}</p>` : ''}`;
 
                             if (node.children) {
                                 html += `<div class="space-y-12 pl-0 ml-0">`; // Eliminada clase 'subtitle-children'
@@ -2546,8 +2567,8 @@
                     // CONTENEDOR GRUPO FLUSH-LEFT
                     fragment += `<div class="mb-12 pl-0 ml-0">
                                     <div class="mb-6 pb-2 border-b border-slate-100 flex items-baseline gap-3 pl-0 ml-0">
-                                        <h3 class="text-xl font-bold text-emerald-800 pl-0 ml-0">${node.title}</h3>
-                                        <p class="text-sm text-slate-400 font-medium">${node.desc}</p>
+                                        <h3 class="text-xl font-bold text-emerald-800 pl-0 ml-0">${renderText(node.title)}</h3>
+                                        <p class="text-sm text-slate-400 font-normal">${renderText(node.desc)}</p>
                                     </div>
                                     <div class="pl-0 ml-0">`; // Container de items FLUSH
 
@@ -2707,8 +2728,8 @@
                 // Título del Item Nivel 2 (si existe)
                 const dispTitle = row.nivel_2_titulo || row.nivel_2;
                 if (dispTitle) {
-                    html += `<h4 class="l2-title">${dispTitle}</h4>
-                             <p class="text-sm text-slate-400 font-medium mb-4">${row.nivel_2_descripcion || ''}</p>`;
+                    html += `<h4 class="l2-title">${renderText(dispTitle)}</h4>
+                             <p class="text-sm text-slate-400 font-normal mb-4">${renderText(row.nivel_2_descripcion)}</p>`;
                 }
 
                 html += this.createTable(row, precios);
@@ -2727,24 +2748,22 @@
 
                 rawNotas.forEach(raw => {
                     // 1. Separar por Bloques (^)
-                    // El símbolo ^ actúa como un "Enter" fuerte, separando párrafos o listas
-                    const blocks = raw.split('^').map(b => b.trim()).filter(b => b.length > 0);
+                    const blocks = raw.split('^').map(b => b.trim());
 
                     blocks.forEach(block => {
+                        if (block.length === 0) {
+                            // Bloque vacío = Salto de línea extra
+                            processedBlocks.push('<br>');
+                            return;
+                        }
+
                         // 2. Detectar Listas (|)
                         if (block.includes('|')) {
-                            // Es una lista: Separamos items por pipe
                             const listItems = block.split('|').map(i => i.trim()).filter(i => i.length > 0);
-
                             if (listItems.length > 0) {
-                                // Renderizar como Grid List
-                                const listHtml = `<ul class="note-grid-list">
-                                    ${listItems.map(item => `<li>${item}</li>`).join('')}
-                                </ul>`;
-                                processedBlocks.push(listHtml);
+                                processedBlocks.push(`<ul class="note-grid-list">${listItems.map(item => `<li>${item}</li>`).join('')}</ul>`);
                             }
                         } else {
-                            // Es texto normal: Renderizar como párrafo
                             processedBlocks.push(`<p class="note-text">${block}</p>`);
                         }
                     });
@@ -2757,14 +2776,14 @@
                 const titleLong = meta.nivel_3_titulo || meta.nivel_3;
 
                 return `<section class="mb-8">
-                    ${showTitle ? `<h5 class="text-xl font-black text-secondary mb-3 section-title-n3">${titleLong}</h5>
-                                   <p class="text-xs text-slate-400 mb-6 font-bold tracking-tight">${meta.nivel_3_descripcion || ''}</p>` : ''}
+                    ${showTitle ? `<h5 class="text-xl font-black text-secondary mb-3 section-title-n3">${renderText(titleLong)}</h5>
+                                   <p class="text-xs text-slate-400 mb-6 font-normal tracking-tight">${renderText(meta.nivel_3_descripcion)}</p>` : ''}
 
                     ${items.length ? `<div class="data-grid-container">
                         <table class="data-grid">
                             <thead>
                                 <tr>
-                                    <th class="pl-4">Producto</th>
+                                    <th class="pl-4">Presentación</th>
                                     <th class="text-right professional-only text-emerald-600">Precio farmacia</th>
                                     <th class="text-right pr-4">Precio público</th>
                                 </tr>
@@ -2773,8 +2792,8 @@
                                 ${items.map(p => `
                                 <tr class="hover:bg-slate-100 transition-colors">
                                     <td class="pl-4 product-name">
-                                        <div class="font-medium text-secondary text-sm">${p.producto}</div>
-                                        <div class="text-[10px] text-slate-400 font-bold tracking-tight">${p.presentacion || ''}</div>
+                                        <div class="font-medium text-secondary text-sm">${renderText(p.producto)}</div>
+                                        <div class="text-[10px] text-slate-400 font-bold tracking-tight">${renderText(p.presentacion)}</div>
                                     </td>
                                     <td class="text-right professional-only font-bold text-emerald-600" data-label="Farmacia">${this.formatPrice(p.precio_farmacia)}</td>
                                     <td class="text-right font-black text-secondary pr-4" data-label="Público">${this.formatPrice(p.precio_publico)}</td>
@@ -2866,23 +2885,23 @@
                                              <img src="img/${logoName}.webp" alt="Logo Sede" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/40x40?text=MH'">
                                         </div>
                                         <div>
-                                            <h4 class="text-2xl font-black text-slate-800 leading-tight">${toTitleCase(hq.sede)}</h4>
-                                            <p class="text-[11px] font-black text-emerald-500 tracking-widest uppercase mt-1">Medellín, Antioquia</p> 
+                                            <h4 class="text-2xl font-black text-slate-800 leading-tight">${renderText(hq.sede)}</h4>
+                                            <p class="text-[11px] font-normal text-emerald-500 tracking-widest uppercase mt-1">Medellín, Antioquia</p> 
                                         </div>
                                     </div>
 
                                     <!-- Datos de Contacto (Iconos alineados) -->
                                     <div class="space-y-4 mb-10">
                                         ${hq.direccion ? `
-                                        <div class="flex items-start gap-4 text-slate-500 font-medium text-sm">
+                                        <div class="flex items-start gap-4 text-slate-500 font-normal text-sm">
                                             <div class="w-5 flex justify-center mt-0.5"><i data-lucide="map-pin" class="w-5 h-5 text-slate-400"></i></div>
-                                            <span>${hq.direccion}</span>
+                                            <span>${renderText(hq.direccion)}</span>
                                         </div>` : ''}
                                         
                                         ${hq.horarios ? `
-                                        <div class="flex items-start gap-4 text-slate-500 font-medium text-sm">
+                                        <div class="flex items-start gap-4 text-slate-500 font-normal text-sm">
                                             <div class="w-5 flex justify-center mt-0.5"><i data-lucide="clock" class="w-5 h-5 text-slate-400"></i></div>
-                                            <span>${hq.horarios}</span>
+                                            <span>${renderText(hq.horarios)}</span>
                                         </div>` : ''}
                                     </div>
 
@@ -2947,19 +2966,19 @@
                                 <i data-lucide="store" class="w-5 h-5 transition-colors"></i>
                             </div>
                             <div>
-                                <h4 class="font-bold text-base text-secondary leading-tight mb-1">${toTitleCase(d.sede)}</h4>
-                                <p class="text-[11px] font-bold text-emerald-600 capitalize tracking-wide">${(d.departamento || 'Colombia').toLowerCase()}</p>
+                                <h4 class="font-bold text-base text-secondary leading-tight mb-1">${renderText(d.sede)}</h4>
+                                <p class="text-[11px] font-normal text-emerald-600 capitalize tracking-wide">${(d.departamento || 'Colombia').toLowerCase()}</p>
                             </div>
                         </div>
                         
                         <div class="space-y-2 mb-4 flex-grow">
                             ${d.direccion ? `<p class="text-sm text-slate-500 flex items-start gap-2 leading-relaxed">
                                 <i data-lucide="map-pin" class="w-3.5 h-3.5 mt-1 flex-shrink-0 opacity-40"></i>
-                                <span>${d.direccion}</span>
+                                <span>${renderText(d.direccion)}</span>
                             </p>` : ''}
                             ${d.horarios ? `<p class="text-xs text-slate-400 flex items-start gap-2 leading-relaxed">
                                 <i data-lucide="clock" class="w-3.5 h-3.5 mt-0.5 flex-shrink-0 opacity-40"></i>
-                                <span>${d.horarios}</span>
+                                <span>${renderText(d.horarios)}</span>
                             </p>` : ''}
                         </div>
 
@@ -3024,12 +3043,12 @@
                         const a = f[aKey] || "Respuesta en proceso...";
                         return `<div class="bg-white rounded-lg border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-md">
                             <button onclick="UIHandlers.toggleFaq(this)" class="faq-trigger w-full flex justify-between items-center p-6 text-left" aria-expanded="false">
-                                <span class="font-bold text-sm text-secondary pr-4">${q}</span>
+                                <span class="font-bold text-sm text-secondary pr-4">${renderText(q)}</span>
                                 <i data-lucide="chevron-down" class="w-5 h-5 text-slate-300 transition-transform duration-300 flex-shrink-0"></i>
                             </button>
                             <div class="faq-answer-container hidden px-6 pb-6 pt-0">
-                                <div class="text-xs text-slate-500 font-medium leading-relaxed border-t border-slate-50 pt-4 animate-fade-in">
-                                    ${a}
+                                <div class="text-xs text-slate-500 font-normal leading-relaxed border-t border-slate-50 pt-4 animate-fade-in">
+                                    ${renderText(a)}
                                 </div>
                             </div>
                         </div>`;
@@ -3114,7 +3133,7 @@
                 if (cachedBanner && localStorage.getItem('mh_banner_closed') !== 'true') {
                     const bannerTextEl = document.getElementById('bannerText');
                     if (bannerTextEl) {
-                        bannerTextEl.textContent = cachedBanner;
+                        bannerTextEl.innerHTML = escapeHtml(cachedBanner).replace(/\^/g, '<br>');
                         document.getElementById('bannerWrapper')?.classList.remove('collapsed');
                         document.body.classList.add('has-banner');
                     }
@@ -3130,7 +3149,7 @@
                     const bannerTextEl = document.getElementById('bannerText');
                     if (bannerTextEl) {
                         document.getElementById('bannerWrapper')?.classList.remove('collapsed');
-                        bannerTextEl.textContent = bannerMsg;
+                        bannerTextEl.innerHTML = escapeHtml(bannerMsg).replace(/\^/g, '<br>');
                         document.body.classList.add('has-banner');
                     }
                 }
