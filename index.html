@@ -391,6 +391,18 @@
             transition: all 0.2s ease;
         }
 
+        .sidebar-link:hover {
+            background-color: var(--slate-100);
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .sidebar-link.active {
+            background-color: var(--emerald-50);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
         .sidebar-link i,
         .sidebar-item-accordion i {
             width: 20px;
@@ -408,13 +420,13 @@
             align-items: center;
             gap: 12px;
             padding: 0.6rem 0.75rem;
+            /* Mismo padding */
             margin: 2px 0;
             font-size: var(--font-sm);
-            /* 14px */
             font-weight: 500;
-            /* Medium (Igual N2) */
-            color: #64748b;
-            /* Slate-500 */
+            /* Medium */
+            color: #334155;
+            /* Slate-700 (Unificado con Links) */
             background: transparent;
             border-radius: var(--radius-md);
             cursor: pointer;
@@ -460,6 +472,23 @@
             /* 12px */
             color: #64748b;
             padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            /* Radio más pequeño para hijos */
+            transition: all 0.2s ease;
+        }
+
+        /* Hover para hijos (Sombreado igual al padre) */
+        .sidebar-link.child-link:hover {
+            background-color: var(--slate-100);
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        /* Active para hijos (Seleccionado) */
+        .sidebar-link.child-link.active {
+            background-color: var(--emerald-50);
+            color: var(--primary);
+            font-weight: 600;
         }
 
         .sidebar-n2-parent {
