@@ -219,10 +219,8 @@
             overflow-x: hidden;
             z-index: 90;
             /* Bajo el header */
-            /* Bajo el header */
-            padding: 0.75rem 0;
-            /* Padding exacto sidebar-nav del proyecto anterior */
-            /* Prioridad: Densidad de información */
+            padding: 0.75rem 1.5rem;
+            /* Padding lateral añadido por solicitud */
             display: flex;
             flex-direction: column;
         }
@@ -381,18 +379,16 @@
 
         /* Sidebar Links e Iconografía */
         /* Sidebar Labels (Nivel 1 - Encabezados de Categoría) */
+        /* Sidebar Labels (Nivel 1 - Encabezados de Categoría) */
         .sidebar-label-l1 {
             display: flex;
             align-items: center;
-            padding: 0.5rem 1.5rem;
-            /* Ajuste Reestructuración: Padding lateral consistente */
+            padding: 0.5rem 0.75rem;
+            /* Alineado exactamente con el padding-left de los links */
             margin-top: 1rem;
-            /* Border-top eliminado para limpieza visual del proyecto anterior */
             font-size: 11px;
-            /* 0.6875rem aprox */
             font-weight: 700;
             color: #64748b;
-            /* Slate-500 exacto */
             text-transform: uppercase;
             letter-spacing: 0.05em;
             width: 100%;
@@ -403,69 +399,40 @@
             border-top: none;
         }
 
-        /* Sidebar Subtitle Context (Nivel 2 - Agrupadores Visuales) */
+        /* REGLA L2 (Subtítulos): Normal y Alineado */
         .sidebar-subtitle-context {
             font-size: var(--font-sm);
             color: var(--secondary);
             font-weight: 700;
-            padding: 8px 16px;
+            padding: 8px 0.75rem;
+            /* Alineado exactamente con links */
             margin-top: 8px;
             opacity: 0.8;
+            font-style: normal;
         }
 
         .sidebar-link {
             display: flex;
             align-items: center;
-            gap: 10px;
-            /* Ajuste fino */
-            padding: 0.6rem 1.5rem;
-            /* Padding exacto proyecto anterior */
-            margin: 0;
+            gap: 12px;
+            /* Aumentado gap para separar icono de texto */
+            padding: 0.6rem 0.75rem;
+            /* Padding interno reducido para caber en grid */
+            margin: 2px 0;
             width: 100%;
             font-size: 13px;
-            /* 0.8125rem */
             font-weight: 500;
             color: #334155;
-            /* Slate-700 exacto */
             text-decoration: none;
             cursor: pointer;
-            border-left: 3px solid transparent;
-            /* Preparación para estado activo border-left */
-            border-radius: 0;
-            /* Flush total, sin radius */
+            border: none;
+            border-radius: var(--radius-md);
             transition: all 0.2s ease;
-        }
-
-        .sidebar-link:hover {
-            background-color: #f1f5f9;
-            /* Slate-100 */
-            color: #0f172a;
-            /* Slate-900 */
-            padding-left: 1.5rem;
-            /* Mismo padding, sin desplazamiento */
-        }
-
-        /* ESTADO ACTIVO (Estilo Reestructuración: Border Left + Background) */
-        .sidebar-link.active {
-            background-color: #ecfdf5;
-            /* Farmacia Light */
-            color: #064e3b !important;
-            /* Farmacia Dark */
-            font-weight: 700;
-            border-left-color: #10b981;
-            /* Farmacia Main */
-            box-shadow: none;
-            /* Limpieza */
-        }
-
-        .sidebar-link.active i {
-            color: white !important;
         }
 
         .sidebar-link i,
         .sidebar-item-accordion i {
             width: 20px;
-            /* Ancho fijo: Columna de Iconos */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -481,14 +448,14 @@
             align-items: center;
             gap: 12px;
             /* Mismo gap que sidebar-link */
-            padding: 10px 12px;
+            padding: 0.6rem 0.75rem;
             /* Mismo padding */
             margin: 2px 0;
             font-size: var(--font-sm);
             font-weight: 500;
             color: #334155;
             background: transparent;
-            border-radius: 6px;
+            border-radius: var(--radius-md);
             cursor: pointer;
             transition: all 0.15s ease;
         }
@@ -1184,29 +1151,20 @@
             overflow: hidden;
         }
 
+        /* Modern Glass/Glow Effect on Hover */
         .contact-card:hover {
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
-            /* Modern soft shadow */
+            box-shadow: 0 20px 40px -12px rgba(16, 185, 129, 0.15), 0 0 0 1px rgba(16, 185, 129, 0.1);
+            /* Sombra esmeralda difusa */
             transform: translateY(-4px);
-            border-color: var(--emerald-200);
+            background: linear-gradient(to bottom right, #ffffff, #f0fdf4);
+            /* Sutil gradiente blanco -> verde muy pálido */
+            border-color: transparent;
+            /* El borde lo maneja el box-shadow */
         }
 
-        /* Decorative top accent on hover */
+        /* REMOVIDO: Línea superior verde (old style) */
         .contact-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--primary);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-            transform-origin: left;
-        }
-
-        .contact-card:hover::before {
-            transform: scaleX(1);
+            display: none;
         }
 
         .contact-card-icon {
@@ -1406,7 +1364,7 @@
                     <!-- Botón Navegación (Math Optimized + Dark Pill) -->
                     <button id="navToggleButton" onclick="Navigation.toggle()"
                         class="btn-math btn-dark-pill icon-right">
-                        <span id="navButtonText">Contacto</span>
+                        <span id="navButtonText">Sedes y contacto</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -1450,40 +1408,68 @@
 
             <!-- VISTA: CONTACTO (CONTEXTUAL) -->
             <div id="sidebar-contact-view" class="hidden flex-col h-full animate-fade-in">
-                <!-- CTA Card: Diseñada para ocupar el mismo espacio vertical que (Buscador + Botón Login) -->
-                <div class="flex-shrink-0 mb-6">
-                    <div class="distributor-promo-card p-5 bg-emerald-50/50 border border-emerald-100/60 rounded-xl">
-                        <h3 class="font-bold text-lg text-emerald-900 mb-1">Sé distribuidor</h3>
-                        <p class="text-xs text-emerald-700/80 mb-4 leading-relaxed">Únete a nuestra red de aliados
-                            certificados.</p>
+                <!-- SECCIÓN SUPERIOR (Matching Catalog) -->
+                <div class="flex-shrink-0">
+                    <!-- 1. Título "Nuestras redes" (Posición visual del Buscador) -->
+                    <div class="h-[46px] flex items-center mb-4 px-1">
+                        <span class="text-sm font-bold text-slate-500 tracking-wider">Nuestras redes</span>
+                    </div>
 
-                        <!-- SLOT 2: Botón WhatsApp (Alineado) -->
-                        <a id="btn-whatsapp-sidebar" href="https://wa.me/573176680750" target="_blank"
-                            class="btn-math btn-emerald w-full justify-center shadow-sm">
-                            <i data-lucide="message-circle" class="w-4 h-4"></i>
-                            <span>WhatsApp</span>
+                    <!-- 2. Botones de Redes (Posición visual del Botón Distribuidores) -->
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <a href="https://www.instagram.com/mundohomeopatico/" target="_blank"
+                            class="btn-math btn-slate justify-center" aria-label="Instagram">
+                            <i data-lucide="instagram" class="w-5 h-5 text-pink-600"></i>
+                        </a>
+                        <a href="https://mundohomeopatico.com/" target="_blank"
+                            class="btn-math btn-slate justify-center" aria-label="Sitio Web">
+                            <i data-lucide="globe" class="w-5 h-5 text-blue-600"></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="category-divider"></div>
+                <div class="category-divider flex-shrink-0"></div>
 
                 <!-- Menú de Navegación de Contacto -->
-                <nav class="space-y-1 flex-grow overflow-y-auto">
-                    <div class="sidebar-label-l1 mt-4">Nuestras sedes</div>
-                    <a href="#headquarters" class="sidebar-link group"
-                        onclick="document.querySelector('.bg-gradient-to-br')?.scrollIntoView({behavior:'smooth'})">
+                <nav class="space-y-1 overflow-y-auto mb-6">
+                    <a href="#videoSection" class="sidebar-link group mt-4"
+                        onclick="document.getElementById('videoSection')?.scrollIntoView({behavior:'smooth'})">
+                        <i data-lucide="play-circle"
+                            class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
+                        <span>Video institucional</span>
+                    </a>
+
+                    <a href="#distributorsSection" class="sidebar-link group"
+                        onclick="document.getElementById('distributorsSection')?.scrollIntoView({behavior:'smooth'})">
                         <i data-lucide="map-pin"
                             class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
                         <span>Sedes principales</span>
                     </a>
-                    <a href="#distributors" class="sidebar-link group"
-                        onclick="document.getElementById('distributors-grid')?.scrollIntoView({behavior:'smooth'})">
-                        <i data-lucide="store"
+
+                    <a href="#faqSection" class="sidebar-link group"
+                        onclick="document.getElementById('faqSection')?.scrollIntoView({behavior:'smooth'})">
+                        <i data-lucide="help-circle"
                             class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                        <span>Distribuidores</span>
+                        <span>Preguntas frecuentes</span>
                     </a>
                 </nav>
+
+                <!-- CTA Card (Abajo) -->
+                <div class="flex-shrink-0 mt-auto mb-4">
+                    <div
+                        class="distributor-promo-card p-5 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl shadow-lg border border-emerald-500/30">
+                        <h3 class="font-bold text-lg text-white mb-2">Conviértete en Distribuidor</h3>
+                        <p class="text-xs text-emerald-50/90 mb-5 leading-relaxed">Únete a nuestra red y distribuye
+                            nuestros productos homeopáticos.</p>
+
+                        <a id="btn-whatsapp-sidebar" href="https://wa.me/573176680750" target="_blank"
+                            class="flex items-center justify-center gap-2 w-full py-3 px-4 bg-emerald-900/30 hover:bg-emerald-900/50 text-white rounded-xl transition-all duration-300 font-medium text-sm backdrop-blur-sm shadow-inner group">
+                            <i data-lucide="message-circle"
+                                class="w-4 h-4 text-emerald-200 group-hover:text-white transition-colors"></i>
+                            <span>Contáctanos por WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <!-- Pie de Autoría (Común a ambas vistas) -->
@@ -1516,9 +1502,9 @@
             <!-- Fix Footer: Flex Column para empujar footer -->
             <main id="view-catalog" class="flex-grow p-6 lg:p-10 lg:pl-16 min-w-0 flex flex-col">
                 <div class="mb-6 animate-fade-in">
-                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Catálogo de
-                        productos</h2>
-                    <p class="text-slate-400 font-medium text-sm">Catálogo 2026</p>
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Lista de precios
+                    </h2>
+                    <p class="text-slate-400 font-medium text-sm">Precios actualizados 2026</p>
                 </div>
                 <!-- Contenedor crece para ocupar espacio -->
                 <div id="tables-container" class="space-y-32 flex-grow">
@@ -1528,22 +1514,18 @@
 
             <main id="view-contact" class="hidden flex-grow p-6 lg:p-10 lg:pl-16 min-w-0 flex flex-col">
                 <div class="mb-6 animate-fade-in">
-                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Sedes y
-                        Contacto
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Sedes y contacto
                     </h2>
                     <p class="text-slate-400 font-medium text-sm">Red nacional de distribución</p>
                 </div>
 
                 <div class="flex-grow">
-                    <section id="videoSection" class="mb-16 scroll-mt-24">
+                    <section id="videoSection" class="mb-16 scroll-mt-40">
                         <div class="mb-6">
                             <h3 class="text-2xl md:text-3xl font-black text-secondary tracking-tight mb-2">
-                                Excelencia en
-                                la
-                                elaboración
-                                homeopática</h3>
-                            <p class="section-desc-l1">Procesos secuenciales
-                                limpios y fórmulas innovadoras bajo estándares farmacéuticos internacionales.</p>
+                                Excelencia en la elaboración homeopática</h3>
+                            <p class="section-desc-l1 text-left">Procesos secuenciales limpios y fórmulas innovadoras
+                                bajo estándares farmacéuticos internacionales.</p>
                         </div>
                         <div id="videoContainer"
                             class="aspect-video w-full rounded-[2rem] bg-slate-200 overflow-hidden shadow-2xl border-4 border-white animate-fade-in">
@@ -1554,7 +1536,7 @@
                         </div>
                     </section>
 
-                    <section id="distributorsSection" class="scroll-mt-24 mb-16">
+                    <section id="distributorsSection" class="scroll-mt-40 mb-16">
                         <h3 class="text-2xl font-black text-secondary mb-8 tracking-tight flex items-center gap-3">
                             <i data-lucide="map-pin" class="text-primary"></i> Sedes principales
                         </h3>
@@ -2249,7 +2231,7 @@
                 // Actualizar Botón (Solo texto para evitar saltos)
                 const navButtonText = document.getElementById('navButtonText');
                 if (navButtonText) {
-                    navButtonText.textContent = (viewId === 'contact') ? 'Catálogo' : 'Contacto';
+                    navButtonText.textContent = (viewId === 'contact') ? 'Lista de precios' : 'Sedes y contacto';
                 }
 
                 // Actualizar ícono si fuera necesario (aquí es el mismo, pero lo mantenemos robusto)
@@ -2267,9 +2249,11 @@
         const DataService = {
             // Lista de Proxies para Failover (Rotación)
             proxies: [
-                url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-                url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
-                url => `https://thingproxy.freeboard.io/fetch/${url}`
+                url => url, // INTENTO 1: Directo (Google permite CORS)
+                url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, // INTENTO 2: AllOrigins (Muy estable)
+                url => `https://corsproxy.io/?${encodeURIComponent(url)}`, // INTENTO 3: CORSProxy.io
+                url => `https://thingproxy.freeboard.io/fetch/${url}`, // INTENTO 4: ThingProxy
+                url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}` // INTENTO 5: CodeTabs (Backup final)
             ],
 
             async fetchCSV(url) {
@@ -2298,9 +2282,12 @@
                         return this.parseCSV(text);
 
                     } catch (error) {
-                        console.warn(`⚠️ Proxy ${i + 1} falló, intentando siguiente...`);
+                        const errorMsg = error.name === 'AbortError' ? 'Timeout (5s)' : error.message;
+                        console.warn(`⚠️ Proxy ${i + 1} (${new URL(fetchUrl).hostname}) falló: ${errorMsg}. Intentando siguiente...`);
+
                         if (i === this.proxies.length - 1) {
-                            console.error('❌ Error de conexión: Todos los proxies fallaron.');
+                            console.error('❌ Error Crítico: Todos los métodos de conexión fallaron.');
+                            console.info('💡 Diagnóstico: Verifique que el archivo Google Sheet esté publicado en: Archivo > Compartir > Publicar en la web > CSV.');
                             return [];
                         }
                     }
