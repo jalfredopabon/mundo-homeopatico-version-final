@@ -96,8 +96,8 @@
 
             /* Grid System (Medidas Matemáticas de imagen adjunta) */
             /* Grid System (Medidas Matemáticas de imagen adjunta) */
-            --sidebar-w: 260px;
-            /* RETORNO A ORIGEN: Ancho exacto del proyecto anterior */
+            --sidebar-w: 280px;
+            /* RETORNO A ORIGEN: Ancho aumentado para mejor lectura */
             /* Navigation Area Width */
             --radius: 24px;
             /* Radio de curvatura estándar */
@@ -137,7 +137,8 @@
             --p-sidebar: 2rem;
             /* Espacio superior sidebar */
             --p-nav-item-v: 0.75rem;
-            --p-nav-item-h: 1rem;
+            --p-nav-item-h: 1.25rem;
+            /* Aumentado padding horizontal visual */
 
             --p-card: 2.5rem;
             /* Padding interno de tarjetas */
@@ -274,18 +275,20 @@
             scroll-padding-top: calc(var(--header-h) + 20px);
         }
 
-        /* Banner Dinámico Fluido */
+        /* Banner Dinámico Fluido (Integrado en Sidebar) */
         .banner-wrapper {
-            position: sticky;
-            top: var(--header-h);
-            /* Sigue debajo del header contextual */
-            z-index: 30;
+            position: relative;
+            /* Flow layout */
+            display: block;
             background: #fffbeb;
             border-bottom: 1px solid #fef3c7;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 200px;
+            max-height: 400px;
+            /* Permitir más altura por wrapping de texto */
             overflow: hidden;
             opacity: 1;
+            flex-shrink: 0;
+            /* No encoger en flex container */
         }
 
         .banner-wrapper.collapsed {
@@ -1006,18 +1009,7 @@
             display: none !important;
         }
 
-        /* Ajuste Dinámico para Sidebar cuando hay Banner */
-        body.has-banner .main-sidebar {
-            top: calc(var(--header-h) + 48px);
-            /* 80px + altura aprox banner */
-        }
 
-        @media (max-width: 1024px) {
-            body.has-banner .main-sidebar {
-                top: 0;
-                /* En móvil el sidebar es overlay completo */
-            }
-        }
 
         /* //#endregion */
 
@@ -1428,6 +1420,8 @@
         <aside id="mainSidebar" class="main-sidebar pb-10">
 
 
+
+
             <!-- VISTA: CATÁLOGO -->
             <div id="sidebar-catalog-view" class="flex flex-col h-full animate-fade-in">
                 <!-- Zona Superior: Buscador y Accesos -->
@@ -1505,22 +1499,22 @@
 
         <!-- WRAPPER DE CONTENIDO (Offset por Header y Sidebar) -->
         <div class="main-content-wrapper">
-            <!-- Barra de Progreso Global -->
+            <!-- Barra de Progreso Global & Banner de Notificaciones -->
             <div id="bannerWrapper" class="banner-wrapper collapsed">
                 <div
-                    class="w-full px-10 py-3.5 flex items-center gap-4 text-amber-900 text-[10px] font-black tracking-widest animate-fade-in">
-                    <i data-lucide="megaphone" class="w-4 h-4 flex-shrink-0 text-amber-500"></i>
-                    <p id="bannerText" class="flex-grow text-center"></p>
+                    class="w-full px-8 py-4 flex items-center gap-4 text-amber-900 text-[11px] font-bold tracking-wide animate-fade-in">
+                    <i data-lucide="megaphone" class="w-5 h-5 flex-shrink-0 text-amber-500"></i>
+                    <p id="bannerText" class="flex-grow text-left"></p>
                     <button onclick="UIHandlers.closeBanner()"
                         class="p-2 hover:bg-amber-100 rounded-full transition-colors">
-                        <i data-lucide="x" class="w-4 h-4"></i>
+                        <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
             </div>
 
             <!-- PANEL CENTRAL SPA -->
             <!-- Fix Footer: Flex Column para empujar footer -->
-            <main id="view-catalog" class="flex-grow p-6 lg:p-10 min-w-0 flex flex-col">
+            <main id="view-catalog" class="flex-grow p-6 lg:p-10 lg:pl-16 min-w-0 flex flex-col">
                 <div class="mb-6 animate-fade-in">
                     <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Catálogo de
                         productos</h2>
@@ -1532,7 +1526,7 @@
                 </div>
             </main>
 
-            <main id="view-contact" class="hidden flex-grow p-6 lg:p-10 min-w-0 flex flex-col">
+            <main id="view-contact" class="hidden flex-grow p-6 lg:p-10 lg:pl-16 min-w-0 flex flex-col">
                 <div class="mb-6 animate-fade-in">
                     <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Sedes y
                         Contacto
@@ -2192,14 +2186,20 @@
             },
 
             // CARGA DIFERIDA DE VIDEO (Click-to-Load)
-            loadVideo(btn, videoId) {
-                const container = btn.closest('.youtube-facade');
-                if (!container) return;
+            loadVideo(btn) {
+                const videoId = btn.dataset.videoId;
+                if (!videoId) return;
 
-                // Reemplazar fachada con iframe real
-                container.innerHTML = `<iframe class="w-full h-full" 
-                    src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
-                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                // Evitar múltiples clicks
+                btn.onclick = null;
+                btn.classList.remove('cursor-pointer'); // Feedback visual
+
+                // Reemplazar fachada con iframe real con autoplay
+                btn.innerHTML = `<iframe class="w-full h-full" 
+                    src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" 
+                    title="Video corporativo"
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                     allowfullscreen></iframe>`;
             },
 
@@ -3024,8 +3024,13 @@
                 if (faqCont && STATE.faq.length) {
                     // FAQ CONTROLADO: Botones + JS para comportamiento exclusivo
                     faqCont.innerHTML = STATE.faq.map((f, index) => {
-                        const q = f.pregunta || f.Pregunta || f.PREGUNTA || "Pregunta pendiente";
-                        const a = f.respuesta || f.Respuesta || f.RESPUESTA || "Respuesta en proceso...";
+                        // Búsqueda Flexible de Columnas (Smart Key Search)
+                        const keys = Object.keys(f);
+                        const qKey = keys.find(k => k.toLowerCase().includes('pregunta')) || 'pregunta';
+                        const aKey = keys.find(k => k.toLowerCase().includes('respuesta') || k.toLowerCase().includes('answer')) || 'respuesta';
+
+                        const q = f[qKey] || "Pregunta pendiente";
+                        const a = f[aKey] || "Respuesta en proceso...";
                         return `<div class="bg-white rounded-lg border border-slate-100 overflow-hidden transition-all duration-300 hover:shadow-md">
                             <button onclick="UIHandlers.toggleFaq(this)" class="faq-trigger w-full flex justify-between items-center p-6 text-left" aria-expanded="false">
                                 <span class="font-bold text-sm text-secondary pr-4">${q}</span>
@@ -3151,15 +3156,31 @@
                 }).catch(() => { });
 
                 DataService.fetchCSV(APP_CONFIG.SHEETS.VIDEO).then(d => {
-                    if (d && d[0] && d[0].url) {
-                        const videoId = d[0].url.split('v=')[1]?.split('&')[0] || d[0].url.split('/').pop();
-                        if (!videoId) return;
-                        const container = document.getElementById('videoContainer');
-                        if (container) {
-                            container.innerHTML = `<div class="youtube-facade w-full h-full group" onclick="UIHandlers.loadVideo(this, '${videoId}')">
-                                <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'">
-                                <div class="play-button shadow-2xl"></div>
-                            </div>`;
+                    if (d && d.length > 0) {
+                        // Búsqueda Robusta: Escanear todas las columnas por una URL de YouTube válida
+                        const row = d[0];
+                        const url = Object.values(row).find(v => v && typeof v === 'string' && (v.includes('youtube.com') || v.includes('youtu.be')));
+
+                        if (url) {
+                            // Regex universal para ID de YouTube
+                            const match = url.match(/(?:v=|\/embed\/|youtu\.be\/|\/v\/|\/e\/|watch\?v%3D|watch\?v=)([^#\&\?]*).*/);
+                            const videoId = match && match[1] ? match[1] : null;
+
+                            if (!videoId) return;
+
+                            const container = document.getElementById('videoContainer');
+                            if (container) {
+                                // Usar data-attributes para evitar problemas de comillas en inline JS
+                                container.innerHTML = `<div class="youtube-facade w-full h-full group" 
+                                    data-video-id="${videoId}"
+                                    onclick="UIHandlers.loadVideo(this)">
+                                    <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" 
+                                        alt="Video de Calidad"
+                                        class="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-80"
+                                        onerror="this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'">
+                                    <div class="play-button shadow-2xl"></div>
+                                </div>`;
+                            }
                         }
                     }
                 }).catch(() => { });
