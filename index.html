@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mundo Homeopático | Catálogo Senior 2026</title>
+    <meta name="keywords"
+        content="homeopatia, homeopatía, productos hoemopáticos, comprar homeopatia medellin, precios medicamentos naturales colombia, distribuidor esencias florales latinoamerica, farmacia homeopatica certificada">
+    <meta name="author" content="Mundo Homeopático">
     <meta name="description"
         content="Catálogo oficial de Mundo Homeopático 2026. Lista de precios de farmacia, multipotencias, esencias florales y red de distribuidores en Colombia.">
 
@@ -92,7 +95,9 @@
             --text-primary: #0f172a;
 
             /* Grid System (Medidas Matemáticas de imagen adjunta) */
-            --sidebar-w: 280px;
+            /* Grid System (Medidas Matemáticas de imagen adjunta) */
+            --sidebar-w: 260px;
+            /* RETORNO A ORIGEN: Ancho exacto del proyecto anterior */
             /* Navigation Area Width */
             --radius: 24px;
             /* Radio de curvatura estándar */
@@ -213,32 +218,34 @@
             overflow-x: hidden;
             z-index: 90;
             /* Bajo el header */
-            padding: var(--p-sidebar) 0;
-            /* Padding vertical interno */
-
+            /* Bajo el header */
+            padding: 0.75rem 0;
+            /* Padding exacto sidebar-nav del proyecto anterior */
+            /* Prioridad: Densidad de información */
             display: flex;
             flex-direction: column;
-            padding-left: 0;
-            /* Reset for precise control */
-            padding-right: 0;
         }
 
+
         .main-sidebar::-webkit-scrollbar {
-            width: 4px;
+            width: 8px;
+            /* Más fino, similar al panel principal */
         }
 
         .main-sidebar::-webkit-scrollbar-track {
-            background: transparent;
+            background: #f1f1f1;
         }
 
         .main-sidebar::-webkit-scrollbar-thumb {
-            background: var(--slate-200);
-            border-radius: var(--radius-full);
+            background: #c0c0c0;
+            border-radius: 10px;
+            /* Puntas redondeadas */
         }
 
         .main-sidebar::-webkit-scrollbar-thumb:hover {
-            background: var(--slate-300);
+            background: #a0a0a0;
         }
+
 
         /* Alineación Maestra Sidebar (Coordenada X=40px) */
         /* El logo en header tiene px-10 (40px). 
@@ -247,8 +254,8 @@
         */
         #sidebar-catalog-view,
         #sidebar-contact-view {
-            padding: 0 28px;
-            /* 28px + 12px de item = 40px alineado con logo */
+            padding: 0;
+            /* Reset total, el padding lo llevan los links */
         }
 
         .main-content-wrapper {
@@ -370,74 +377,86 @@
         }
 
         /* Sidebar Links e Iconografía */
+        /* Sidebar Labels (Nivel 1 - Encabezados de Categoría) */
         .sidebar-label-l1 {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px;
-            /* Padding uniforme */
-            font-size: var(--font-sm);
-            font-weight: 600;
-            color: var(--secondary);
-            /* Sin márgenes extraños, solo flujo natural */
+            padding: 0.5rem 1.5rem;
+            /* Ajuste Reestructuración: Padding lateral consistente */
+            margin-top: 1rem;
+            /* Border-top eliminado para limpieza visual del proyecto anterior */
+            font-size: 11px;
+            /* 0.6875rem aprox */
+            font-weight: 700;
+            color: #64748b;
+            /* Slate-500 exacto */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            width: 100%;
         }
 
         #sidebar-menu>.sidebar-label-l1:first-child {
             margin-top: 0;
-            /* El primero va pegado arriba */
+            border-top: none;
         }
 
+        /* Sidebar Subtitle Context (Nivel 2 - Agrupadores Visuales) */
         .sidebar-subtitle-context {
             font-size: var(--font-sm);
-            color: #64748b;
-            /* Slate 500 para diferenciar de links */
-            font-weight: 500;
-            padding: 4px 12px;
-            /* Menos altura que un link clickeable */
-            margin: 4px 8px 2px 0;
+            color: var(--secondary);
+            font-weight: 700;
+            padding: 8px 16px;
+            margin-top: 8px;
+            opacity: 0.8;
         }
 
         .sidebar-link {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 8px 12px;
-            /* Compacto */
-            margin: 2px 0 2px 0;
-            /* Sin margen lateral, el padre controla el padding */
-            font-size: var(--font-sm);
+            gap: 10px;
+            /* Ajuste fino */
+            padding: 0.6rem 1.5rem;
+            /* Padding exacto proyecto anterior */
+            margin: 0;
+            width: 100%;
+            font-size: 13px;
+            /* 0.8125rem */
             font-weight: 500;
             color: #334155;
-            /* Slate 700 */
+            /* Slate-700 exacto */
             text-decoration: none;
             cursor: pointer;
-            border-radius: 6px;
-            /* Estilo Figma: Rectángulo redondeado consistente */
-            transition: all 0.15s ease;
-            position: relative;
-        }
-
-        /* AJUSTE ÓPTICO DE TEXTO (Optical Center Fix) */
-        .sidebar-link span,
-        .sidebar-item-accordion span {
-            line-height: 1;
-            /* Reset de altura de línea para evitar espacios fantasma */
-            margin-top: 1.5px;
-            /* Empuje óptico hacia abajo para centrar con el icono */
-            display: inline-block;
-            /* Necesario para que margin-top funcione bien */
+            border-left: 3px solid transparent;
+            /* Preparación para estado activo border-left */
+            border-radius: 0;
+            /* Flush total, sin radius */
+            transition: all 0.2s ease;
         }
 
         .sidebar-link:hover {
-            background: var(--slate-100);
-            color: var(--secondary);
+            background-color: #f1f5f9;
+            /* Slate-100 */
+            color: #0f172a;
+            /* Slate-900 */
+            padding-left: 1.5rem;
+            /* Mismo padding, sin desplazamiento */
         }
 
+        /* ESTADO ACTIVO (Estilo Reestructuración: Border Left + Background) */
         .sidebar-link.active {
-            background: #e2e8f0;
-            /* Slate 200: Sombreado más acentuado */
-            color: var(--secondary);
+            background-color: #ecfdf5;
+            /* Farmacia Light */
+            color: #064e3b !important;
+            /* Farmacia Dark */
             font-weight: 700;
+            border-left-color: #10b981;
+            /* Farmacia Main */
+            box-shadow: none;
+            /* Limpieza */
+        }
+
+        .sidebar-link.active i {
+            color: white !important;
         }
 
         .sidebar-link i,
@@ -459,10 +478,9 @@
             align-items: center;
             gap: 12px;
             /* Mismo gap que sidebar-link */
-            padding: 8px 12px;
+            padding: 10px 12px;
             /* Mismo padding */
-            /* Mismo padding */
-            margin: 2px 0 2px 0;
+            margin: 2px 0;
             font-size: var(--font-sm);
             font-weight: 500;
             color: #334155;
@@ -478,34 +496,45 @@
         }
 
         /* Jerarquía de Línea Vertical (Items dentro de Acordeón) */
+        /* TECNOLOGÍA LIQUID: Transición suave 0fr -> 1fr */
         .sidebar-accordion-content {
-            display: none;
-            /* Por defecto oculto (State Management) */
-            border-left: 1px solid var(--slate-200);
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+            /* Línea vertical: Se maneja aquí pero se oculta visualmente cuando está cerrado usando transparencia */
+            border-left: 1px solid transparent;
             margin-left: 22px;
-            /* (12px padding + 10px mitad icono) */
-            padding-left: 14px;
-            margin-bottom: 8px;
+            margin-bottom: 0;
+            /* Sin margen cuando está cerrado */
         }
 
         .sidebar-accordion-content.is-open {
-            display: block;
-            animation: fadeIn 0.2s ease;
+            grid-template-rows: 1fr;
+            border-left-color: var(--slate-200);
+            margin-bottom: 8px;
+            /* Restaurar margen al abrir */
+        }
+
+        /* Identación de hijos (W3Schools: Hierarchy via Padding) */
+        .sidebar-accordion-inner {
+            overflow: hidden;
+            padding-left: 24px;
+            padding-top: 4px;
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-accordion-content.is-open .sidebar-accordion-inner {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .sidebar-link.child-link {
-            min-height: 36px;
-            padding-top: 6px;
-            padding-bottom: 6px;
-            font-size: var(--font-sm);
-            color: var(--slate-500);
-            border-radius: var(--radius-sm);
-        }
-
-        .sidebar-link.child-link.active {
-            color: #10b981;
-            background: #f0fdf4;
-            font-weight: 700;
+            font-size: 12px;
+            color: #64748b;
+            padding: 6px 12px;
         }
 
         /* Estilo de Cabecera para N2 con hijos */
@@ -585,6 +614,23 @@
         .data-grid td.text-right {
             text-align: right;
             padding-right: 24px;
+        }
+
+        /* Anchos FIJOS para columnas de precios (Alineación consistente) */
+        .data-grid th:nth-child(2),
+        .data-grid td:nth-child(2) {
+            width: 160px;
+            min-width: 160px;
+            max-width: 160px;
+            white-space: nowrap;
+        }
+
+        .data-grid th:nth-child(3),
+        .data-grid td:nth-child(3) {
+            width: 160px;
+            min-width: 160px;
+            max-width: 160px;
+            white-space: nowrap;
         }
 
         /* Ajuste para el nombre del producto (Negrita suave como Drive) */
@@ -913,6 +959,16 @@
                 padding-bottom: 1.25rem;
                 background: var(--slate-50);
             }
+
+            /* Reset anchos fijos en móvil (columnas se vuelven bloques) */
+            .data-grid th:nth-child(2),
+            .data-grid td:nth-child(2),
+            .data-grid th:nth-child(3),
+            .data-grid td:nth-child(3) {
+                width: auto;
+                min-width: 0;
+                max-width: none;
+            }
         }
 
         .professional-only {
@@ -988,6 +1044,59 @@
             border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
             background: white;
+        }
+
+        /* Saludo de Usuario */
+        #userGreeting:not(.hidden) {
+            min-width: 320px;
+            /* Ancho amplio para nombres largos */
+            white-space: nowrap;
+            /* Evita saltos de línea */
+            display: flex !important;
+            /* CRÍTICO: Mantiene todo en línea horizontal */
+            flex-direction: row !important;
+            gap: 16px !important;
+            /* Espacio cómodo entre nombre y botón */
+            justify-content: flex-end !important;
+            /* Alineado a la DERECHA para consistencia */
+        }
+
+        #greetingText {
+            white-space: nowrap;
+            /* Mantiene el nombre en una sola línea */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* Si es MUY largo, muestra ... */
+            max-width: 250px;
+            /* Máximo antes de cortarse con ... */
+        }
+
+        /* Botón de Salir (Logout) */
+        .logout-button {
+            display: flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            padding: 6px 12px !important;
+            font-size: 12px !important;
+            font-weight: 500 !important;
+            color: #64748b !important;
+            border-radius: 8px !important;
+            transition: all 0.2s !important;
+            background: none !important;
+            border: none !important;
+            cursor: pointer !important;
+            flex-shrink: 0;
+            /* No se comprime */
+        }
+
+        .logout-button:hover {
+            color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+        }
+
+        .logout-button i {
+            width: 14px !important;
+            height: 14px !important;
         }
 
         /* SEARCH DROPDOWN (Predictivo) */
@@ -1291,9 +1400,15 @@
                 <div class="flex items-center gap-6">
                     <!-- Saludo User -->
                     <div id="userGreeting"
-                        class="hidden flex items-center gap-2 text-sm font-medium text-slate-600 animate-fade-in">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        <span id="greetingText"></span>
+                        class="hidden items-center text-sm font-medium text-slate-600 animate-fade-in">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="user-circle" class="w-4 h-4 text-emerald-500"></i>
+                            <span id="greetingText"></span>
+                        </div>
+                        <button onclick="UIHandlers.logout()" class="logout-button" title="Cerrar sesión">
+                            <i data-lucide="log-out"></i>
+                            <span>Salir</span>
+                        </button>
                     </div>
 
                     <!-- Botón Navegación (Math Optimized + Dark Pill) -->
@@ -1419,7 +1534,8 @@
 
             <main id="view-contact" class="hidden flex-grow p-6 lg:p-10 min-w-0 flex flex-col">
                 <div class="mb-6 animate-fade-in">
-                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Sedes y Contacto
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Sedes y
+                        Contacto
                     </h2>
                     <p class="text-slate-400 font-medium text-sm">Red nacional de distribución</p>
                 </div>
@@ -1427,7 +1543,8 @@
                 <div class="flex-grow">
                     <section id="videoSection" class="mb-16 scroll-mt-24">
                         <div class="mb-6">
-                            <h3 class="text-2xl md:text-3xl font-black text-secondary tracking-tight mb-2">Excelencia en
+                            <h3 class="text-2xl md:text-3xl font-black text-secondary tracking-tight mb-2">
+                                Excelencia en
                                 la
                                 elaboración
                                 homeopática</h3>
@@ -1453,7 +1570,8 @@
                     </section>
 
                     <section id="faqSection" class="mt-16 mb-16">
-                        <h3 class="text-2xl font-black text-secondary mb-8 tracking-tight">Preguntas frecuentes</h3>
+                        <h3 class="text-2xl font-black text-secondary mb-8 tracking-tight">Preguntas
+                            frecuentes</h3>
                         <div id="faq-container" class="grid gap-4 w-full">
                             <!-- Dinámico: RenderEngine llenará esto -->
                         </div>
@@ -1476,7 +1594,7 @@
 
                     <!-- Bloque Derecho: Redes -->
                     <div class="flex justify-center gap-6">
-                        <a href="https://wa.me/573176680750" target="_blank" title="WhatsApp"
+                        <a id="footer-whatsapp-link" href="https://wa.me/573176680750" target="_blank" title="WhatsApp"
                             class="text-slate-400 hover:text-emerald-500 transition-colors transform hover:scale-110">
                             <i data-lucide="message-circle" class="w-5 h-5"></i>
                         </a>
@@ -1614,11 +1732,15 @@
                 // Configurar Buscador con Debounce
                 const inp = document.getElementById('mainSearch');
                 if (inp) {
+                    // Optimización: Debouncing (300ms) para performance y UX fluida
+                    // Evita congelamientos al renderizar en cada tecla (Best Practice)
                     let searchTimeout;
                     inp.addEventListener('input', (e) => {
                         const q = e.target.value.toLowerCase().trim();
                         clearTimeout(searchTimeout);
-                        searchTimeout = setTimeout(() => this.search(q), 150);
+                        searchTimeout = setTimeout(() => {
+                            this.search(q);
+                        }, 300);
                     });
 
                     // Cerrar dropdown al hacer click fuera
@@ -1888,16 +2010,34 @@
                 localStorage.setItem('mh_banner_closed', 'true');
                 document.body.classList.remove('has-banner');
             },
-            showPasswordModal: () => document.getElementById('passwordModal').classList.remove('hidden'),
-            closeModal: () => document.getElementById('passwordModal').classList.add('hidden'),
+            showPasswordModal: () => {
+                const modal = document.getElementById('passwordModal');
+                if (!modal) return;
+
+                // Técnica de Blindaje: Remover hidden y forzar display flex
+                modal.classList.remove('hidden');
+                modal.style.display = 'flex'; // Inline override para garantizar visibilidad
+
+                // Enfocar input para UX inmediata
+                setTimeout(() => document.getElementById('professionalPassword')?.focus(), 100);
+            },
+            closeModal: () => {
+                const modal = document.getElementById('passwordModal');
+                if (!modal) return;
+
+                modal.classList.add('hidden');
+                modal.style.display = ''; // Limpiar override
+            },
             validateLogin: async () => {
                 const passInput = document.getElementById('professionalPassword');
                 const pass = passInput.value.trim();
 
                 // Feedback de carga
-                const btn = passInput.parentElement.querySelector('button');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<span class="animate-pulse">Verificando...</span>';
+                // FIX: El botón NO está dentro del parentElement del input, debemos buscarlo en el modal completo
+                const modal = document.getElementById('passwordModal');
+                const btn = modal.querySelector('button[onclick*="validateLogin"]');
+                const originalText = btn ? btn.innerHTML : '';
+                if (btn) btn.innerHTML = '<span class="animate-pulse">Verificando...</span>';
 
                 try {
                     // ESTRATEGIA HÍBRIDA: Memoria (Rápida) -> Red (Fallback)
@@ -1928,8 +2068,9 @@
 
                     // ESCENARIO 2: Validación en Memoria (Instantánea)
                     // Búsqueda insensible a mayúsculas/minúsculas
+                    // NOTA: La columna en Google Sheets es "contraseñas" (PLURAL con ñ)
                     const user = auth.find(r => {
-                        const p = (r.password || r.clave || r.contrasena || r.contraseña || "").toString().trim();
+                        const p = (r.contraseñas || r.password || r.clave || r.contrasena || r.contraseña || "").toString().trim();
                         return p.toLowerCase() === pass.toLowerCase();
                     });
 
@@ -1941,7 +2082,7 @@
                         // Pequeño delay artificial para deterred fuerza bruta y dar peso a la UI
                         setTimeout(() => {
                             alert("La contraseña ingresada no es válida.");
-                            btn.innerHTML = originalText;
+                            if (btn) btn.innerHTML = originalText;
                             passInput.value = "";
                             passInput.focus();
                         }, 500);
@@ -1950,10 +2091,10 @@
                 } catch (e) {
                     console.error("Error Auth Crítico:", e);
                     alert("Error verificando credenciales. Intente nuevamente.");
-                    btn.innerHTML = originalText;
+                    if (btn) btn.innerHTML = originalText;
                 }
             },
-            logout: () => { localStorage.clear(); location.reload(); },
+
 
             // NAVEGACIÓN MANUAL (SIMPLE)
             initNavigation() {
@@ -1962,7 +2103,13 @@
                     const link = e.target.closest('.sidebar-link[data-tid]');
                     if (link) {
                         e.preventDefault();
+                        e.stopPropagation(); // AISLAMIENTO DE EVENTOS: Evita que el click suba a contenedores padre
+
                         const tid = link.getAttribute('data-tid');
+
+                        // Bloqueo temporal del Observer para evitar "saltos" de active state
+                        UIHandlers.isManualScroll = true;
+                        clearTimeout(UIHandlers.scrollTimeout);
 
                         // Scroll directo sin complicaciones
                         const targetId = `sec-${tid}`;
@@ -1991,6 +2138,11 @@
                         // UX Básico: Marcar activo inmediatamente
                         document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
                         link.classList.add('active');
+
+                        // Liberar bloqueo del Observer después de la animación de scroll (aprox 1s)
+                        UIHandlers.scrollTimeout = setTimeout(() => {
+                            UIHandlers.isManualScroll = false;
+                        }, 1000);
 
                         // En móvil cerrar sidebar
                         if (window.innerWidth < 1024) UIHandlers.toggleSidebar();
@@ -2049,6 +2201,12 @@
                     src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
                     allowfullscreen></iframe>`;
+            },
+
+            // LOGOUT: Limpieza total y recarga
+            logout() {
+                localStorage.clear();
+                location.reload();
             },
 
         };
@@ -2121,9 +2279,8 @@
                     const fetchUrl = proxyFn(url);
 
                     try {
-                        console.log(`📡 Conectando vía Proxy ${i + 1}...`);
                         const controller = new AbortController();
-                        const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s Timeout generoso
+                        const timeoutId = setTimeout(() => controller.abort(), 5000); // Reducido a 5s para mayor agilidad
 
                         const response = await fetch(fetchUrl, { signal: controller.signal });
                         clearTimeout(timeoutId);
@@ -2133,16 +2290,17 @@
                         const text = await response.text();
 
                         // Validación básica (evitar páginas de error de proxy disfrazadas de 200 OK)
-                        if (!text || text.length < 50 || text.includes('<!DOCTYPE html>')) {
+                        // FIX: Bajado límite de 50 a 5 para permitir CSVs cortos como el banner
+                        if (!text || text.length < 5 || text.includes('<!DOCTYPE html>')) {
                             throw new Error('Respuesta inválida (posible error de proxy)');
                         }
 
                         return this.parseCSV(text);
 
                     } catch (error) {
-                        console.warn(`⚠️ Falló Proxy ${i + 1}:`, error.message);
+                        console.warn(`⚠️ Proxy ${i + 1} falló, intentando siguiente...`);
                         if (i === this.proxies.length - 1) {
-                            console.error('❌ Todos los proxies fallaron. Verifica conexión.');
+                            console.error('❌ Error de conexión: Todos los proxies fallaron.');
                             return [];
                         }
                     }
@@ -2181,7 +2339,7 @@
                     return clean;
                 });
 
-                return arr.slice(1).filter(r => r.length > 1).map(row => {
+                return arr.slice(1).filter(r => r.some(cell => cell && cell.trim().length > 0)).map(row => {
                     const obj = {};
                     headers.forEach((h, i) => {
                         let val = row[i] || "";
@@ -2202,12 +2360,13 @@
             slugify(text) {
                 if (!text) return "unknown";
                 return text.toString()
-                    .replace(/\u00FC|\u00DC/g, 'u') // Manual 'ü' replacement for safety
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
                     .toLowerCase()
-                    .replace(/[^a-z0-9]+/g, '-')
-                    .replace(/^-+|-+$/g, '')
+                    .replace(/\u00FC|\u00DC/g, 'u') // Diéresis
+                    .replace(/\u00F1|\u00D1/g, 'n') // Ñ
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "") // Quitar acentos
+                    .replace(/[^a-z0-9]+/g, '-')     // Solo alfanuméricos y guiones
+                    .replace(/^-+|-+$/g, '')         // Limpiar bordes
                     .trim();
             }
         };
@@ -2221,9 +2380,14 @@
             },
             renderCatalog() {
                 try {
+                    console.log("🚀 RenderEngine: Starting Catalog Architecture v3.0 (Modular)");
                     const sidebar = document.getElementById('sidebar-menu');
                     const panel = document.getElementById('tables-container');
-                    if (!sidebar || !panel) return;
+
+                    if (!sidebar || !panel) {
+                        console.error("Elementos UI críticos no encontrados");
+                        return;
+                    }
 
                     // 1. CAPTURA DE ESTADO PREVIO (Persistencia Acordeones)
                     const openGroups = new Set();
@@ -2234,88 +2398,25 @@
                         }
                     });
 
-                    // 2. FASE DE ARQUITECTO: CONSTRUIR LA JERARQUÍA
+                    // 2. Obtener Datos
+                    if (!STATE.nav.length) {
+                        if (panel.innerHTML.trim() === '') {
+                            panel.innerHTML = `<div class="p-20 text-center animate-fade-in text-slate-400">Cargando catálogo...</div>`;
+                        }
+                        return;
+                    }
+
+                    // 3. FASE DE ARQUITECTO: CONSTRUIR LA JERARQUÍA
                     const tree = this.buildHierarchy(STATE.nav);
 
-                    let sHtml = '';
-                    let pHtml = '';
+                    // 4. FASE DE PINTOR: RENDERIZADO MODULAR
+                    const sHtml = this.generateSidebarHTML(tree, openGroups);
+                    const pHtml = this.generateContentHTML(tree);
 
-                    // 3. FASE DE PINTOR: RENDERIZADO RECURSIVO
-                    tree.forEach(section => {
-                        // Header Sección
-                        sHtml += `<div class="sidebar-label-l1">${section.title}</div>`;
-
-                        pHtml += `<div class="section-container">
-                                    <h2 class="section-title-l1">${section.displayTitle}</h2>
-                                    <p class="section-desc-l1">${section.desc}</p>`;
-
-                        // Iterar hijos (Subtítulos, Grupos, Items)
-                        section.children.forEach(node => {
-
-                            // SUBTÍTULO
-                            if (node.type === 'subtitle') {
-                                sHtml += `<div class="sidebar-subtitle-context">${node.title}</div>`;
-                                pHtml += `<div class="subtitulo-container">
-                                            <h3 class="subtitulo-title">${node.title}</h3>
-                                            ${node.desc ? `<p class="subtitulo-desc">${node.desc}</p>` : ''}
-                                          </div>`;
-                            }
-
-                            // AGRUPADOR (Accordion)
-                            else if (node.type === 'group') {
-                                const isOpen = openGroups.has(node.title);
-                                const openClass = isOpen ? 'is-open' : '';
-                                const rotateClass = isOpen ? 'rotate-180' : '';
-                                const activeClass = isOpen ? 'bg-slate-100 text-secondary' : '';
-
-                                // Sidebar: Botón Acordeón
-                                sHtml += `<div class="mb-1">
-                                    <button class="sidebar-item-accordion group ${activeClass}" aria-expanded="${isOpen}" onclick="UIHandlers.toggleAccordion(this)">
-                                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-300 group-hover:text-primary transition-colors ${rotateClass}"></i>
-                                        <span class="text-left tracking-wide">${node.title}</span>
-                                    </button>
-                                    <nav class="mt-1 sidebar-accordion-content space-y-1 ${openClass}">`;
-
-                                node.items.forEach(item => {
-                                    sHtml += `<a href="#sec-${item.id}" data-tid="${item.id}" class="sidebar-link child-link">${item.label}</a>`;
-                                });
-                                sHtml += `</nav></div>`;
-
-                                // Panel: Contenedor Grupo
-                                pHtml += `<div class="group-container">
-                                            <div class="group-header">
-                                                <h3 class="group-title">${node.title}</h3>
-                                                <p class="text-xs text-slate-500 font-medium max-w-3xl">${node.desc}</p>
-                                            </div>`;
-                                node.items.forEach(item => {
-                                    pHtml += this.renderItemPanel(item);
-                                });
-                                pHtml += `</div>`;
-                            }
-
-                            // ITEM SUELTO
-                            else if (node.type === 'item') {
-                                const iconSlug = DataService.slugify(node.label).replace(/-/g, '');
-                                const matchedKey = Object.keys(APP_CONFIG.ICONS.ITEM).find(k => iconSlug.includes(k) || k.includes(iconSlug));
-                                const iconName = APP_CONFIG.ICONS.ITEM[matchedKey] || "circle";
-
-                                sHtml += `<div class="mb-1 space-y-1 mt-2">
-                                            <a href="#sec-${node.id}" data-tid="${node.id}" class="sidebar-link group">
-                                                <i data-lucide="${iconName}" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
-                                                <span>${node.label}</span>
-                                            </a>
-                                          </div>`;
-                                pHtml += this.renderItemPanel(node);
-                            }
-                        });
-
-                        pHtml += `</div>`; // Cierre section-container
-                    });
-
-                    // 4. INYECCIÓN FINAL
-                    if (sHtml === '') {
-                        panel.innerHTML = `<div class="p-20 text-center animate-fade-in text-slate-400">Cargando catálogo...</div>`;
-                        // Si falló algo grave silenciosamente, forzamos recarga segura
+                    // 5. INYECCIÓN PROTEGIDA
+                    if (!sHtml) {
+                        console.error("RenderEngine: Sidebar HTML vacío");
+                        panel.innerHTML = `<div class="p-8 text-center text-red-500">Error rendering UI</div>`;
                         setTimeout(() => location.reload(), 2000);
                     } else {
                         sidebar.innerHTML = sHtml;
@@ -2325,84 +2426,242 @@
 
                 } catch (err) {
                     console.error("Error Crítico UI:", err);
-                    document.getElementById('tables-container').innerHTML = `<div class="p-8 text-center text-red-500">Error de Sistema: ${err.message}</div>`;
+                    const panel = document.getElementById('tables-container');
+                    if (panel) panel.innerHTML = `<div class="p-8 text-center text-red-500">Error Fatal de Interfaz: ${err.message}</div>`;
                 }
+            },
+
+            // --- GENERADOR DEL SIDEBAR (Menú de Navegación) ---
+            generateSidebarHTML(tree, openGroups) {
+                let html = '';
+                // Fallback si no se pasa el Set
+                const activeGroups = openGroups || new Set();
+
+                tree.forEach(section => {
+                    // Nivel 1: Título de Sección
+                    html += `<div class="sidebar-label-l1">${section.title}</div>`;
+
+                    section.children.forEach(node => {
+                        // Nivel 2: Subtítulo
+                        if (node.type === 'subtitle') {
+                            html += `<div class="sidebar-subtitle-context">${node.title}</div>`;
+
+                            if (node.children) {
+                                node.children.forEach(child => this.appendSidebarNode(html, child, activeGroups, (h) => html += h));
+                            }
+                        }
+                        // Nivel Directo
+                        else {
+                            this.appendSidebarNode(html, node, activeGroups, (h) => html += h);
+                        }
+                    });
+                });
+                return html;
+            },
+
+            // --- HELPER INTERNO PARA NODOS DEL SIDEBAR ---
+            appendSidebarNode(currentHtml, node, openGroups, appendFn) {
+                let fragment = '';
+
+                // CASO A: GRUPO
+                if (node.type === 'group') {
+                    const isOpen = openGroups.has(node.title);
+                    const openClass = isOpen ? 'is-open' : '';
+                    const rotateClass = isOpen ? 'rotate-180' : '';
+                    const activeClass = isOpen ? 'bg-slate-100 text-secondary' : '';
+
+                    fragment += `<div class="mb-1">
+                        <button class="sidebar-item-accordion group ${activeClass}" aria-expanded="${isOpen}" onclick="UIHandlers.toggleAccordion(this)">
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-300 group-hover:text-primary transition-colors ${rotateClass}"></i>
+                            <span class="text-left tracking-wide">${node.title}</span>
+                        </button>
+                        <div class="sidebar-accordion-content ${openClass}">
+                            <nav class="sidebar-accordion-inner space-y-1">`;
+
+                    node.items.forEach(item => {
+                        fragment += `<a href="#sec-${item.id}" data-tid="${item.id}" class="sidebar-link child-link">${item.label}</a>`;
+                    });
+                    fragment += `</nav></div></div>`;
+                }
+                // CASO B: ITEM SUELTO
+                else if (node.type === 'item') {
+                    const iconSlug = DataService.slugify(node.label).replace(/-/g, '');
+
+                    let iconName = "circle";
+                    const keywordMap = { 'gotas': 'droplet', 'jarabe': 'flask-conical', 'crema': 'sparkles', 'unguento': 'sparkles', 'gel': 'droplets', 'capsulas': 'pill', 'glóbulos': 'circle-dot', 'oficinales': 'flask-conical', 'esencias': 'flower-2', 'floral': 'flower-2', 'alimento': 'apple', 'shampoo': 'droplets', 'locion': 'spray-can', 'spray': 'spray-can' };
+
+                    const exactMatch = Object.keys(APP_CONFIG.ICONS.ITEM).find(k => iconSlug.includes(k) || k.includes(iconSlug));
+                    if (exactMatch) iconName = APP_CONFIG.ICONS.ITEM[exactMatch];
+                    else {
+                        const k = Object.keys(keywordMap).find(key => iconSlug.includes(key));
+                        if (k) iconName = keywordMap[k];
+                    }
+
+                    fragment += `<div class="mb-1 space-y-1 mt-2">
+                                <a href="#sec-${node.id}" data-tid="${node.id}" class="sidebar-link group">
+                                    <i data-lucide="${iconName}" class="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors"></i>
+                                    <span>${node.label}</span>
+                                </a>
+                              </div>`;
+                }
+                appendFn(fragment);
+            },
+
+            // --- GENERADOR DEL CONTENIDO (Panel Principal) ---
+            generateContentHTML(tree) {
+                let html = '';
+
+                tree.forEach(section => {
+                    // NIVEL 1: SECCIÓN
+                    html += `<div class="section-container mb-24">
+                                <h1 class="text-4xl font-black text-secondary mb-4 tracking-tighter">${section.displayTitle}</h1>
+                                <p class="text-slate-500 mb-10 text-lg font-light max-w-5xl leading-relaxed">${section.desc}</p>
+                                <div class="section-content">`;
+
+                    section.children.forEach(node => {
+                        // NIVEL 2: SUBTÍTULO
+                        if (node.type === 'subtitle') {
+                            // CONTENEDOR FLUSH-LEFT (Sin Clases Custom)
+                            html += `<div class="mb-16 pl-0 ml-0">
+                                        <h2 class="text-2xl font-bold text-slate-800 mb-6 pl-0 ml-0">${node.title}</h2>
+                                        ${node.desc ? `<p class="text-slate-500 mb-8 italic max-w-4xl pl-0 ml-0">${node.desc}</p>` : ''}`;
+
+                            if (node.children) {
+                                html += `<div class="space-y-12 pl-0 ml-0">`; // Eliminada clase 'subtitle-children'
+                                node.children.forEach(child => this.appendContentNode(html, child, (h) => html += h));
+                                html += `</div>`;
+                            }
+                            html += `</div>`;
+                        }
+                        // Opción 2: Nodo directo
+                        else {
+                            html += `<div class="mb-12 pl-0 ml-0">`;
+                            this.appendContentNode(html, node, (h) => html += h);
+                            html += `</div>`;
+                        }
+                    });
+
+                    html += `</div></div>`; // Fin section-container
+                });
+                return html;
+            },
+
+            // --- HELPER INTERNO PARA NODOS DE CONTENIDO ---
+            appendContentNode(currentHtml, node, appendFn) {
+                let fragment = '';
+
+                // CASO A: GRUPO
+                if (node.type === 'group') {
+                    // CONTENEDOR GRUPO FLUSH-LEFT
+                    fragment += `<div class="mb-12 pl-0 ml-0">
+                                    <div class="mb-6 pb-2 border-b border-slate-100 flex items-baseline gap-3 pl-0 ml-0">
+                                        <h3 class="text-xl font-bold text-emerald-800 pl-0 ml-0">${node.title}</h3>
+                                        <p class="text-sm text-slate-400 font-medium">${node.desc}</p>
+                                    </div>
+                                    <div class="pl-0 ml-0">`; // Container de items FLUSH
+
+                    node.items.forEach(item => {
+                        fragment += this.renderItemPanel(item);
+                    });
+                    fragment += `</div></div>`;
+                }
+                // CASO B: ITEM
+                else if (node.type === 'item') {
+                    fragment += this.renderItemPanel(node);
+                }
+                appendFn(fragment);
             },
 
             // --- FASE 1: EL ARQUITECTO (Construcción Jerárquica corregida) ---
             buildHierarchy(rows) {
                 const tree = [];
-
-                // Estados persistentes del recorrido
-                let activeSection = null;
-                let activeSubtitle = null;
-                let activeGroup = null;
+                const sectionMap = new Map();
 
                 rows.forEach(row => {
                     const l1 = (row.nivel_1 || "").trim();
                     if (!l1) return;
 
-                    // 1. NIVEL 1 (SECCIÓN)
-                    // Si cambia la sección, reseteamos ABSOLUTAMENTE TODO
-                    if (!activeSection || activeSection.rawTitle !== l1) {
-                        activeSection = {
+                    // 1. NIVEL 1 (SECCIÓN) - Garantizar unicidad
+                    if (!sectionMap.has(l1)) {
+                        const sectionNode = {
                             type: 'section',
                             title: l1.charAt(0).toUpperCase() + l1.slice(1).toLowerCase(),
                             rawTitle: l1,
                             displayTitle: row.nivel_1_titulo || l1,
                             desc: row.nivel_1_descripcion || '',
-                            children: []
+                            children: [],
+                            subtitleMap: new Map(), // Para rastrear subtítulos únicos dentro de esta sección
+                            itemMap: new Map()      // Para rastrear items (N2/N3) sueltos únicos
                         };
-                        tree.push(activeSection);
-
-                        // Reset de hijos
-                        activeSubtitle = null;
-                        activeGroup = null;
+                        sectionMap.set(l1, sectionNode);
+                        tree.push(sectionNode);
                     }
+
+                    const activeSection = sectionMap.get(l1);
 
                     // 2. NIVEL SUBTÍTULO
                     const sub = (row.subtitulo || "").trim();
-                    // Si hay subtítulo y es diferente al activo, creamos uno nuevo
+                    let activeSubtitle = null;
+
                     if (sub && sub !== 'undefined') {
-                        if (!activeSubtitle || activeSubtitle.title !== sub) {
-                            activeSubtitle = {
+                        if (!activeSection.subtitleMap.has(sub)) {
+                            const subtitleNode = {
                                 type: 'subtitle',
                                 title: sub,
-                                desc: row.subtitulo_descripcion || ''
+                                desc: row.subtitulo_descripcion || '',
+                                groupMap: new Map(), // Para rastrear grupos únicos dentro de este subtítulo
+                                children: []        // Para mantener el orden de inserción de grupos/items
                             };
-                            activeSection.children.push(activeSubtitle);
-
-                            // IMPORTANTE: Cambio de subtítulo implica resetear grupo
-                            activeGroup = null;
+                            activeSection.subtitleMap.set(sub, subtitleNode);
+                            activeSection.children.push(subtitleNode);
                         }
-                    } else if (!sub) {
-                        // Si la fila NO tiene subtítulo, limpiamos el estado activo
-                        activeSubtitle = null;
-                        // Opcional: ¿Debería resetear grupo? Depende de si un grupo puede cruzar fronteras de subtítulos vacíos.
-                        // Por seguridad asumimos que sí.
+                        activeSubtitle = activeSection.subtitleMap.get(sub);
                     }
 
                     // 3. NIVEL AGRUPADOR (ACORDEÓN)
                     const agp = (row.agrupador || "").trim();
+                    let activeGroup = null;
+
                     if (agp) {
-                        // Si hay grupo y es diferente al activo, creamos uno nuevo
-                        if (!activeGroup || activeGroup.title !== agp) {
-                            activeGroup = {
+                        const parent = activeSubtitle || activeSection;
+                        const containerMap = activeSubtitle ? activeSubtitle.groupMap : activeSection.itemMap;
+
+                        // Si el "agp" no existe en el contenedor actual, lo creamos
+                        if (!containerMap.has(agp)) {
+                            const groupNode = {
                                 type: 'group',
                                 title: agp,
                                 desc: row.agrupador_descripcion || '',
-                                items: []
+                                items: [],
+                                itemSet: new Set() // Para evitar productos duplicados exactos en el mismo grupo
                             };
-                            activeSection.children.push(activeGroup);
+                            containerMap.set(agp, groupNode);
+
+                            if (activeSubtitle) {
+                                activeSubtitle.children.push(groupNode);
+                            } else {
+                                activeSection.children.push(groupNode);
+                            }
                         }
-                    } else {
-                        // Si no hay grupo, el item va suelto
-                        activeGroup = null;
+                        activeGroup = containerMap.get(agp);
                     }
 
                     // 4. NIVEL ITEM (HOJA)
                     const titleShort = row.nivel_3 || row.nivel_2 || "Item";
-                    const rawId = row.tabla_id || (agp || sub || l1) + "-" + titleShort;
+
+                    // ESTRATEGIA DE ID ÚNICO (Jerárquico)
+                    // Genera IDs tipo "agrupador-item" (ej: "pomadas-arnica") para evitar colisiones 
+                    // cuando un mismo nombre de producto existe en diferentes categorías.
+                    let context = agp || sub || l1 || "global";
+                    let identifier = row.tabla_id || titleShort;
+
+                    // Optimización: Si el identifier ya empieza con el context (duplicidad manual), lo simplificamos
+                    // Esto maneja casos donde el usuario ya puso "Pomadas Arnica" en el nombre.
+                    if (identifier.toLowerCase().startsWith(context.toLowerCase())) {
+                        context = "";
+                    }
+
+                    const rawId = context ? `${context}-${identifier}` : identifier;
                     const cleanId = DataService.slugify(rawId);
 
                     const itemNode = {
@@ -2413,11 +2672,23 @@
                         tablaId: row.tabla_id
                     };
 
-                    // Asignación: Si hay grupo activo, va al grupo. Si no, directo a la sección.
+                    // Asignación con control de duplicados
                     if (activeGroup) {
-                        activeGroup.items.push(itemNode);
+                        if (!activeGroup.itemSet.has(cleanId)) {
+                            activeGroup.items.push(itemNode);
+                            activeGroup.itemSet.add(cleanId);
+                        }
                     } else {
-                        activeSection.children.push(itemNode);
+                        const container = activeSubtitle || activeSection;
+                        // Solo añadimos si el item no existe ya en este nivel (basado en su cleanId)
+                        if (!activeSection.itemMap.has(cleanId)) {
+                            activeSection.itemMap.set(cleanId, itemNode);
+                            if (activeSubtitle) {
+                                activeSubtitle.children.push(itemNode);
+                            } else {
+                                activeSection.children.push(itemNode);
+                            }
+                        }
                     }
                 });
 
@@ -2502,20 +2773,20 @@
                         <table class="data-grid">
                             <thead>
                                 <tr>
-                                    <th class="pl-6">Producto</th>
+                                    <th class="pl-4">Producto</th>
                                     <th class="text-right professional-only text-emerald-600">Precio farmacia</th>
-                                    <th class="text-right pr-6">Precio público</th>
+                                    <th class="text-right pr-4">Precio público</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 ${items.map(p => `
                                 <tr class="hover:bg-slate-100 transition-colors">
-                                    <td class="pl-6 product-name">
+                                    <td class="pl-4 product-name">
                                         <div class="font-medium text-secondary text-sm">${p.producto}</div>
                                         <div class="text-[10px] text-slate-400 font-bold tracking-tight">${p.presentacion || ''}</div>
                                     </td>
                                     <td class="text-right professional-only font-bold text-emerald-600" data-label="Farmacia">${this.formatPrice(p.precio_farmacia)}</td>
-                                    <td class="text-right font-black text-secondary pr-6" data-label="Público">${this.formatPrice(p.precio_publico)}</td>
+                                    <td class="text-right font-black text-secondary pr-4" data-label="Público">${this.formatPrice(p.precio_publico)}</td>
                                 </tr>`).join('')}
                             </tbody>
                         </table>
@@ -2572,6 +2843,12 @@
                             const cleanNum = Formatters.whatsapp(mainWA);
                             const msg = encodeURIComponent("Hola Mundo Homeopático, requiero información sobre distribución y precios.");
                             btnSidebar.href = `https://wa.me/${cleanNum}?text=${msg}`;
+
+                            // Punto 12: Actualizar también el WhatsApp del Footer
+                            const footerWA = document.getElementById('footer-whatsapp-link');
+                            if (footerWA) {
+                                footerWA.href = `https://wa.me/${cleanNum}?text=${msg}`;
+                            }
                         }
                     }
 
@@ -2585,32 +2862,87 @@
                         else if (sedeLower.includes('santander')) logoName = 'logo-mundo-homeopatico';
                         else if (sedeLower.includes('cordoba') || sedeLower.includes('córdoba')) logoName = 'logo-eco-natural';
 
+                        // DISEÑO REFINADO: Split Layout (Info Left / Map Right)
                         html += `<div class="col-span-1 md:col-span-2 mb-8 animate-fade-in">
-                            <div class="bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 rounded-lg p-8 relative overflow-hidden group hover:shadow-lg transition-all">
-                                <!-- Decoración de fondo -->
-                                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-100 rounded-full blur-3xl -mr-16 -mt-16 opacity-50"></div>
+                            <div class="flex flex-col md:flex-row bg-[#F0FDF4] border border-emerald-100/50 rounded-3xl overflow-hidden shadow-sm">
                                 
-                                <div class="relative z-10 flex flex-col md:flex-row gap-8 items-start">
-                                    <div class="flex-shrink-0 bg-white p-4 rounded-lg shadow-sm border border-emerald-50">
-                                        <img src="img/${logoName}.webp" alt="Logo Sede" class="w-20 h-20 object-contain" onerror="this.src='https://placehold.co/80x80?text=MH'">
+                                <!-- COLUMNA IZQUIERDA: INFORMACIÓN Y ACCIONES -->
+                                <div class="p-8 md:p-10 flex-1 flex flex-col justify-center">
+                                    
+                                    <!-- Header: Icono + Título -->
+                                    <div class="flex items-center gap-5 mb-8">
+                                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm text-emerald-500 border border-emerald-50">
+                                             <img src="img/${logoName}.webp" alt="Logo Sede" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/40x40?text=MH'">
+                                        </div>
+                                        <div>
+                                            <h4 class="text-2xl font-black text-slate-800 leading-tight">${toTitleCase(hq.sede)}</h4>
+                                            <p class="text-[11px] font-black text-emerald-500 tracking-widest uppercase mt-1">Medellín, Antioquia</p> 
+                                        </div>
                                     </div>
-                                    <div class="flex-grow">
-                                        <div class="flex items-center gap-3 mb-2">
-                                            <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-black capitalize tracking-wide rounded-full">Sede principal</span>
-                                            <h4 class="text-2xl font-black text-secondary tracking-tight">${toTitleCase(hq.sede)}</h4>
-                                        </div>
+
+                                    <!-- Datos de Contacto (Iconos alineados) -->
+                                    <div class="space-y-4 mb-10">
+                                        ${hq.direccion ? `
+                                        <div class="flex items-start gap-4 text-slate-500 font-medium text-sm">
+                                            <div class="w-5 flex justify-center mt-0.5"><i data-lucide="map-pin" class="w-5 h-5 text-slate-400"></i></div>
+                                            <span>${hq.direccion}</span>
+                                        </div>` : ''}
                                         
-                                        <!-- UBICACIÓN FÍSICA AÑADIDA -->
-                                        ${hq.direccion ?
-                                `<p class="flex items-center gap-2 text-slate-500 mb-4 font-medium">
-                                            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-500"></i> ${hq.direccion}
-                                         </p>` : ''}
+                                        ${hq.horarios ? `
+                                        <div class="flex items-start gap-4 text-slate-500 font-medium text-sm">
+                                            <div class="w-5 flex justify-center mt-0.5"><i data-lucide="clock" class="w-5 h-5 text-slate-400"></i></div>
+                                            <span>${hq.horarios}</span>
+                                        </div>` : ''}
+                                    </div>
+
+                                    <!-- Botones de Acción (Grid 2 Columnas) -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         
-                                        <div class="flex flex-wrap gap-3 mt-6">
-                                            ${this.generateContactButtons(hq)}
-                                        </div>
+                                        <!-- Botón 1: Llamada a la Acción Principal (Verde Sólido) -->
+                                        <a href="https://wa.me/${Formatters.whatsapp(hq.whatsapp_1 || '')}" target="_blank" 
+                                           class="flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#059669] text-white py-3 px-6 rounded-xl font-bold transition-all shadow-lg shadow-emerald-200/50 hover:shadow-emerald-300/50 transform hover:-translate-y-0.5">
+                                            <i data-lucide="phone" class="w-5 h-5 fill-current"></i>
+                                            <span>${hq.telefono_1 || 'Contactar'}</span>
+                                        </a>
+
+                                        <!-- Botón 2: Cómo llegar (Blanco Bordeado) -->
+                                        <!-- Botón 2: Cómo llegar (Google Maps Search Fallback) -->
+                                        <a href="${(() => {
+                                if (hq.mapa_link) return hq.mapa_link;
+                                // Fallback: Generar enlace de búsqueda automática
+                                const query = encodeURIComponent((hq.direccion || "") + ", " + (hq.ciudad || "Medellín") + ", Colombia");
+                                return `https://www.google.com/maps/search/?api=1&query=${query}`;
+                            })()}" target="_blank"
+                                           class="flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 py-3 px-6 rounded-xl font-bold transition-colors shadow-sm">
+                                            <i data-lucide="navigation" class="w-5 h-5"></i>
+                                            <span>Cómo llegar</span>
+                                        </a>
+
                                     </div>
                                 </div>
+
+                                <!-- COLUMNA DERECHA: MAPA VISUAL (Grisáceo) -->
+                                <div class="w-full md:w-[380px] bg-slate-100 relative min-h-[300px] border-l border-emerald-50">
+                                    ${(() => {
+                                // 1. Si es un iframe completo, inyectar clases y usar
+                                if (hq.mapa && hq.mapa.includes('<iframe')) {
+                                    return hq.mapa.replace('<iframe', '<iframe class="w-full h-full absolute inset-0 mix-blend-multiply opacity-90 hover:opacity-100 transition-opacity"');
+                                }
+
+                                // 2. Si es una URL, validar si es embeddable. Si no, generar búsqueda por dirección
+                                let mapSrc = hq.mapa || "";
+                                const isEmbed = mapSrc.includes('output=embed') || mapSrc.includes('/embed');
+
+                                // Fallback inteligente: Si no es embed o está vacío, usar dirección + ciudad
+                                if (!isEmbed || !mapSrc) {
+                                    const query = encodeURIComponent((hq.direccion || hq.sede || "Mundo Homeopatico") + " Medellín Colombia");
+                                    mapSrc = `https://maps.google.com/maps?q=${query}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+                                }
+
+                                return `<iframe src="${mapSrc}" class="w-full h-full absolute inset-0 mix-blend-multiply opacity-90 hover:opacity-100 transition-opacity" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`;
+                            })()}
+                                </div>
+
                             </div>
                         </div>`;
                     });
@@ -2712,8 +3044,10 @@
             },
             formatPrice: (v) => {
                 if (!v || v === '-') return '-';
-                const str = String(v).replace(/\D/g, '');
-                return str ? `$ ${parseInt(str).toLocaleString('es-CO')} ` : '-';
+                const num = parseInt(String(v).replace(/\D/g, ''));
+                if (isNaN(num)) return '-';
+                // Formato colombiano: separador de miles = punto, sin decimales
+                return `$${num.toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
             },
             initObserver() {
                 // OBSERVER MEJORADO: Margen ajustado para detectar mejor el centro de la pantalla
@@ -2756,7 +3090,8 @@
                 prices: 'mh_cache_prices',
                 nav: 'mh_cache_nav',
                 faq: 'mh_cache_faq',
-                dist: 'mh_cache_dist'
+                dist: 'mh_cache_dist',
+                banner: 'mh_cache_banner'
             };
 
             // Flag para evitar doble render
@@ -2768,95 +3103,122 @@
                 const cachedNav = localStorage.getItem(keys.nav);
                 const cachedFaq = localStorage.getItem(keys.faq);
                 const cachedDist = localStorage.getItem(keys.dist);
+                const cachedBanner = localStorage.getItem(keys.banner);
 
                 if (cachedPrices && cachedNav) {
                     STATE.prices = JSON.parse(cachedPrices);
                     STATE.nav = JSON.parse(cachedNav);
                     STATE.faq = cachedFaq ? JSON.parse(cachedFaq) : [];
                     STATE.dist = cachedDist ? JSON.parse(cachedDist) : [];
-                    console.log('⚡ Renderizado inicial (Caché)');
                     RenderEngine.renderAll();
                     hasRenderedFromCache = true;
                 }
+
+                // Mostrar banner desde caché inmediatamente si existe
+                if (cachedBanner && localStorage.getItem('mh_banner_closed') !== 'true') {
+                    const bannerTextEl = document.getElementById('bannerText');
+                    if (bannerTextEl) {
+                        bannerTextEl.textContent = cachedBanner;
+                        document.getElementById('bannerWrapper')?.classList.remove('collapsed');
+                        document.body.classList.add('has-banner');
+                    }
+                }
             } catch (e) { console.error('Error leyendo caché', e); }
 
-            // 2. Fetch Background (Estrategia Stale-While-Revalidate)
-            // Carga de recursos secundarios (no bloqueantes)
-            DataService.fetchCSV(APP_CONFIG.SHEETS.AUTHOR).then(d => {
-                if (d && d[0]) {
-                    const l = document.getElementById('author-link');
-                    l.textContent = d[0].nombre || ""; l.href = d[0].url || "#";
-                    document.getElementById('author-credit').classList.remove('opacity-0');
-                }
-            });
+            // 2. Carga Inmediata del Banner (Prioridad Visual)
             DataService.fetchCSV(APP_CONFIG.SHEETS.BANNER).then(d => {
-                if (localStorage.getItem('mh_banner_closed') === 'true') return;
-
-                const bannerTextEl = document.getElementById('bannerText');
-                if (d && d[0] && d[0].mensaje && bannerTextEl) {
-                    const bw = document.getElementById('bannerWrapper');
-                    bannerTextEl.textContent = d[0].mensaje;
-                    bw.classList.remove('collapsed');
-                    document.body.classList.add('has-banner');
-                }
-            });
-            DataService.fetchCSV(APP_CONFIG.SHEETS.VIDEO).then(d => {
-                if (d && d[0] && d[0].url) {
-                    const videoId = d[0].url.split('v=')[1]?.split('&')[0] || d[0].url.split('/').pop();
-                    if (!videoId) return;
-
-                    // Renderizar FACHADA (Imagen + Botón) en lugar de Iframe pesado
-                    const container = document.getElementById('videoContainer');
-                    if (container) {
-                        container.innerHTML = `
-            <div class="youtube-facade w-full h-full group" onclick="UIHandlers.loadVideo(this, '${videoId}')">
-                <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="Video de Calidad"
-                    onerror="this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'"> <!-- Fallback a HQ si no hay MaxRes -->
-                    <div class="play-button shadow-2xl"></div>
-            </div>`;
+                const bannerMsg = d?.[0]?.banner || d?.[0]?.mensaje || "";
+                if (bannerMsg) {
+                    localStorage.setItem(keys.banner, bannerMsg);
+                    if (localStorage.getItem('mh_banner_closed') === 'true') return;
+                    const bannerTextEl = document.getElementById('bannerText');
+                    if (bannerTextEl) {
+                        document.getElementById('bannerWrapper')?.classList.remove('collapsed');
+                        bannerTextEl.textContent = bannerMsg;
+                        document.body.classList.add('has-banner');
                     }
                 }
-            });
+            }).catch(e => console.warn("Banner fetch error", e));
 
-            try {
-                // Activar Barra de Carga Real
-                UIHandlers.showLoading(true);
-
-                const [p, n, f, dist, auth] = await Promise.all([
-                    DataService.fetchCSV(APP_CONFIG.SHEETS.PRICES),
-                    DataService.fetchCSV(APP_CONFIG.SHEETS.NAV),
-                    DataService.fetchCSV(APP_CONFIG.SHEETS.FAQ),
-                    DataService.fetchCSV(APP_CONFIG.SHEETS.DIST),
-                    DataService.fetchCSV(APP_CONFIG.SHEETS.AUTH)
-                ]);
-
-                // Actualizar Estado y Caché
-                if (p.length) { STATE.prices = p; localStorage.setItem(keys.prices, JSON.stringify(p)); }
-                if (n.length) { STATE.nav = n; localStorage.setItem(keys.nav, JSON.stringify(n)); }
-                if (f.length) { STATE.faq = f; localStorage.setItem(keys.faq, JSON.stringify(f)); }
-                if (dist.length) { STATE.dist = dist; localStorage.setItem(keys.dist, JSON.stringify(dist)); }
-                if (auth && auth.length) { STATE.auth = auth; console.log('🔐 Accesos cargados'); }
-
-                // Finalizar Barra de Carga
-                UIHandlers.showLoading(false);
-
-                // Actualizar UI con datos frescos SOLO si no había caché
-                if (p.length && n.length) {
-                    console.log('📦 Caché actualizada (silencioso)');
-                    // Solo re-renderizamos si es primera visita (sin caché previa)
-                    if (!hasRenderedFromCache) {
-                        RenderEngine.renderAll();
+            // 3. Carga diferida de otros recursos no críticos
+            setTimeout(() => {
+                DataService.fetchCSV(APP_CONFIG.SHEETS.AUTHOR).then(d => {
+                    if (d && d[0]) {
+                        const l = document.getElementById('author-link');
+                        if (l) { l.textContent = d[0].nombre || ""; l.href = d[0].url || "#"; }
+                        document.getElementById('author-credit')?.classList.remove('opacity-0');
                     }
-                } else if (!hasRenderedFromCache) {
-                    // Solo alertamos si no teníamos nada que mostrar
-                    alert("¡Atención! No se pudieron descargar los datos de Google Sheets. Verifica tu conexión a internet.");
-                    console.error("Fetch fallido: p.length=" + p.length + ", n.length=" + n.length);
+                }).catch(() => { });
+
+                DataService.fetchCSV(APP_CONFIG.SHEETS.VIDEO).then(d => {
+                    if (d && d[0] && d[0].url) {
+                        const videoId = d[0].url.split('v=')[1]?.split('&')[0] || d[0].url.split('/').pop();
+                        if (!videoId) return;
+                        const container = document.getElementById('videoContainer');
+                        if (container) {
+                            container.innerHTML = `<div class="youtube-facade w-full h-full group" onclick="UIHandlers.loadVideo(this, '${videoId}')">
+                                <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'">
+                                <div class="play-button shadow-2xl"></div>
+                            </div>`;
+                        }
+                    }
+                }).catch(() => { });
+            }, 800);
+
+            // 4. Fetch de datos PRINCIPALES (Estrategia Stale-While-Revalidate OPTIMIZADA)
+            // LÓGICA: Solo hacemos fetch de red si:
+            //   A) No hay caché (primera visita)
+            //   B) Es un refresh manual (F5/Ctrl+R) - detectado via Performance API
+            const isManualRefresh = performance.navigation?.type === 1 ||
+                (performance.getEntriesByType?.('navigation')?.[0]?.type === 'reload');
+            const shouldFetchFresh = !hasRenderedFromCache || isManualRefresh;
+
+            if (shouldFetchFresh) {
+                try {
+                    // Solo mostramos barra de carga si NO hay nada que mostrar (primera carga)
+                    if (!hasRenderedFromCache) UIHandlers.showLoading(true);
+
+                    const [p, n, f, dist, auth] = await Promise.all([
+                        DataService.fetchCSV(APP_CONFIG.SHEETS.PRICES),
+                        DataService.fetchCSV(APP_CONFIG.SHEETS.NAV),
+                        DataService.fetchCSV(APP_CONFIG.SHEETS.FAQ),
+                        DataService.fetchCSV(APP_CONFIG.SHEETS.DIST),
+                        DataService.fetchCSV(APP_CONFIG.SHEETS.AUTH)
+                    ]);
+
+                    // Actualizar Estado y Caché
+                    if (p.length) { STATE.prices = p; localStorage.setItem(keys.prices, JSON.stringify(p)); }
+                    if (n.length) { STATE.nav = n; localStorage.setItem(keys.nav, JSON.stringify(n)); }
+                    if (f.length) { STATE.faq = f; localStorage.setItem(keys.faq, JSON.stringify(f)); }
+                    if (dist.length) { STATE.dist = dist; localStorage.setItem(keys.dist, JSON.stringify(dist)); }
+                    if (auth && auth.length) { STATE.auth = auth; }
+
+                    // Finalizar Barra de Carga
+                    UIHandlers.showLoading(false);
+
+                    // Actualizar UI con datos frescos
+                    if (p.length && n.length) {
+                        // En refresh manual, SIEMPRE re-renderizamos para mostrar cambios
+                        if (isManualRefresh || !hasRenderedFromCache) {
+                            RenderEngine.renderAll();
+                        }
+                    } else if (!hasRenderedFromCache) {
+                        // Solo alertamos si no teníamos nada que mostrar
+                        alert("¡Atención! No se pudieron descargar los datos de Google Sheets. Verifica tu conexión a internet.");
+                    }
+                } catch (error) {
+                    console.error('Error en sincronización:', error);
+                    UIHandlers.showLoading(false);
+                    if (STATE.prices.length === 0) {
+                        document.getElementById('tables-container').innerHTML = `<div class="p-8 text-center text-red-500 font-bold">Error de conexión. Intente recargar.</div>`;
+                    }
                 }
-            } catch (error) {
-                console.error('Error en sincronización:', error);
-                if (STATE.prices.length === 0) {
-                    document.getElementById('tables-container').innerHTML = `<div class="p-8 text-center text-red-500 font-bold">Error de conexión. Intente recargar.</div>`;
-                }
+            } else {
+                // Caché válido + navegación normal = NO hacer fetch
+                // Cargar AUTH en background silencioso (para login)
+                DataService.fetchCSV(APP_CONFIG.SHEETS.AUTH).then(auth => {
+                    if (auth && auth.length) STATE.auth = auth;
+                }).catch(() => { }); // Silenciar errores
             }
         });
     </script>
