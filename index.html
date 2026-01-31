@@ -2216,16 +2216,20 @@
 
                 // Hard-Switch de Vistas
                 // Cambiar visibilidad de vistas y sidebars
+                const banner = document.getElementById('bannerWrapper');
+
                 if (viewId === 'contact') {
                     views.catalog.classList.add('hidden');
                     views.contact.classList.remove('hidden');
                     sidebars.catalog.classList.add('hidden');
                     sidebars.contact.classList.remove('hidden');
+                    if (banner) banner.classList.add('hidden'); // Ocultar banner en contacto
                 } else {
                     views.contact.classList.add('hidden');
                     views.catalog.classList.remove('hidden');
                     sidebars.contact.classList.add('hidden');
                     sidebars.catalog.classList.remove('hidden');
+                    if (banner) banner.classList.remove('hidden'); // Restaurar banner en catálogo
                 }
 
                 // Actualizar Botón (Solo texto para evitar saltos)
