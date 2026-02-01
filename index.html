@@ -14,10 +14,62 @@
     <!-- Open Graph (WhatsApp, Facebook) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mundohomeopatico.com/">
-    <meta property="og:title" content="Mundo Homeopático - Catálogo 2026">
+    <meta property="og:title" content="Mundo Homeopático - Lista de Precios 2026">
     <meta property="og:description"
         content="Consulta nuestra lista de precios actualizada y red de sedes en tiempo real.">
-    <meta property="og:image" content="img/logo-mundo-homeopatico.webp">
+    <meta property="og:image" content="https://mundohomeopatico.com/img/logo-mundo-homeopatico.webp">
+
+    <!-- SEO & GEO ROBUSTO - Mundo Homeopático 2026 -->
+    <link rel="canonical" href="https://mundohomeopatico.com/">
+
+    <!-- Geo Tags (Posicionamiento Local) -->
+    <meta name="geo.region" content="CO-ANT" />
+    <meta name="geo.placename" content="Medellín" />
+    <meta name="geo.position" content="6.2608861;-75.5602183" />
+    <meta name="ICBM" content="6.2608861, -75.5602183" />
+
+    <!-- Twitter Cards (Social SEO) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mundo Homeopático - Lista de Precios 2026">
+    <meta name="twitter:description"
+        content="Consulta nuestra lista de precios actualizada y red de sedes en tiempo real.">
+    <meta name="twitter:image" content="https://mundohomeopatico.com/img/logo-mundo-homeopatico.webp">
+
+    <!-- JSON-LD (Estructura de Negocio Local Principal) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Pharmacy",
+      "name": "Mundo Homeopático",
+      "image": "https://mundohomeopatico.com/img/logo-mundo-homeopatico.webp",
+      "@id": "https://mundohomeopatico.com",
+      "url": "https://mundohomeopatico.com",
+      "telephone": "+573176680750",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Carrera 49 # 64-06", 
+        "addressLocality": "La Candelaria, Medellín",
+        "addressRegion": "Antioquia",
+        "postalCode": "050012",
+        "addressCountry": "CO"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 6.2608861,
+        "longitude": -75.5602183
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "08:00",
+        "closes": "18:00"
+      },
+      "sameAs": [
+        "https://www.instagram.com/mundohomeopatico",
+        "https://wa.me/573176680750"
+      ]
+    }
+    </script>
 
     <!-- 
     ★ ARQUITECTURA MONOLÍTICA ESTRUCTURADA ★
@@ -139,6 +191,19 @@
             /* H1 Página Principal */
 
             --header-h: 80px;
+            --mobile-header-h: 64px;
+
+            /* DISTRIBUIDORES - SISTEMA ESTANDARIZADO REESTRUCTURACION */
+            --dist-card-bg: white;
+            --dist-card-border: var(--slate-200);
+            --dist-card-radius: 1rem;
+            --dist-primary-bg: linear-gradient(to bottom right, #ecfdf5, white);
+            --dist-primary-border: var(--primary);
+            --dist-primary-radius: 1.5rem;
+            --dist-whatsapp-bg: #22c55e;
+            --dist-whatsapp-hover: #16a34a;
+            --btn-py: 0.75rem;
+            --btn-px: 1rem;
 
             /* TOKENS SEMÁNTICOS */
             --p-header-v: 0.8rem;
@@ -765,6 +830,146 @@
             transform: translateY(-1px);
         }
 
+        /* Botón con Flecha Dinámica (Micro-interacción Premium) */
+        .btn-dynamic-arrow {
+            --primary-color: var(--secondary);
+            --secondary-color: #fff;
+            --hover-color: var(--primary);
+            --arrow-width: 10px;
+            --arrow-stroke: 2px;
+            box-sizing: border-box;
+            border: 0;
+            border-radius: 999px;
+            color: var(--secondary-color);
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            display: inline-flex;
+            transition: 0.2s all;
+            align-items: center;
+            gap: 0.6em;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: var(--font-sm);
+            line-height: 1;
+        }
+
+        .btn-dynamic-arrow .arrow-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-dynamic-arrow .arrow {
+            margin-top: 1px;
+            width: var(--arrow-width);
+            background: var(--primary-color);
+            height: var(--arrow-stroke);
+            position: relative;
+            transition: 0.2s;
+        }
+
+        .btn-dynamic-arrow .arrow::before {
+            content: "";
+            box-sizing: border-box;
+            position: absolute;
+            border: solid var(--secondary-color);
+            border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+            display: inline-block;
+            top: -3px;
+            right: 3px;
+            transition: 0.2s;
+            padding: 3px;
+            transform: rotate(-45deg);
+        }
+
+        .btn-dynamic-arrow:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px -10px var(--primary);
+        }
+
+        .btn-dynamic-arrow:hover .arrow {
+            background: var(--secondary-color) !important;
+        }
+
+        .btn-dynamic-arrow:hover .arrow:before {
+            right: 0;
+        }
+
+        /* From Uiverse.io by alshahwan - Adaptado a UI/UX Mundo Homeopático */
+        .btn-uiverse {
+            background-color: #fff;
+            border: 1px solid #cbd5e1;
+            /* Gris neutro como el buscador */
+            padding: 5px;
+            position: relative;
+            width: 100%;
+            height: 3.2rem;
+            transition: 0.5s;
+            font-size: 15px;
+            /* Ligeramente más pequeño para elegancia */
+            border-radius: 0.75rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            overflow: hidden;
+        }
+
+        .btn-uiverse p {
+            position: absolute;
+            top: 50%;
+            left: 1.5rem;
+            transform: translateY(-50%);
+            margin: 0;
+            padding: 0;
+            transition: .5s;
+            color: #64748b;
+            /* Texto gris pizarra medio */
+            font-weight: 600;
+        }
+
+        .btn-uiverse svg {
+            position: absolute;
+            top: 50%;
+            right: 1.5rem;
+            transform: translateY(-50%);
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            transition: 0.5s;
+            height: 1.1em;
+            fill: #fff
+        }
+
+        .btn-uiverse:hover p {
+            left: 1.25rem;
+            color: #fff
+        }
+
+        .btn-uiverse:hover svg {
+            opacity: 1;
+        }
+
+        .btn-uiverse:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Colores Específicos de Interacción */
+        .btn-uiverse.btn-inst:hover {
+            background-color: #E1306C;
+            /* Rosa Instagram */
+            border-color: #E1306C;
+            box-shadow: 0 4px 12px rgba(225, 48, 108, 0.3);
+        }
+
+        .btn-uiverse.btn-web:hover {
+            background-color: var(--primary);
+            /* Verde Institucional */
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
         /* RENDERIZADOR SEMÁNTICO (Clases para JS) */
 
 
@@ -885,58 +1090,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        @media (max-width: 1024px) {
-            .main-sidebar {
-                position: fixed;
-                left: 0;
-                transform: translateX(-100%);
-                z-index: 200;
-                height: 100vh;
-                top: 0;
-                box-shadow: 20px 0 50px rgba(0, 0, 0, 0.1);
-            }
-
-            .main-sidebar.open {
-                transform: translateX(0);
-            }
-
-            .data-grid thead {
-                display: none;
-            }
-
-            .data-grid td {
-                display: block;
-                text-align: right;
-                padding: 0.75rem 1rem;
-                position: relative;
-                border-bottom: 1px solid var(--slate-50);
-            }
-
-            .data-grid td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 1rem;
-                font-weight: 800;
-                color: var(--slate-400);
-                font-size: 0.6rem;
-            }
-
-            .data-grid td:first-child {
-                text-align: left;
-                padding-bottom: 1.25rem;
-                background: var(--slate-50);
-            }
-
-            /* Reset anchos fijos en móvil (columnas se vuelven bloques) */
-            .data-grid th:nth-child(2),
-            .data-grid td:nth-child(2),
-            .data-grid th:nth-child(3),
-            .data-grid td:nth-child(3) {
-                width: auto;
-                min-width: 0;
-                max-width: none;
-            }
-        }
+        /* Bloques móviles antiguos eliminados para evitar conflictos */
 
         .professional-only {
             display: none !important;
@@ -946,11 +1100,7 @@
             display: table-cell !important;
         }
 
-        @media (max-width: 1024px) {
-            body.professional-mode .professional-only {
-                display: block !important;
-            }
-        }
+        /* Bloque profesional móvil antiguo eliminado */
 
         .animate-fade-in {
             animation: fadeIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -971,6 +1121,172 @@
 
         .hidden {
             display: none !important;
+        }
+
+        /* 
+        ==========================================================================
+        ★ OPTIMIZACIÓN MÓVIL (MOBILE-FIRST RESPONSIVENESS) ★
+        ==========================================================================
+        Basado en especificaciones de codigo_mobile.txt
+        */
+        @media (max-width: 1024px) {
+            :root {
+                --header-h: var(--mobile-header-h);
+                --sidebar-w: 280px;
+                --align-offset: 16px;
+                --p-card: 1.5rem;
+            }
+
+            body {
+                overflow-x: hidden;
+            }
+
+            .main-header {
+                height: var(--header-h);
+            }
+
+            .header-content {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            .header-content h1 {
+                font-size: 1rem;
+                line-height: 1.1;
+                display: none;
+                /* Ocultar texto en móviles muy pequeños */
+            }
+
+            @media (min-width: 380px) {
+                .header-content h1 {
+                    display: block;
+                }
+            }
+
+            .header-content img {
+                height: 2rem;
+            }
+
+            .main-sidebar {
+                top: 0;
+                height: 100vh;
+                z-index: 2100;
+                transform: translateX(-102%);
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 20px 0 50px rgba(0, 0, 0, 0.2);
+                border-right: none;
+                padding-top: 2rem;
+            }
+
+            .main-sidebar.is-open {
+                transform: translateX(0);
+            }
+
+            .main-content-wrapper {
+                margin-left: 0 !important;
+                margin-top: var(--header-h);
+                width: 100%;
+                overflow-x: hidden;
+            }
+
+            /* Fix Search Bar on Mobile */
+            .search-container {
+                margin-top: 1rem;
+            }
+
+            /* Responsive Tables */
+            .data-grid-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                margin-left: -1rem;
+                margin-right: -1rem;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+
+            .data-grid {
+                min-width: 600px;
+                /* Asegura que la tabla no se colapse pero sea scrollable */
+                border-collapse: separate;
+            }
+
+            .data-grid th,
+            .data-grid td {
+                padding: 12px 10px;
+                white-space: normal;
+            }
+
+            /* Reset fixed widths in mobile for better flow */
+            .data-grid th:nth-child(2),
+            .data-grid td:nth-child(2),
+            .data-grid th:nth-child(3),
+            .data-grid td:nth-child(3) {
+                width: 90px !important;
+                min-width: 90px !important;
+                max-width: 90px !important;
+            }
+
+            .catalog-card {
+                padding: 1.25rem;
+                border-radius: var(--radius-md);
+            }
+
+            #navToggleButton {
+                font-size: 11px;
+                padding: 0.6rem 1rem;
+            }
+
+            #navButtonText {
+                display: none;
+                /* Hide text, keep icon or show shorter text */
+            }
+
+            #navButtonText::before {
+                content: 'Sedes';
+                display: inline;
+            }
+
+            /* Section Titles */
+            .section-title-l1 {
+                font-size: 1.5rem;
+                padding: 0 1rem;
+            }
+
+            .section-desc-l1 {
+                padding-left: 1rem;
+                max-width: 100%;
+            }
+
+            .group-container,
+            .subtitulo-container {
+                padding-left: 1rem;
+            }
+
+            .group-header {
+                margin-right: 1rem;
+            }
+
+            /* Footer Mobile */
+            .footer-grid {
+                grid-template-columns: 1fr !important;
+                text-align: center;
+                gap: 2rem;
+            }
+        }
+
+        /* Overlay fix */
+        #mobileOverlay {
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 2000;
+        }
+
+        #mobileOverlay.show {
+            opacity: 1;
+            pointer-events: auto;
+            display: block !important;
         }
 
 
@@ -1182,6 +1498,105 @@
             color: var(--primary);
         }
 
+        /* DISTRIBUIDORES - SISTEMA REESTRUCTURACION */
+        .dist-card-principal {
+            background: var(--dist-primary-bg);
+            border: 2px solid var(--dist-primary-border);
+            border-radius: var(--dist-primary-radius);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        .dist-principal-contact-wrapper .dist-contact-container {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.75rem;
+            margin-top: 0 !important;
+        }
+
+        .dist-card {
+            background-color: var(--dist-card-bg);
+            border: 1px solid var(--dist-card-border);
+            border-radius: var(--dist-card-radius);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .dist-card:hover {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transform: translateY(-2px);
+        }
+
+        .dist-card-header {
+            background-color: var(--slate-50);
+            border-bottom: 1px solid var(--slate-100);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .dist-card>div:last-child {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dist-card>div:last-child>.dist-contact-container {
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+
+        .dist-btn-whatsapp {
+            background-color: var(--dist-whatsapp-bg);
+            color: white !important;
+            font-weight: 700;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .dist-btn-whatsapp:hover {
+            background-color: var(--dist-whatsapp-hover);
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .dist-tag-phone {
+            background-color: var(--slate-100);
+            color: var(--slate-700);
+            padding: 0.5rem 0.75rem;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 640px) {
+            .dist-card-principal {
+                padding: 1.5rem;
+            }
+
+            .dist-principal-contact-wrapper .dist-contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* //#endregion */
         /* YOUTUBE FACADE (Mejora de rendimiento) */
         .youtube-facade {
@@ -1358,11 +1773,12 @@
                         </button>
                     </div>
 
-                    <!-- Botón Navegación (Math Optimized + Dark Pill) -->
-                    <button id="navToggleButton" onclick="Navigation.toggle()"
-                        class="btn-math btn-dark-pill icon-right">
+                    <!-- Botón Navegación (Micro-interacción Premium) -->
+                    <button id="navToggleButton" onclick="Navigation.toggle()" class="btn-dynamic-arrow">
                         <span id="navButtonText">Sedes y contacto</span>
-                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        <div class="arrow-wrapper">
+                            <div class="arrow"></div>
+                        </div>
                     </button>
                 </div>
             </div>
@@ -1405,29 +1821,23 @@
 
             <!-- VISTA: CONTACTO (CONTEXTUAL) -->
             <div id="sidebar-contact-view" class="hidden flex-col h-full animate-fade-in">
-                <!-- SECCIÓN SUPERIOR (Matching Catalog) -->
-                <!-- SECCIÓN SUPERIOR (Diseño Tarjeta Unificada) -->
-                <div class="flex-shrink-0 mb-6">
-                    <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-                        <!-- Título -->
-                        <h3 class="text-sm font-bold text-slate-700 mb-3">Nuestras redes</h3>
-
-                        <!-- Botones de Redes -->
-                        <div class="grid grid-cols-2 gap-3">
-                            <a href="https://www.instagram.com/mundohomeopatico/" target="_blank"
-                                class="flex items-center justify-center p-3 rounded-xl bg-pink-50 hover:bg-pink-100 transition-colors border border-pink-100 group"
-                                aria-label="Instagram">
-                                <i data-lucide="instagram"
-                                    class="w-6 h-6 text-pink-600 group-hover:scale-110 transition-transform"></i>
-                            </a>
-                            <a href="https://mundohomeopatico.com/" target="_blank"
-                                class="flex items-center justify-center p-3 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors border border-blue-100 group"
-                                aria-label="Sitio Web">
-                                <i data-lucide="globe"
-                                    class="w-6 h-6 text-blue-600 group-hover:scale-110 transition-transform"></i>
-                            </a>
+                <!-- Zona Superior: Espacio para nuevos botones -->
+                <div id="sidebar-contact-top-actions" class="flex-shrink-0 mb-6 flex flex-col items-center gap-4">
+                    <!-- From Uiverse.io by alshahwan -->
+                    <!-- From Uiverse.io by alshahwan -->
+                    <a href="https://www.instagram.com/mundohomeopatico/" target="_blank" class="btn-uiverse btn-inst">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                            <p>Instagram</p>
                         </div>
-                    </div>
+                    </a>
+
+                    <a href="https://mundohomeopatico.com/" target="_blank" class="btn-uiverse btn-web">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="globe" class="w-4 h-4"></i>
+                            <p>Sitio web</p>
+                        </div>
+                    </a>
                 </div>
 
                 <div class="category-divider flex-shrink-0"></div>
@@ -1540,9 +1950,22 @@
 
                     <section id="distributorsSection" class="scroll-mt-40 mb-16">
                         <h3 class="text-2xl font-black text-secondary mb-8 tracking-tight flex items-center gap-3">
-                            <i data-lucide="map-pin" class="text-primary"></i> Sedes principales
+                            <i data-lucide="map-pin" class="w-6 h-6 text-primary flex-shrink-0"></i>
+                            <span>Sede principal</span>
                         </h3>
-                        <div id="distributors-grid" class="grid md:grid-cols-2 gap-6">
+
+                        <!-- Contenedor Sede Principal (Dinámico) -->
+                        <div id="sede-principal-container"></div>
+
+                        <!-- Separador Estandarizado -->
+                        <div class="mt-16 mb-8">
+                            <h3 class="text-xl font-bold text-slate-400 flex items-center gap-2">
+                                <i data-lucide="users" class="w-5 h-5"></i>
+                                Distribuidores autorizados
+                            </h3>
+                        </div>
+
+                        <div id="distributors-grid" class="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
                             <!-- Dinámico: RenderEngine llenará esto -->
                         </div>
                     </section>
@@ -1945,8 +2368,8 @@
                 document.getElementById('userGreeting')?.classList.toggle('hidden', !STATE.isPro);
             },
             toggleSidebar: () => {
-                document.getElementById('mainSidebar').classList.toggle('open');
-                document.getElementById('mobileOverlay').classList.toggle('hidden');
+                document.getElementById('mainSidebar').classList.toggle('is-open');
+                document.getElementById('mobileOverlay').classList.toggle('show');
             },
 
             // LÓGICA DE ACORDEÓN PURA Y SIMPLE
@@ -2079,16 +2502,22 @@
             },
 
 
-            // NAVEGACIÓN MANUAL (SIMPLE)
+            // NAVEGACIÓN MANUAL (OPTIMIZADA PARA ACORDEONES)
             initNavigation() {
-                // Delegación de eventos estándar
+                // Delegación de eventos con PRIORIDAD a los links
+                // Usamos capture phase (true) para interceptar el evento ANTES que otros handlers
                 document.addEventListener('click', (e) => {
+                    // PASO 1: Verificar si el click fue en un link con data-tid
                     const link = e.target.closest('.sidebar-link[data-tid]');
+
                     if (link) {
+                        // CRÍTICO: Detener propagación inmediatamente para evitar que
+                        // el click active el acordeón padre o cualquier otro handler
                         e.preventDefault();
-                        e.stopPropagation(); // AISLAMIENTO DE EVENTOS: Evita que el click suba a contenedores padre
+                        e.stopImmediatePropagation(); // stopIMMEDIATE para bloquear TODOS los handlers
 
                         const tid = link.getAttribute('data-tid');
+                        if (!tid) return; // Safety check
 
                         // Bloqueo temporal del Observer para evitar "saltos" de active state
                         UIHandlers.isManualScroll = true;
@@ -2096,8 +2525,7 @@
 
                         // Scroll directo sin complicaciones
                         const targetId = `sec-${tid}`;
-                        // Búsqueda EXACTA por ID. Eliminamos fallback 'fuzzy' para evitar conflictos de nombres parecidos.
-                        let target = document.getElementById(targetId);
+                        const target = document.getElementById(targetId);
 
                         if (target) {
                             // Ajuste Dinámico para el header fijo
@@ -2111,11 +2539,12 @@
                             });
 
                             // FEEDBACK VISUAL: Resaltar la sección destino
-                            // Esto confirma al usuario que "Especiales" o "Cuidado Capilar" ha sido localizado
                             target.classList.add('bg-emerald-50/50', 'transition-colors', 'duration-500');
                             setTimeout(() => {
                                 target.classList.remove('bg-emerald-50/50');
                             }, 1500);
+                        } else {
+                            console.warn(`⚠️ Sección no encontrada: ${targetId}`);
                         }
 
                         // UX Básico: Marcar activo inmediatamente
@@ -2130,7 +2559,7 @@
                         // En móvil cerrar sidebar
                         if (window.innerWidth < 1024) UIHandlers.toggleSidebar();
                     }
-                });
+                }, true); // TRUE = Capture phase (intercepta ANTES que bubble handlers)
             },
 
             // FAQ ACORDEÓN EXCLUSIVO (Lógica migrada de proyecto modular)
@@ -2258,47 +2687,52 @@
         };
 
         const DataService = {
-            // Lista de Proxies para Failover (Rotación)
+            // Lista de Proxies para Failover (Rotación optimizada)
             proxies: [
-                url => url, // INTENTO 1: Directo (Google permite CORS)
-                url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, // INTENTO 2: AllOrigins (Muy estable)
+                url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, // INTENTO 1: AllOrigins (Más estable y rápido)
+                url => url, // INTENTO 2: Directo (Backup)
                 url => `https://corsproxy.io/?${encodeURIComponent(url)}`, // INTENTO 3: CORSProxy.io
-                url => `https://thingproxy.freeboard.io/fetch/${url}`, // INTENTO 4: ThingProxy
-                url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}` // INTENTO 5: CodeTabs (Backup final)
+                url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`, // INTENTO 4: CodeTabs
+                url => `https://thingproxy.freeboard.io/fetch/${url}` // INTENTO 5: ThingProxy
             ],
 
             async fetchCSV(url) {
-                // Estrategia: Sequential Failover con Timeout
+                // Añadir Cache-Busting para evitar Error 400 de Google por peticiones repetidas
+                const separator = url.includes('?') ? '&' : '?';
+                const freshUrl = `${url}${separator}cb=${Date.now()}`;
+
                 for (let i = 0; i < this.proxies.length; i++) {
                     const proxyFn = this.proxies[i];
-                    const fetchUrl = proxyFn(url);
+                    const fetchUrl = proxyFn(freshUrl);
 
                     try {
                         const controller = new AbortController();
-                        const timeoutId = setTimeout(() => controller.abort(), 5000); // Reducido a 5s para mayor agilidad
+                        // Aumentado a 15s para dar margen a conexiones lentas
+                        const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-                        const response = await fetch(fetchUrl, { signal: controller.signal });
+                        const response = await fetch(fetchUrl, {
+                            signal: controller.signal,
+                            cache: 'no-store' // Forzar al navegador a no usar caché
+                        });
                         clearTimeout(timeoutId);
 
                         if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
                         const text = await response.text();
 
-                        // Validación básica (evitar páginas de error de proxy disfrazadas de 200 OK)
-                        // FIX: Bajado límite de 50 a 5 para permitir CSVs cortos como el banner
+                        // Validación de integridad
                         if (!text || text.length < 5 || text.includes('<!DOCTYPE html>')) {
-                            throw new Error('Respuesta inválida (posible error de proxy)');
+                            throw new Error('Respuesta inválida o bloqueada');
                         }
 
                         return this.parseCSV(text);
 
                     } catch (error) {
-                        const errorMsg = error.name === 'AbortError' ? 'Timeout (5s)' : error.message;
-                        console.warn(`⚠️ Proxy ${i + 1} (${new URL(fetchUrl).hostname}) falló: ${errorMsg}. Intentando siguiente...`);
+                        const errorMsg = error.name === 'AbortError' ? 'Timeout (15s)' : error.message;
+                        console.warn(`⚠️ Intento ${i + 1} falló: ${errorMsg}. Probando alternativa...`);
 
                         if (i === this.proxies.length - 1) {
-                            console.error('❌ Error Crítico: Todos los métodos de conexión fallaron.');
-                            console.info('💡 Diagnóstico: Verifique que el archivo Google Sheet esté publicado en: Archivo > Compartir > Publicar en la web > CSV.');
+                            console.error('❌ Error Crítico: No se pudo conectar con la base de datos.');
                             return [];
                         }
                     }
@@ -2794,227 +3228,179 @@
                         <p class="text-[11px] font-black text-slate-700 tracking-widest mb-3"><i data-lucide="info" class="w-3.5 h-3.5 inline mr-1 text-emerald-500"></i> Información adicional:</p>
                         <div class="space-y-4">
                             ${uniqueBlocks.join('')}
-                        </div>
+                    </div>
                     </div>` : ''}
                 </section>`;
             },
 
+            // --- RENDERIZADO DE DISTRIBUIDORES (BUSINESS CARD SYSTEM) ---
             renderContactItems() {
-                const distContainer = document.getElementById('distributors-grid');
-                if (!distContainer) return;
+                const sedePrincipalContainer = document.getElementById('sede-principal-container');
+                const distributorsGrid = document.getElementById('distributors-grid');
+                if (!distributorsGrid || !sedePrincipalContainer) return;
 
                 if (!STATE.dist.length) {
-                    distContainer.innerHTML = '<p class="text-slate-400 italic col-span-2 text-center">Cargando la red de distribuidores...</p>';
+                    distributorsGrid.innerHTML = '<p class="text-slate-400 italic col-span-2 text-center">Cargando la red de distribuidores...</p>';
                     return;
                 }
 
-                // Helper local para Title Case
-                const toTitleCase = (str) => {
-                    return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-                };
+                // Separar Sede Principal y Red de Distribución basado en la columna 'sedes' o 'sede'
+                const hqs = STATE.dist.filter(d => (d.sedes || d.sede || d.tipo || "").toLowerCase().includes('principal'));
+                const dists = STATE.dist.filter(d => !(d.sedes || d.sede || d.tipo || "").toLowerCase().includes('principal'));
 
-                // 1. Separar Sede Principal y Distribuidores
-                const headquarters = [];
-                const distributors = [];
+                // 1. Renderizar Sede(s) Principal(es)
+                if (hqs.length > 0) {
+                    sedePrincipalContainer.innerHTML = hqs.map(hq => this.generateDistributorHTML(hq, true)).join('');
 
-                STATE.dist.forEach(d => {
-                    // Detectar sede principal por nombre (insensible a mayúsculas)
-                    if (d.sede && d.sede.toLowerCase().includes('principal')) {
-                        headquarters.push(d);
-                    } else {
-                        distributors.push(d);
-                    }
-                });
-
-                let html = '';
-
-                // 2. Renderizar Sede Principal (Diseño Destacado Premium)
-                if (headquarters.length > 0) {
-                    // LÓGICA DE ACTUALIZACIÓN DEL SIDEBAR (Punto 11)
-                    // Tomamos la primera sede principal como la "Oficial" para el sidebar
-                    const mainHQ = headquarters[0];
-                    const mainWA = mainHQ.whatsapp_1; // Asumimos columna whatsapp_1
-
+                    // Actualizar WhatsApp Global (Sidebar/Footer) basado en la primera sede
+                    const mainWA = hqs[0].whatsapp_1;
                     if (mainWA) {
-                        const btnSidebar = document.getElementById('btn-whatsapp-sidebar');
-                        if (btnSidebar) {
-                            const cleanNum = Formatters.whatsapp(mainWA);
-                            const msg = encodeURIComponent("Hola Mundo Homeopático, requiero información sobre distribución y precios.");
-                            btnSidebar.href = `https://wa.me/${cleanNum}?text=${msg}`;
-
-                            // Punto 12: Actualizar también el WhatsApp del Footer
-                            const footerWA = document.getElementById('footer-whatsapp-link');
-                            if (footerWA) {
-                                footerWA.href = `https://wa.me/${cleanNum}?text=${msg}`;
-                            }
-                        }
+                        const cleanNum = Formatters.whatsapp(mainWA);
+                        const msg = encodeURIComponent("Hola Mundo Homeopático, requiero información sobre productos y precios.");
+                        [document.getElementById('btn-whatsapp-sidebar'), document.getElementById('footer-whatsapp-link')].forEach(btn => {
+                            if (btn) btn.href = `https://wa.me/${cleanNum}?text=${msg}`;
+                        });
                     }
-
-                    headquarters.forEach(hq => {
-                        // Lógica de Logos Personalizados (Punto 8)
-                        let logoName = 'logo-mundo-homeopatico'; // Default
-                        const sedeLower = hq.sede.toLowerCase();
-
-                        if (sedeLower.includes('cafetero')) logoName = 'logo-mundo-homeopatico';
-                        else if (sedeLower.includes('atlantica') || sedeLower.includes('atlántica')) logoName = 'logo-biomedic';
-                        else if (sedeLower.includes('santander')) logoName = 'logo-mundo-homeopatico';
-                        else if (sedeLower.includes('cordoba') || sedeLower.includes('córdoba')) logoName = 'logo-eco-natural';
-
-                        // DISEÑO REFINADO: Split Layout (Info Left / Map Right)
-                        html += `<div class="col-span-1 md:col-span-2 mb-8 animate-fade-in">
-                            <div class="flex flex-col md:flex-row bg-[#F0FDF4] border border-emerald-100/50 rounded-3xl overflow-hidden shadow-sm">
-                                
-                                <!-- COLUMNA IZQUIERDA: INFORMACIÓN Y ACCIONES -->
-                                <div class="p-8 md:p-10 flex-1 flex flex-col justify-center">
-                                    
-                                    <!-- Header: Icono + Título -->
-                                    <div class="flex items-center gap-5 mb-8">
-                                        <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm text-emerald-500 border border-emerald-50">
-                                             <img src="img/${logoName}.webp" alt="Logo Sede" class="w-8 h-8 object-contain" onerror="this.src='https://placehold.co/40x40?text=MH'">
-                                        </div>
-                                        <div>
-                                            <h4 class="text-2xl font-black text-slate-800 leading-tight">${renderText(hq.sede)}</h4>
-                                            <p class="text-[11px] font-normal text-emerald-500 tracking-widest uppercase mt-1">Medellín, Antioquia</p> 
-                                        </div>
-                                    </div>
-
-                                    <!-- Datos de Contacto (Iconos alineados) -->
-                                    <div class="space-y-4 mb-10">
-                                        ${hq.direccion ? `
-                                        <div class="flex items-start gap-4 text-slate-500 font-normal text-sm">
-                                            <div class="w-5 flex justify-center mt-0.5"><i data-lucide="map-pin" class="w-5 h-5 text-slate-400"></i></div>
-                                            <span>${renderText(hq.direccion)}</span>
-                                        </div>` : ''}
-                                        
-                                        ${hq.horarios ? `
-                                        <div class="flex items-start gap-4 text-slate-500 font-normal text-sm">
-                                            <div class="w-5 flex justify-center mt-0.5"><i data-lucide="clock" class="w-5 h-5 text-slate-400"></i></div>
-                                            <span>${renderText(hq.horarios)}</span>
-                                        </div>` : ''}
-                                    </div>
-
-                                    <!-- Botones de Acción (Grid 2 Columnas) -->
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        
-                                        <!-- Botón 1: Llamada a la Acción Principal (Verde Sólido) -->
-                                        <a href="https://wa.me/${Formatters.whatsapp(hq.whatsapp_1 || '')}" target="_blank" 
-                                           class="flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#059669] text-white py-3 px-6 rounded-xl font-bold transition-all shadow-lg shadow-emerald-200/50 hover:shadow-emerald-300/50 transform hover:-translate-y-0.5">
-                                            <i data-lucide="phone" class="w-5 h-5 fill-current"></i>
-                                            <span>${hq.telefono_1 || 'Contactar'}</span>
-                                        </a>
-
-                                        <!-- Botón 2: Cómo llegar (Blanco Bordeado) -->
-                                        <!-- Botón 2: Cómo llegar (Google Maps Search Fallback) -->
-                                        <a href="${(() => {
-                                if (hq.mapa_link) return hq.mapa_link;
-                                // Fallback: Generar enlace de búsqueda automática
-                                const query = encodeURIComponent((hq.direccion || "") + ", " + (hq.ciudad || "Medellín") + ", Colombia");
-                                return `https://www.google.com/maps/search/?api=1&query=${query}`;
-                            })()}" target="_blank"
-                                           class="flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 py-3 px-6 rounded-xl font-bold transition-colors shadow-sm">
-                                            <i data-lucide="navigation" class="w-5 h-5"></i>
-                                            <span>Cómo llegar</span>
-                                        </a>
-
-                                    </div>
-                                </div>
-
-                                <!-- COLUMNA DERECHA: MAPA VISUAL (Grisáceo) -->
-                                <div class="w-full md:w-[380px] bg-slate-100 relative min-h-[300px] border-l border-emerald-50">
-                                    ${(() => {
-                                // 1. Si es un iframe completo, inyectar clases y usar
-                                if (hq.mapa && hq.mapa.includes('<iframe')) {
-                                    return hq.mapa.replace('<iframe', '<iframe class="w-full h-full absolute inset-0 mix-blend-multiply opacity-90 hover:opacity-100 transition-opacity"');
-                                }
-
-                                // 2. Si es una URL, validar si es embeddable. Si no, generar búsqueda por dirección
-                                let mapSrc = hq.mapa || "";
-                                const isEmbed = mapSrc.includes('output=embed') || mapSrc.includes('/embed');
-
-                                // Fallback inteligente: Si no es embed o está vacío, usar dirección + ciudad
-                                if (!isEmbed || !mapSrc) {
-                                    const query = encodeURIComponent((hq.direccion || hq.sede || "Mundo Homeopatico") + " Medellín Colombia");
-                                    mapSrc = `https://maps.google.com/maps?q=${query}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-                                }
-
-                                return `<iframe src="${mapSrc}" class="w-full h-full absolute inset-0 mix-blend-multiply opacity-90 hover:opacity-100 transition-opacity" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`;
-                            })()}
-                                </div>
-
-                            </div>
-                        </div>`;
-                    });
                 }
 
-                // 3. Renderizar Distribuidores (Business Card Moderno)
-                distributors.forEach(d => {
-                    html += `<div class="contact-card group animate-fade-in">
-                        <div class="flex items-start gap-4 mb-4">
-                            <div class="contact-card-icon">
-                                <i data-lucide="store" class="w-5 h-5 transition-colors"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-base text-secondary leading-tight mb-1">${renderText(d.sede)}</h4>
-                                <p class="text-[11px] font-normal text-emerald-600 capitalize tracking-wide">${(d.departamento || 'Colombia').toLowerCase()}</p>
-                            </div>
-                        </div>
-                        
-                        <div class="space-y-2 mb-4 flex-grow">
-                            ${d.direccion ? `<p class="text-sm text-slate-500 flex items-start gap-2 leading-relaxed">
-                                <i data-lucide="map-pin" class="w-3.5 h-3.5 mt-1 flex-shrink-0 opacity-40"></i>
-                                <span>${renderText(d.direccion)}</span>
-                            </p>` : ''}
-                            ${d.horarios ? `<p class="text-xs text-slate-400 flex items-start gap-2 leading-relaxed">
-                                <i data-lucide="clock" class="w-3.5 h-3.5 mt-0.5 flex-shrink-0 opacity-40"></i>
-                                <span>${renderText(d.horarios)}</span>
-                            </p>` : ''}
-                        </div>
+                // 2. Renderizar Distribuidores Autorizados
+                distributorsGrid.innerHTML = dists
+                    .filter(d => d.sede || d.sedes) // Validar que tenga al menos nombre de sede (Soporte dual)
+                    .map(d => this.generateDistributorHTML(d, false))
+                    .join('');
 
-                        <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-50 mt-auto">
-                            ${this.generateContactButtons(d)}
-                        </div>
-                    </div>`;
-                });
-
-                distContainer.innerHTML = html;
+                if (window.lucide) window.lucide.createIcons();
             },
 
-            // Helper para generar botones inteligentes (WhatsApp vs Teléfono vs Fijo)
-            generateContactButtons(data) {
-                let buttons = '';
+            generateDistributorHTML(dist, isHQ = false) {
+                const { logo, departamento, direccion, horarios, nombre_distribuidor, nombre_persona } = dist;
+                // Soporte dual para columna 'sede' o 'sedes' desde Google Sheets
+                const sede = dist.sede || dist.sedes || "Distribuidor Autorizado";
 
-                // WhatsApps (Iteramos hasta 4 columnas posibles)
+                // Procesar botones de contacto (WhatsApp, Celular, Fijo)
+                const contactButtons = this.generateContactButtons(dist, isHQ);
+
+                if (isHQ) {
+                    return `
+                        <div class="dist-card-principal animate-fade-in">
+                            <div class="grid lg:grid-cols-2 gap-8">
+                                <div>
+                                    <div class="flex items-center gap-5 mb-8">
+                                        <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center p-2 shadow-sm border border-emerald-50">
+                                            <img src="img/${logo || 'logo-mundo-homeopatico'}.webp" 
+                                                 class="w-full h-full object-contain" 
+                                                 alt="${sede}"
+                                                 onerror="this.src='img/logo-mundo-homeopatico.webp'">
+                                        </div>
+                                        <div>
+                                            <h3 class="text-2xl font-black text-secondary tracking-tight mb-1">${renderText(sede)}</h3>
+                                            <p class="text-emerald-600 font-bold uppercase tracking-widest text-[11px]">${renderText(departamento)}</p>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4 mb-8">
+                                        ${direccion ? `<p class="flex items-start gap-4 text-slate-600 font-medium">
+                                            <i data-lucide="map-pin" class="text-primary mt-1 w-5 h-5 flex-shrink-0"></i>
+                                            <span>${renderText(direccion)}</span>
+                                        </p>` : ''}
+                                        ${horarios ? `<p class="flex items-start gap-4 text-slate-500 text-sm">
+                                            <i data-lucide="clock" class="text-primary mt-1 w-5 h-5 flex-shrink-0"></i>
+                                            <span>${renderText(horarios)}</span>
+                                        </p>` : ''}
+                                    </div>
+                                    <div class="dist-principal-contact-wrapper">
+                                        <div class="dist-contact-container grid grid-cols-2 gap-3">
+                                            ${contactButtons}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col h-full">
+                                    <div class="flex-grow min-h-[300px] rounded-2xl overflow-hidden border border-slate-200 shadow-sm relative bg-slate-100 mb-4">
+                                        <iframe 
+                                            width="100%" 
+                                            height="100%" 
+                                            style="border:0; min-height: 100%;" 
+                                            loading="lazy" 
+                                            allowfullscreen 
+                                            src="https://maps.google.com/maps?q=${encodeURIComponent((direccion || 'Medellín') + ' ' + (departamento || 'Antioquia'))}&t=&z=15&ie=UTF8&iwloc=&output=embed">
+                                        </iframe>
+                                    </div>
+                                    <a href="${dist.mapa || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((direccion || '') + ', ' + (departamento || ''))}`}" 
+                                       target="_blank" 
+                                       class="btn-base btn-primary w-full justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                                        <span>Cómo llegar</span>
+                                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>`;
+                }
+
+                return `
+                    <div class="dist-card animate-fade-in">
+                        <div class="dist-card-header">
+                            <img src="img/${logo || 'logo-mundo-homeopatico'}.webp" 
+                                 class="w-10 h-10 object-contain" 
+                                 alt="${sede}"
+                                 onerror="this.src='img/logo-mundo-homeopatico.webp'">
+                            <h4 class="font-bold text-secondary text-base leading-tight">${renderText(sede)}</h4>
+                        </div>
+                        <div class="p-6">
+                            ${nombre_distribuidor ? `<p class="font-bold text-slate-700 mb-1 text-sm">${renderText(nombre_distribuidor)}</p>` : ''}
+                            ${nombre_persona ? `<p class="text-xs text-slate-500 mb-3 font-medium">${renderText(nombre_persona)}</p>` : ''}
+                            
+                            <div class="space-y-2 text-xs text-slate-500 mb-4">
+                                <p class="flex items-center gap-2"><i data-lucide="map" class="w-3.5 h-3.5 opacity-50"></i>${renderText(departamento)}</p>
+                                ${direccion ? `<p class="flex items-center gap-2"><i data-lucide="map-pin" class="w-3.5 h-3.5 opacity-50"></i>${renderText(direccion)}</p>` : ''}
+                            </div>
+                            
+                            <div class="dist-contact-container flex flex-wrap gap-2 mt-auto">
+                                ${contactButtons}
+                            </div>
+                        </div>
+                    </div>`;
+            },
+
+            generateContactButtons(data, fullWidth = false) {
+                let html = '';
+                const btnExtras = fullWidth ? 'w-full justify-center text-center' : '';
+
+                // WhatsApps (1-4)
                 [1, 2, 3, 4].forEach(i => {
                     const wa = data[`whatsapp_${i}`];
                     if (wa) {
-                        buttons += `<a href="https://wa.me/${Formatters.whatsapp(wa)}" target="_blank"
-        class="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-bold hover:bg-emerald-100 transition-colors transform hover:-translate-y-0.5">
-            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> ${Formatters.formatPhone(wa)}
-                        </a>`;
+                        html += `
+                            <a href="https://wa.me/${Formatters.whatsapp(wa)}" target="_blank" class="dist-btn-whatsapp ${btnExtras}">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                <span>${Formatters.formatPhone(wa)}</span>
+                            </a>`;
                     }
                 });
 
-                // Móviles (Llamada directa)
+                // Móviles (1-2)
                 [1, 2].forEach(i => {
-                    const mob = data[`movil_${i}`];
-                    if (mob) {
-                        buttons += `<a href="tel:${mob}" class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-50 text-slate-600 rounded-lg text-xs font-bold hover:bg-slate-100 transition-colors">
-            <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> ${Formatters.formatPhone(mob)}
-                        </a>`;
+                    const mov = data[`movil_${i}`];
+                    if (mov) {
+                        html += `
+                            <div class="dist-tag-phone ${btnExtras}">
+                                <i data-lucide="smartphone" class="w-4 h-4"></i>
+                                <span>${Formatters.formatPhone(mov)}</span>
+                            </div>`;
                     }
                 });
 
-                // Fijos (Solo visualización)
+                // Fijos (1-2)
                 [1, 2].forEach(i => {
-                    const fix = data[`telefono_fijo_${i}`];
-                    if (fix) {
-                        buttons += `<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-100 text-slate-400 rounded-lg text-xs font-medium cursor-default">
-            <i data-lucide="phone" class="w-3.5 h-3.5"></i> ${fix}
-                        </div>`;
+                    const fij = data[`telefono_fijo_${i}`];
+                    if (fij) {
+                        html += `
+                            <div class="dist-tag-phone ${btnExtras}">
+                                <i data-lucide="phone" class="w-4 h-4"></i>
+                                <span>${renderText(fij)}</span>
+                            </div>`;
                     }
                 });
 
-                return buttons;
+                return html;
             },
 
             renderFAQ() {
