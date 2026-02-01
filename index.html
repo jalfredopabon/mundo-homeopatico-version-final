@@ -90,7 +90,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;700;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;700&family=Mulish:wght@400;600;800&display=swap"
         rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- //#endregion -->
@@ -130,29 +130,40 @@
 
         /* //#region 2. SISTEMA DE DISEÑO (CSS) */
         :root {
-            /* Branding: Abstracción de colores del logo */
-            --primary: #10b981;
-            /* Verde Institucional */
-            --primary-dark: #059669;
-            --secondary: #0f172a;
-            /* Azul Pizarra (Identidad Visual) */
-            --primary-light: #ecfdf5;
+            /* Branding: Paleta "Earthy Sophistication" 2026 */
+            --bg-main: #F0F7F0;
+            /* Verde Salvia Hielo (Main Background) */
+            --bg-surface: #ffffff;
+            /* Superficies (Cards/Sidebar) */
+            --slate-50: var(--bg-main);
+            /* Mapping legacy variable */
 
-            /* Escala de Grises y Superficies */
-            --slate-50: #f8fafc;
-            --bg-secondary: #f8fafc;
-            --border-color: #cbd5e1;
-            /* slate-300 for better contrast */
-            --slate-100: #f1f5f9;
-            --slate-200: #e2e8f0;
-            --slate-400: #94a3b8;
-            --text-primary: #0f172a;
+            --primary: #9CAF88;
+            /* Verde Salvia */
+            --primary-dark: #8A9D76;
+            --primary-light: #E8F0E4;
+            --primary-vibrant: #00C16C;
+            /* Verde Tech Moderno (Vibrante) */
 
-            /* Grid System (Medidas Matemáticas de imagen adjunta) */
+            --secondary: #1A292F;
+            /* Azul Marino Profundo (Texto/Titulos) */
+            --text-body: #4A5568;
+            /* Gris suave legible */
+            --accent: #D1835C;
+            /* Terracota Suave (CTA) */
+
+            --border-soft: #DEBDA6;
+            /* Taupe Cálido */
+            --border-color: var(--border-soft);
+
+            /* Compatibilidad Legacy */
+            --slate-100: #F3F4F6;
+            --slate-200: #E2E8F0;
+            --slate-400: #94A3B8;
+            --text-primary: var(--secondary);
+
             /* Grid System (Medidas Matemáticas de imagen adjunta) */
             --sidebar-w: 280px;
-            /* RETORNO A ORIGEN: Ancho aumentado para mejor lectura */
-            /* Navigation Area Width */
             --radius: 24px;
             /* Radio de curvatura estándar */
 
@@ -170,9 +181,11 @@
             --space-xxl: 4rem;
             /* 64px */
 
-            /* SISTEMA TIPOGRÁFICO (Nueva Propuesta 2026: Outfit + Inter) */
-            --font-display: 'Outfit', sans-serif;
-            --font-body: 'Inter', sans-serif;
+            /* SISTEMA TIPOGRÁFICO (Nueva Propuesta 2026: Mulish + Karla) */
+            --font-heading: 'Mulish', sans-serif;
+            --font-body: 'Karla', sans-serif;
+            /* Compatibilidad hacia atrás */
+            --font-display: var(--font-heading);
 
             /* ESCALA TIPOGRÁFICA (Design Specs v2) */
             --font-xs: 12px;
@@ -234,6 +247,8 @@
             --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-soft: 0 20px 40px -10px rgba(26, 41, 47, 0.08);
+            /* Sombra Suave Premium */
         }
 
         body {
@@ -247,8 +262,10 @@
 
         h1,
         h2,
+        h3,
+        h4,
         .font-display {
-            font-family: var(--font-display);
+            font-family: var(--font-heading);
         }
 
         .app-layout {
@@ -389,13 +406,20 @@
 
         .btn-primary {
             background: var(--secondary);
+            /* Azul Noche (Sobrio en reposo) */
             color: white;
             font-size: var(--font-sm);
             letter-spacing: 0.05em;
+            border-radius: 999px;
+            min-height: 44px;
+            /* Zona táctil mínima */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-primary:hover {
-            background: var(--primary);
+            background: var(--primary-vibrant);
             transform: translateY(-1px);
             box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.3);
         }
@@ -464,7 +488,8 @@
 
         .sidebar-link.active {
             background-color: var(--emerald-50);
-            color: var(--primary);
+            color: var(--primary-vibrant);
+            /* Texto vivo al seleccionar */
             font-weight: 600;
         }
 
@@ -552,8 +577,23 @@
         /* Active para hijos (Seleccionado) */
         .sidebar-link.child-link.active {
             background-color: var(--emerald-50);
-            color: var(--primary);
+            color: var(--primary-vibrant);
             font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+
+            .sidebar-link,
+            .sidebar-item-accordion {
+                padding: 1rem;
+                /* ZONA DEL PULGAR: Hit area mas grande */
+                margin: 4px 0;
+            }
+
+            .sidebar-link.child-link {
+                padding: 12px 16px;
+                /* Mejor toque en sub-items */
+            }
         }
 
         .sidebar-n2-parent {
@@ -565,11 +605,19 @@
         }
 
         .catalog-card {
-            background: white;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--slate-200);
+            background: var(--bg-surface);
+            border-radius: 16px;
+            /* 1rem Soft Rounded */
+            border: 1px solid var(--border-soft);
             padding: var(--p-card);
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .catalog-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px -12px rgba(26, 41, 47, 0.12);
+            /* Lift effect */
         }
 
         .data-grid-container,
@@ -795,9 +843,11 @@
         }
 
         .btn-slate:hover {
-            background-color: #cbd5e1;
-            /* slate-300 */
-            color: var(--slate-800);
+            background-color: var(--primary);
+            /* Verde Institucional igual que 'Sitio web' */
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            /* Glow verde sutil */
         }
 
         .btn-emerald-soft {
@@ -898,57 +948,63 @@
 
         /* From Uiverse.io by alshahwan - Adaptado a UI/UX Mundo Homeopático */
         .btn-uiverse {
-            background-color: #fff;
-            border: 1px solid #cbd5e1;
+            background-color: var(--slate-200);
+            /* Igualando al btn-slate */
+            border: none;
+            /* Eliminamos borde para limpiar el estilo */
             /* Gris neutro como el buscador */
-            padding: 5px;
+            padding: 0 1.5rem;
+            /* Ajuste padding lateral */
             position: relative;
             width: 100%;
             height: 3.2rem;
-            transition: 0.5s;
+            transition: all 0.3s ease;
             font-size: 15px;
             /* Ligeramente más pequeño para elegancia */
             border-radius: 0.75rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
+            justify-content: flex-start;
+            /* Alineamos contenido a la izquierda */
             text-decoration: none;
             overflow: hidden;
+            gap: 12px;
+            /* Espacio entre icono y texto */
         }
 
         .btn-uiverse p {
-            position: absolute;
-            top: 50%;
-            left: 1.5rem;
-            transform: translateY(-50%);
             margin: 0;
             padding: 0;
-            transition: .5s;
+            transition: color 0.3s ease;
             color: #64748b;
             /* Texto gris pizarra medio */
             font-weight: 600;
         }
 
-        .btn-uiverse svg {
-            position: absolute;
-            top: 50%;
-            right: 1.5rem;
-            transform: translateY(-50%);
+        .btn-uiverse svg,
+        .btn-uiverse i {
+            /* Agrego soporte para i (Lucide) */
             margin: 0;
             padding: 0;
-            opacity: 0;
-            transition: 0.5s;
+            opacity: 1;
+            /* Siempre visible */
+            transition: all 0.3s ease;
             height: 1.1em;
-            fill: #fff
+            width: 1.1em;
+            color: #64748b;
+            /* Color base igual al texto */
         }
 
         .btn-uiverse:hover p {
-            left: 1.25rem;
-            color: #fff
+            color: #fff;
         }
 
-        .btn-uiverse:hover svg {
-            opacity: 1;
+        .btn-uiverse:hover svg,
+        .btn-uiverse:hover i {
+            color: #fff;
+            transform: scale(1.1);
+            /* Efecto sutil */
         }
 
         .btn-uiverse:hover {
@@ -1510,7 +1566,7 @@
 
         .dist-principal-contact-wrapper .dist-contact-container {
             display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 0.75rem;
             margin-top: 0 !important;
         }
@@ -1731,16 +1787,54 @@
             line-height: 1;
             top: 0px;
         }
+
+        /* ANIMATED REFRESH BUTTON (Uiverse Adaptation) */
+        .btn-animated-refresh {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            /* Alineado a la izquierda como el buscador */
+            gap: 12px;
+            width: 100%;
+            background-color: white;
+            color: var(--secondary);
+            /* Texto oscuro normal */
+            border: 1px solid #cbd5e1;
+            /* slate-300 exacto como search-input */
+            border-radius: 0.5rem;
+            /* rounded-lg (8px) exacto como search-input */
+            padding: 0.75rem 1rem;
+            /* Padding similar */
+            font-size: 0.875rem;
+            /* text-sm exacto */
+            font-weight: 500;
+            /* Peso similar al placeholder */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-animated-refresh:hover {
+            background-color: var(--slate-50);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+            border-color: var(--primary-vibrant);
+            color: var(--primary-vibrant);
+        }
+
+        .btn-animated-refresh:hover i {
+            color: var(--primary-vibrant);
+        }
     </style>
 </head>
 
 <body>
-    <!-- //#region 3. ESTRUCTURA DE INTERFAZ (HTML) -->
+    <!-- //#endregion 3. ESTRUCTURA DE INTERFAZ (HTML) -->
 
     <div class="app-layout">
         <!-- HEADER GLOBAL FIXED -->
         <header class="main-header">
-            <div class="header-content px-10 w-full flex justify-between items-center h-full">
+            <div class="header-content px-8 w-full flex justify-between items-center h-full">
                 <!-- IZQUIERDA: Identidad + Toggle -->
                 <div class="flex items-center gap-4">
                     <!-- Logo Principal (Traído del Sidebar) -->
@@ -1760,9 +1854,9 @@
 
                 <!-- DERECHA: Navegación Superior -->
                 <div class="flex items-center gap-6">
-                    <!-- Saludo User -->
+                    <!-- Saludo User (Desktop Only) -->
                     <div id="userGreeting"
-                        class="hidden items-center text-sm font-medium text-slate-600 animate-fade-in">
+                        class="hidden md:flex items-center text-sm font-medium text-slate-600 animate-fade-in">
                         <div class="flex items-center gap-2">
                             <i data-lucide="user-circle" class="w-4 h-4 text-emerald-500"></i>
                             <span id="greetingText"></span>
@@ -1795,22 +1889,51 @@
 
             <!-- VISTA: CATÁLOGO -->
             <div id="sidebar-catalog-view" class="flex flex-col h-full animate-fade-in">
+
+                <!-- Saludo User (Mobile Only - Inside Sidebar) -->
+                <div id="sidebarUserGreeting"
+                    class="hidden flex-col gap-2 mb-4 p-4 bg-slate-50 rounded-xl border border-slate-100 md:hidden animate-fade-in">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span
+                                class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Bienvenido</span>
+                            <span id="sidebarGreetingText"
+                                class="text-sm font-bold text-slate-700 leading-tight"></span>
+                        </div>
+                    </div>
+                    <button onclick="UIHandlers.logout()"
+                        class="w-full mt-2 flex items-center justify-center gap-2 py-2 text-xs font-semibold text-red-500 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
+                        <i data-lucide="log-out" class="w-3 h-3"></i>
+                        Cerrar sesión
+                    </button>
+                    <div class="w-full h-px bg-slate-200 mt-2"></div>
+                </div>
                 <!-- Zona Superior: Buscador y Accesos -->
                 <div class="flex-shrink-0">
                     <div class="search-container relative">
-                        <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-slate-400"></i>
-                        <input type="text" id="mainSearch" placeholder="Buscar..."
-                            class="search-input w-full pl-10 pr-4 py-3 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all shadow-sm hover:border-slate-400"
+                        <i data-lucide="search"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                        <input type="text" id="mainSearch" placeholder="Buscar..." aria-label="Buscar productos"
+                            class="search-input w-full pl-10 pr-10 py-3 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all shadow-sm hover:border-slate-400"
                             autocomplete="off">
+                        <!-- Botón Limpiar (X) -->
+                        <button id="clearSearchBtn" onclick="UIHandlers.clearSearch()"
+                            class="hidden absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-all"
+                            aria-label="Borrar búsqueda">
+                            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                        </button>
                         <!-- Dropdown de Resultados Predictivos -->
                         <div id="searchDropdown" class="search-dropdown hidden animate-fade-in"></div>
                     </div>
                 </div>
 
-                <button onclick="UIHandlers.showPasswordModal()"
-                    class="btn-math btn-slate icon-left w-full justify-start mt-4 mb-4">
-                    <i data-lucide="users" class="w-5 h-5"></i>
-                    <span>Farmacias y médicos</span>
+                <button onclick="UIHandlers.showPasswordModal()" class="btn-animated-refresh mt-4 mb-6">
+                    <i data-lucide="users" class="w-4 h-4 text-slate-400 transition-colors"></i>
+                    Farmacias y médicos
                 </button>
 
                 <div class="category-divider flex-shrink-0"></div>
@@ -1825,18 +1948,15 @@
                 <div id="sidebar-contact-top-actions" class="flex-shrink-0 mb-6 flex flex-col items-center gap-4">
                     <!-- From Uiverse.io by alshahwan -->
                     <!-- From Uiverse.io by alshahwan -->
-                    <a href="https://www.instagram.com/mundohomeopatico/" target="_blank" class="btn-uiverse btn-inst">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="instagram" class="w-4 h-4"></i>
-                            <p>Instagram</p>
-                        </div>
+                    <a href="https://www.instagram.com/mundohomeopatico/" target="_blank"
+                        class="btn-animated-refresh hover:!border-pink-500 hover:!text-pink-600 hover:!bg-pink-50">
+                        <i data-lucide="instagram" class="w-4 h-4 text-slate-400 transition-colors"></i>
+                        Instagram
                     </a>
 
-                    <a href="https://mundohomeopatico.com/" target="_blank" class="btn-uiverse btn-web">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="globe" class="w-4 h-4"></i>
-                            <p>Sitio web</p>
-                        </div>
+                    <a href="https://mundohomeopatico.com/" target="_blank" class="btn-animated-refresh">
+                        <i data-lucide="globe" class="w-4 h-4 text-slate-400 transition-colors"></i>
+                        Sitio web
                     </a>
                 </div>
 
@@ -1868,17 +1988,15 @@
 
                 <!-- CTA Card (Abajo) -->
                 <div class="flex-shrink-0 mt-auto mb-4">
-                    <div
-                        class="distributor-promo-card p-5 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl shadow-lg border border-emerald-500/30">
-                        <h3 class="font-bold text-lg text-white mb-2">Se distribuidor</h3>
-                        <p class="text-xs text-emerald-50/90 mb-5 leading-relaxed">Distribuye nuestros productos
+                    <div class="distributor-promo-card p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/80">
+                        <h3 class="font-bold text-lg text-emerald-900 mb-1">Sé distribuidor</h3>
+                        <p class="text-xs text-slate-500 mb-4 leading-relaxed font-medium">Distribuye nuestros productos
                             homeopáticos.</p>
 
                         <a id="btn-whatsapp-sidebar" href="https://wa.me/573176680750" target="_blank"
-                            class="flex items-center justify-center gap-2 w-full py-3 px-4 bg-emerald-900/30 hover:bg-emerald-900/50 text-white rounded-xl transition-all duration-300 font-medium text-sm backdrop-blur-sm shadow-inner group">
-                            <i data-lucide="message-circle"
-                                class="w-4 h-4 text-emerald-200 group-hover:text-white transition-colors"></i>
-                            <span>WhatsApp</span>
+                            class="btn-animated-refresh justify-center !py-2.5 !text-xs !bg-white hover:!bg-emerald-50 hover:!border-emerald-300 hover:!text-emerald-700">
+                            <i data-lucide="message-circle" class="w-4 h-4 text-emerald-500"></i>
+                            WhatsApp
                         </a>
                     </div>
                 </div>
@@ -1912,7 +2030,7 @@
 
             <!-- PANEL CENTRAL SPA -->
             <!-- Fix Footer: Flex Column para empujar footer -->
-            <main id="view-catalog" class="flex-grow p-6 lg:p-10 lg:pl-16 min-w-0 flex flex-col">
+            <main id="view-catalog" class="flex-grow p-6 lg:p-8 lg:pl-16 min-w-0 flex flex-col">
                 <div class="mb-6 animate-fade-in">
                     <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Lista de precios
                     </h2>
@@ -1924,7 +2042,7 @@
                 </div>
             </main>
 
-            <main id="view-contact" class="hidden flex-grow p-6 lg:p-10 lg:pl-16 min-w-0 flex flex-col">
+            <main id="view-contact" class="hidden flex-grow p-6 lg:p-8 lg:pl-16 min-w-0 flex flex-col">
                 <div class="mb-6 animate-fade-in">
                     <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Sedes y contacto
                     </h2>
@@ -1981,7 +2099,7 @@
             </main>
 
             <!-- FOOTER GLOBAL UNIFICADO (Fuera del padding del main) -->
-            <footer class="mt-auto border-t border-slate-200 bg-white py-6 px-10">
+            <footer class="mt-auto border-t border-slate-200 bg-white py-6 px-8">
                 <div class="w-full flex flex-col md:flex-row justify-between items-center gap-8">
                     <!-- Bloque Izquierdo: Copyright -->
                     <div class="flex items-center gap-4 text-slate-400">
@@ -2025,13 +2143,14 @@
                     <i data-lucide="lock" class="w-8 h-8"></i>
                 </div>
                 <h3 class="text-2xl font-black text-secondary tracking-tight">Acceso restringido</h3>
-                <p class="text-slate-400 text-sm font-medium mt-2">Por favor digite su contraseña</p>
+                <p class="text-slate-500 text-sm font-medium mt-2">Por favor digite su contraseña</p>
             </div>
 
             <div class="space-y-4">
                 <div class="relative">
                     <i data-lucide="key-round" class="absolute left-4 top-4 w-5 h-5 text-slate-300"></i>
                     <input type="password" id="professionalPassword" placeholder="Contraseña..."
+                        aria-label="Contraseña de acceso"
                         class="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all font-medium"
                         onkeyup="if(event.key==='Enter') UIHandlers.validateLogin()">
                 </div>
@@ -2143,6 +2262,10 @@
                     let searchTimeout;
                     inp.addEventListener('input', (e) => {
                         const q = e.target.value.toLowerCase().trim();
+                        // Toggle Clear Button
+                        const btn = document.getElementById('clearSearchBtn');
+                        if (btn) btn.style.display = q.length > 0 ? 'block' : 'none';
+
                         clearTimeout(searchTimeout);
                         searchTimeout = setTimeout(() => {
                             this.search(q);
@@ -2158,8 +2281,36 @@
 
                     // Reactivar dropdown al hacer focus si hay texto
                     inp.addEventListener('focus', () => {
-                        if (inp.value.trim().length > 0) this.search(inp.value.toLowerCase().trim());
+                        if (inp.value.trim().length > 0) this.search(inp.value.trim());
                     });
+                }
+            },
+
+            updateGreeting() {
+                const headGreeting = document.getElementById('userGreeting');
+                const sideGreeting = document.getElementById('sidebarUserGreeting');
+                const headText = document.getElementById('greetingText');
+                const sideText = document.getElementById('sidebarGreetingText');
+
+                if (STATE.isPro && STATE.userName) {
+                    // Update Texts
+                    if (headText) headText.textContent = STATE.userName;
+                    if (sideText) sideText.textContent = STATE.userName;
+
+                    // Show Containers (Absolute Force Logic)
+                    if (headGreeting) {
+                        // Desktop: Oculto en Móvil (hidden), Flex en Desktop (md:flex)
+                        headGreeting.className = "hidden md:flex items-center text-sm font-medium text-slate-600 animate-fade-in";
+                    }
+
+                    if (sideGreeting) {
+                        // Mobile: Flex en Movil (flex), Oculto en Desktop (md:hidden)
+                        sideGreeting.className = "flex flex-col gap-2 mb-4 p-4 bg-slate-50 rounded-xl border border-slate-100 md:hidden animate-fade-in";
+                    }
+
+                } else {
+                    if (headGreeting) headGreeting.classList.add('hidden');
+                    if (sideGreeting) sideGreeting.classList.add('hidden');
                 }
             },
 
@@ -2288,6 +2439,17 @@
                 });
 
                 this.updateSearchDropdown(uniqueMatches, q);
+            },
+
+            clearSearch() {
+                const inp = document.getElementById('mainSearch');
+                const btn = document.getElementById('clearSearchBtn');
+                if (inp) {
+                    inp.value = '';
+                    inp.focus();
+                }
+                if (btn) btn.style.display = 'none';
+                this.search('');
             },
 
             // FUNCIONES DEL DROPDOWN PREDICTIVO
@@ -2689,10 +2851,10 @@
         const DataService = {
             // Lista de Proxies para Failover (Rotación optimizada)
             proxies: [
-                url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, // INTENTO 1: AllOrigins (Más estable y rápido)
-                url => url, // INTENTO 2: Directo (Backup)
+                url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`, // INTENTO 1: CodeTabs (Alta disponibilidad)
+                url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, // INTENTO 2: AllOrigins
                 url => `https://corsproxy.io/?${encodeURIComponent(url)}`, // INTENTO 3: CORSProxy.io
-                url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`, // INTENTO 4: CodeTabs
+                url => url, // INTENTO 4: Directo (Backup)
                 url => `https://thingproxy.freeboard.io/fetch/${url}` // INTENTO 5: ThingProxy
             ],
 
@@ -2733,6 +2895,14 @@
 
                         if (i === this.proxies.length - 1) {
                             console.error('❌ Error Crítico: No se pudo conectar con la base de datos.');
+
+                            // UX: Detectar si el usuario abrió el archivo directamente
+                            if (window.location.protocol === 'file:') {
+                                alert("🛑 ERROR DE CONEXIÓN\n\nEstás abriendo el archivo directamente (Protocolo file://).\nPor seguridad, el navegador bloquea la descarga de datos.\n\nSOLUCIÓN:\nAbre una terminal en esta carpeta y ejecuta:\nnpx serve\n\nLuego abre: http://localhost:3000");
+                            } else {
+                                alert("⚠️ No se pudo conectar con la base de datos.\nVerifica tu conexión a internet o intenta recargar.");
+                            }
+
                             return [];
                         }
                     }
@@ -3215,14 +3385,14 @@
                                 <tr class="hover:bg-slate-100 transition-colors">
                                     <td class="pl-4 product-name">
                                         <div class="font-medium text-secondary text-sm">${renderText(p.producto)}</div>
-                                        <div class="text-[10px] text-slate-400 font-bold tracking-tight">${renderText(p.presentacion)}</div>
+                                        <div class="text-[10px] text-slate-500 font-bold tracking-tight">${renderText(p.presentacion)}</div>
                                     </td>
                                     <td class="text-right professional-only font-bold text-emerald-600" data-label="Farmacia">${this.formatPrice(p.precio_farmacia)}</td>
                                     <td class="text-right font-black text-secondary pr-4" data-label="Público">${this.formatPrice(p.precio_publico)}</td>
                                 </tr>`).join('')}
                             </tbody>
                         </table>
-                    </div>` : '<p class="text-xs text-slate-400 italic pl-4">Catálogo en actualización</p>'}
+                    </div>` : '<p class="text-xs text-slate-500 italic pl-4">Catálogo en actualización</p>'}
 
                     ${uniqueBlocks.length ? `<div class="mt-4 notes-container">
                         <p class="text-[11px] font-black text-slate-700 tracking-widest mb-3"><i data-lucide="info" class="w-3.5 h-3.5 inline mr-1 text-emerald-500"></i> Información adicional:</p>
@@ -3240,7 +3410,7 @@
                 if (!distributorsGrid || !sedePrincipalContainer) return;
 
                 if (!STATE.dist.length) {
-                    distributorsGrid.innerHTML = '<p class="text-slate-400 italic col-span-2 text-center">Cargando la red de distribuidores...</p>';
+                    distributorsGrid.innerHTML = '<p class="text-slate-500 italic col-span-2 text-center">Cargando la red de distribuidores...</p>';
                     return;
                 }
 
@@ -3326,9 +3496,9 @@
                                     </div>
                                     <a href="${dist.mapa || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((direccion || '') + ', ' + (departamento || ''))}`}" 
                                        target="_blank" 
-                                       class="btn-base btn-primary w-full justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all">
+                                       class="btn-animated-refresh w-full justify-center">
                                         <span>Cómo llegar</span>
-                                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                        <i data-lucide="map-pin" class="w-4 h-4 ml-2"></i>
                                     </a>
                                 </div>
                             </div>
@@ -3428,7 +3598,7 @@
                         </div>`;
                     }).join('');
                 } else if (faqCont) {
-                    faqCont.innerHTML = '<p class="text-slate-400 italic">Cargando preguntas frecuentes...</p>';
+                    faqCont.innerHTML = '<p class="text-slate-500 italic">Cargando preguntas frecuentes...</p>';
                 }
             },
             formatPrice: (v) => {
@@ -3449,7 +3619,7 @@
                             // Quitar active de todo
                             document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
                             // Poner active al correspondiente
-                            const link = document.querySelector(`.sidebar - link[data - tid="${e.target.id.replace('sec-', '')}"]`);
+                            const link = document.querySelector(`.sidebar-link[data-tid="${e.target.id.replace('sec-', '')}"]`);
                             if (link) {
                                 link.classList.add('active');
                                 // ELIMINADO: Auto-apertura de acordeón desde el Observer.
