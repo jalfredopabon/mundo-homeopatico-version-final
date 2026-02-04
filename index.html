@@ -71,6 +71,30 @@
     }
     </script>
 
+    <!-- TAREA 1.2: METADATOS DE AUTORIDAD MÉDICA (E-E-A-T) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalWebPage",
+      "name": "Lista de Precios y Catálogo Mundo Homeopático 2026",
+      "lastReviewed": "2026-02-01",
+      "reviewedBy": {
+        "@type": "Organization",
+        "name": "Comité Farmacéutico Mundo Homeopático"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "Mundo Homeopático",
+        "url": "https://mundohomeopatico.com"
+      },
+      "audience": {
+        "@type": "MedicalAudience",
+        "audienceType": "Pacientes, Farmacias y Médicos Homeópatas"
+      },
+      "specialty": "Homeopatía"
+    }
+    </script>
+
     <!-- 
     ★ ARQUITECTURA MONOLÍTICA ESTRUCTURADA ★
     Este proyecto está diseñado intencionalmente como un SOLO ARCHIVO (index.html) para maximizar 
@@ -144,6 +168,8 @@
             --primary-light: #E8F0E4;
             --primary-vibrant: #00C16C;
             /* Verde Tech Moderno (Vibrante) */
+            --primary-jade: #008f64;
+            /* Verde Jade Imperial (Profesional y Vivo) */
 
             --secondary: #1A292F;
             /* Azul Marino Profundo (Texto/Titulos) */
@@ -211,7 +237,7 @@
             --dist-card-border: var(--slate-200);
             --dist-card-radius: 1rem;
             --dist-primary-bg: linear-gradient(to bottom right, #ecfdf5, white);
-            --dist-primary-border: var(--primary);
+            --dist-primary-border: var(--primary-jade);
             --dist-primary-radius: 1.5rem;
             --dist-whatsapp-bg: #22c55e;
             --dist-whatsapp-hover: #16a34a;
@@ -238,6 +264,8 @@
 
             /* TOKENS DE TABLAS */
             --p-table-cell: 12px 16px;
+            --table-font-scale: 1;
+            /* ACCESIBILIDAD: Escala de texto (1 = 100%, 1.15 = 115%, 1.3 = 130%) */
 
             --radius-sm: 4px;
             --radius-md: 8px;
@@ -302,7 +330,8 @@
             overflow-y: auto;
             overflow-x: hidden;
             z-index: 90;
-            padding: 0.75rem 1.5rem;
+            padding: 1.5rem 0;
+            /* Padding horizontal a 0 para hover de borde a borde */
             display: flex;
             flex-direction: column;
         }
@@ -433,7 +462,7 @@
         .sidebar-label-l1 {
             display: flex;
             align-items: center;
-            padding: 0.5rem 0.75rem;
+            padding: 0.5rem 1.5rem;
             margin-top: 1.5rem;
             font-size: var(--font-base);
             /* 15px */
@@ -456,7 +485,7 @@
             color: #64748b;
             font-weight: 500;
             /* Medium */
-            padding: 4px 0.75rem;
+            padding: 4px 1.5rem;
             margin-top: 4px;
             margin-bottom: 2px;
             text-transform: none;
@@ -466,7 +495,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 0.6rem 0.75rem;
+            padding: 0.6rem 1.5rem;
             margin: 2px 0;
             width: 100%;
             font-size: var(--font-sm);
@@ -509,7 +538,7 @@
             justify-content: start;
             align-items: center;
             gap: 12px;
-            padding: 0.6rem 0.75rem;
+            padding: 0.6rem 1.5rem;
             /* Mismo padding */
             margin: 2px 0;
             font-size: var(--font-sm);
@@ -518,6 +547,8 @@
             color: #334155;
             /* Slate-700 (Unificado con Links) */
             background: transparent;
+            border: none;
+            /* CORREGIDO: Eliminar borde por defecto del navegador */
             border-radius: var(--radius-md);
             cursor: pointer;
             transition: all 0.15s ease;
@@ -533,7 +564,8 @@
             grid-template-rows: 0fr;
             transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border-left: 1px solid transparent;
-            margin-left: 22px;
+            margin-left: 1.5rem;
+            /* Alineado más compacto */
             margin-bottom: 0;
         }
 
@@ -545,7 +577,7 @@
 
         .sidebar-accordion-inner {
             overflow: hidden;
-            padding-left: 24px;
+            padding-left: 1rem;
             padding-top: 4px;
             opacity: 0;
             transform: translateY(-5px);
@@ -565,6 +597,8 @@
             border-radius: var(--radius-sm);
             /* Radio más pequeño para hijos */
             transition: all 0.2s ease;
+            margin-left: -4px;
+            /* Compensación visual */
         }
 
         /* Hover para hijos (Sombreado igual al padre) */
@@ -649,10 +683,18 @@
             /* Bold */
             color: #6B7280;
             /* Gris Specs */
-            text-transform: uppercase;
+            text-transform: none;
+            /* Sentence case: Primera mayúscula, resto minúscula */
             border-bottom: 1px solid #747775;
             /* Header Strong */
-            letter-spacing: 0.05em;
+            letter-spacing: 0.02em;
+            /* Reducido para texto normal */
+        }
+
+        /* Ocultar visualmente el texto "Presentación" sin afectar estructura */
+        .data-grid .th-hidden-text {
+            color: transparent;
+            user-select: none;
         }
 
         .data-grid td {
@@ -666,13 +708,18 @@
             vertical-align: middle;
         }
 
-        /* PRICE CELL: Columna de precio destacada */
+        /* ACCESIBILIDAD: Escala dinámica SOLO para columna Presentación */
+        .data-grid td:first-child {
+            font-size: calc(var(--font-sm) * var(--table-font-scale));
+        }
+
+        /* PRICE CELL: Columna de precio destacada (Sin escala dinámica) */
         .data-grid td:nth-last-child(1),
         .data-grid td.price-cell {
             font-weight: 600;
             /* SemiBold */
             font-size: var(--font-base);
-            /* 15px */
+            /* 15px fijo */
             color: #111827;
         }
 
@@ -727,12 +774,12 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: var(--primary);
+            background: var(--primary-jade);
             z-index: 200;
             width: 0;
             opacity: 0;
             pointer-events: none;
-            box-shadow: 0 1px 4px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 1px 4px rgba(0, 143, 100, 0.3);
             /* Transición solo para opacidad y cierre */
             transition: opacity 0.3s ease;
         }
@@ -884,7 +931,7 @@
         .btn-dynamic-arrow {
             --primary-color: var(--secondary);
             --secondary-color: #fff;
-            --hover-color: var(--primary);
+            --hover-color: var(--primary-jade);
             --arrow-width: 10px;
             --arrow-stroke: 2px;
             box-sizing: border-box;
@@ -934,8 +981,6 @@
 
         .btn-dynamic-arrow:hover {
             background-color: var(--hover-color);
-            transform: translateY(-1px);
-            box-shadow: 0 10px 20px -10px var(--primary);
         }
 
         .btn-dynamic-arrow:hover .arrow {
@@ -944,6 +989,11 @@
 
         .btn-dynamic-arrow:hover .arrow:before {
             right: 0;
+        }
+
+        /* Texto del botón de navegación - Por defecto visible en escritorio */
+        .nav-button-text {
+            display: inline;
         }
 
         /* From Uiverse.io by alshahwan - Adaptado a UI/UX Mundo Homeopático */
@@ -994,6 +1044,28 @@
             width: 1.1em;
             color: #64748b;
             /* Color base igual al texto */
+        }
+
+        .btn-animated-refresh {
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+            width: calc(100% - 3rem) !important;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            padding: 0 1.5rem;
+            height: 3.2rem;
+            background-color: var(--slate-200);
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-uiverse:hover p {
@@ -1175,9 +1247,7 @@
             }
         }
 
-        .hidden {
-            display: none !important;
-        }
+
 
         /* 
         ==========================================================================
@@ -1293,15 +1363,11 @@
                 padding: 0.6rem 1rem;
             }
 
-            #navButtonText {
+            /* Ocultar texto del botón de navegación en móvil, solo mostrar ícono */
+            .nav-button-text {
                 display: none;
-                /* Hide text, keep icon or show shorter text */
             }
 
-            #navButtonText::before {
-                content: 'Sedes';
-                display: inline;
-            }
 
             /* Section Titles */
             .section-title-l1 {
@@ -1345,14 +1411,127 @@
             display: block !important;
         }
 
+        /* ========================================
+           FAB ACCESIBILIDAD - Botón Flotante
+           ======================================== */
+        .fab-accessibility {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 150;
+            /* Por encima de contenido, debajo de modales */
 
+            /* Forma: Círculo más grande y visible */
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
 
-        /* //#endregion */
+            /* Colores: Borde verde jade SIEMPRE visible */
+            background: white;
+            border: 2px solid var(--primary-jade);
+            box-shadow: 0 4px 16px rgba(0, 143, 100, 0.25);
+
+            /* Layout interno */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 0;
+
+            /* Cursor e interacción */
+            cursor: pointer;
+
+            /* Transiciones suaves */
+            transition:
+                width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-radius 0.2s ease,
+                box-shadow 0.2s ease,
+                gap 0.3s ease,
+                padding 0.3s ease,
+                transform 0.2s ease;
+
+            /* Animación de pulso inicial para llamar la atención */
+            animation: fab-pulse 2s ease-in-out 3;
+        }
+
+        /* Animación de pulso */
+        @keyframes fab-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 16px rgba(0, 143, 100, 0.25);
+            }
+
+            50% {
+                transform: scale(1.08);
+                box-shadow: 0 6px 24px rgba(0, 143, 100, 0.4);
+            }
+        }
+
+        .fab-accessibility .fab-icon {
+            width: 22px;
+            height: 22px;
+            color: var(--primary-jade);
+            flex-shrink: 0;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .fab-accessibility .fab-label {
+            max-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-jade);
+            opacity: 0;
+            transition:
+                max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.2s ease;
+        }
+
+        /* Estado Hover/Expandido */
+        .fab-accessibility:hover,
+        .fab-accessibility.is-expanded {
+            width: auto;
+            min-width: 56px;
+            border-radius: 28px;
+            box-shadow: 0 6px 24px rgba(0, 143, 100, 0.35);
+            gap: 8px;
+            padding: 0 18px;
+            animation: none;
+            /* Detener pulso al interactuar */
+        }
+
+        .fab-accessibility:hover .fab-icon,
+        .fab-accessibility.is-expanded .fab-icon {
+            transform: scale(1.1);
+        }
+
+        .fab-accessibility:hover .fab-label,
+        .fab-accessibility.is-expanded .fab-label {
+            max-width: 120px;
+            opacity: 1;
+        }
+
+        /* Ajuste móvil */
+        @media (max-width: 768px) {
+            .fab-accessibility {
+                bottom: 1.5rem;
+                right: 1rem;
+                width: 52px;
+                height: 52px;
+            }
+        }
+
+        /* ======================================== */
 
         /* //#region Componentes Estandarizados */
         .search-container {
             position: relative;
             margin-bottom: var(--space-m);
+            padding: 0 1.5rem;
+            /* Padding para alinear con el resto del sidebar */
         }
 
         .search-input {
@@ -1825,6 +2004,32 @@
         .btn-animated-refresh:hover i {
             color: var(--primary-vibrant);
         }
+
+        /* TAREA 1.1: CINTILLO LEGAL INVIMA (Fixed Bottom) */
+        .legal-footer-invima {
+            background-color: #f8fafc;
+            /* Slate 50 */
+            border-top: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            font-size: 0.7rem;
+            /* Muy pequeño pero legible (11px aprox) */
+            color: #64748b;
+            /* Slate 500 */
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .legal-footer-invima strong {
+            color: #475569;
+            /* Slate 600 */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
     </style>
 </head>
 
@@ -1834,29 +2039,37 @@
     <div class="app-layout">
         <!-- HEADER GLOBAL FIXED -->
         <header class="main-header">
-            <div class="header-content px-8 w-full flex justify-between items-center h-full">
-                <!-- IZQUIERDA: Identidad + Toggle -->
-                <div class="flex items-center gap-4">
-                    <!-- Logo Principal (Traído del Sidebar) -->
+            <div class="header-content px-4 md:px-8 w-full flex justify-between items-center h-full">
+                <!-- MÓVIL: Botón menú a la izquierda -->
+                <button onclick="UIHandlers.toggleSidebar()" class="btn-mobile-toggle md:hidden order-first">
+                    <i data-lucide="menu"></i>
+                </button>
+
+                <!-- CENTRO: Identidad (Logo + Nombre en Desktop, Solo Nombre en Móvil) -->
+                <div class="flex items-center gap-2 md:gap-4 flex-1 md:flex-initial justify-center md:justify-start">
+                    <!-- Logo Principal (Solo Desktop) -->
                     <a href="#" onclick="Navigation.goTo('catalog')"
-                        class="flex items-center gap-3 transition-opacity hover:opacity-80">
-                        <img src="img/logo-mundo-homeopatico.webp" alt="Logo" class="h-10 w-auto"
+                        class="hidden md:flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-80">
+                        <img src="img/logo-mundo-homeopatico.webp" alt="Logo" class="h-8 md:h-10 w-auto"
                             onerror="this.src='https://placehold.co/120x40?text=MH LOGO'">
-                        <h1 class="font-black text-xl tracking-tight text-secondary leading-none">Mundo<br>Homeopático
+                        <h1 class="font-black text-lg md:text-xl tracking-tight text-secondary leading-none">
+                            Mundo<br>Homeopático
                         </h1>
                     </a>
 
-                    <!-- Toggle Móvil -->
-                    <button onclick="UIHandlers.toggleSidebar()" class="btn-mobile-toggle md:hidden ml-4">
-                        <i data-lucide="menu"></i>
-                    </button>
+                    <!-- Nombre solo (Móvil) -->
+                    <a href="#" onclick="Navigation.goTo('catalog')"
+                        class="md:hidden flex items-center transition-opacity hover:opacity-80">
+                        <h1 class="font-black text-lg tracking-tight text-secondary leading-none">
+                            Mundo<br>Homeopático
+                        </h1>
+                    </a>
                 </div>
 
                 <!-- DERECHA: Navegación Superior -->
-                <div class="flex items-center gap-6">
-                    <!-- Saludo User (Desktop Only) -->
-                    <div id="userGreeting"
-                        class="hidden md:flex items-center text-sm font-medium text-slate-600 animate-fade-in">
+                <div class="flex items-center gap-3 md:gap-6">
+                    <!-- Saludo User (Desktop Only - LG+) -->
+                    <div id="userGreeting" class="hidden">
                         <div class="flex items-center gap-2">
                             <i data-lucide="user-circle" class="w-4 h-4 text-emerald-500"></i>
                             <span id="greetingText"></span>
@@ -1869,7 +2082,7 @@
 
                     <!-- Botón Navegación (Micro-interacción Premium) -->
                     <button id="navToggleButton" onclick="Navigation.toggle()" class="btn-dynamic-arrow">
-                        <span id="navButtonText">Sedes y contacto</span>
+                        <span id="navButtonText" class="nav-button-text">Sedes y contacto</span>
                         <div class="arrow-wrapper">
                             <div class="arrow"></div>
                         </div>
@@ -1888,18 +2101,17 @@
 
 
             <!-- VISTA: CATÁLOGO -->
-            <div id="sidebar-catalog-view" class="flex flex-col h-full animate-fade-in">
+            <div id="sidebar-catalog-view" class="flex flex-col flex-1 animate-fade-in">
 
                 <!-- Saludo User (Mobile Only - Inside Sidebar) -->
-                <div id="sidebarUserGreeting"
-                    class="hidden flex-col gap-2 mb-4 p-4 bg-slate-50 rounded-xl border border-slate-100 md:hidden animate-fade-in">
+                <div id="sidebarUserGreeting" class="hidden">
                     <div class="flex items-center gap-3">
                         <div
                             class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
                             <i data-lucide="user" class="w-4 h-4"></i>
                         </div>
                         <div class="flex flex-col">
-                            <span
+                            <span id="greetingLabel"
                                 class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Bienvenido</span>
                             <span id="sidebarGreetingText"
                                 class="text-sm font-bold text-slate-700 leading-tight"></span>
@@ -1910,15 +2122,14 @@
                         <i data-lucide="log-out" class="w-3 h-3"></i>
                         Cerrar sesión
                     </button>
-                    <div class="w-full h-px bg-slate-200 mt-2"></div>
                 </div>
                 <!-- Zona Superior: Buscador y Accesos -->
                 <div class="flex-shrink-0">
                     <div class="search-container relative">
                         <i data-lucide="search"
-                            class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
+                            class="absolute left-9 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 z-10"></i>
                         <input type="text" id="mainSearch" placeholder="Buscar..." aria-label="Buscar productos"
-                            class="search-input w-full pl-10 pr-10 py-3 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all shadow-sm hover:border-slate-400"
+                            class="search-input w-full pl-10 pr-10 py-3 bg-slate-100 border border-slate-300 rounded-lg text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all shadow-sm hover:border-slate-400"
                             autocomplete="off">
                         <!-- Botón Limpiar (X) -->
                         <button id="clearSearchBtn" onclick="UIHandlers.clearSearch()"
@@ -1939,11 +2150,11 @@
                 <div class="category-divider flex-shrink-0"></div>
 
                 <!-- Zona de Navegación (Scrollable) -->
-                <nav id="sidebar-menu" class="space-y-1 flex-grow"></nav>
+                <nav id="sidebar-menu" class="space-y-1 flex-grow pb-8"></nav>
             </div>
 
             <!-- VISTA: CONTACTO (CONTEXTUAL) -->
-            <div id="sidebar-contact-view" class="hidden flex-col h-full animate-fade-in">
+            <div id="sidebar-contact-view" class="hidden flex-col flex-1 animate-fade-in">
                 <!-- Zona Superior: Espacio para nuevos botones -->
                 <div id="sidebar-contact-top-actions" class="flex-shrink-0 mb-6 flex flex-col items-center gap-4">
                     <!-- From Uiverse.io by alshahwan -->
@@ -1987,14 +2198,15 @@
                 </nav>
 
                 <!-- CTA Card (Abajo) -->
-                <div class="flex-shrink-0 mt-auto mb-4">
-                    <div class="distributor-promo-card p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/80">
+                <div class="flex-shrink-0 mt-auto mb-4 px-6">
+                    <div
+                        class="distributor-promo-card p-5 bg-emerald-50 rounded-2xl border-2 border-emerald-200/60 shadow-sm">
                         <h3 class="font-bold text-lg text-emerald-900 mb-1">Sé distribuidor</h3>
                         <p class="text-xs text-slate-500 mb-4 leading-relaxed font-medium">Distribuye nuestros productos
                             homeopáticos.</p>
 
                         <a id="btn-whatsapp-sidebar" href="https://wa.me/573176680750" target="_blank"
-                            class="btn-animated-refresh justify-center !py-2.5 !text-xs !bg-white hover:!bg-emerald-50 hover:!border-emerald-300 hover:!text-emerald-700">
+                            class="btn-animated-refresh justify-center !py-2.5 !text-xs !bg-white !border-slate-300 hover:!bg-emerald-50 hover:!border-emerald-400 hover:!text-emerald-800">
                             <i data-lucide="message-circle" class="w-4 h-4 text-emerald-500"></i>
                             WhatsApp
                         </a>
@@ -2002,15 +2214,7 @@
                 </div>
             </div>
 
-            <!-- Pie de Autoría (Común a ambas vistas) -->
-            <div id="author-credit"
-                class="sidebar-footer mt-auto pt-6 opacity-0 transition-opacity duration-1000 flex-shrink-0">
-                <p class="text-[9px] font-black text-slate-300 tracking-[0.3em] text-center leading-loose">
-                    Desarrollado por<br>
-                    <a id="author-link" href="#" target="_blank"
-                        class="text-slate-400 hover:text-emerald-500 transition-colors font-bold border-b border-transparent hover:border-emerald-500"></a>
-                </p>
-            </div>
+
         </aside>
 
         <!-- WRAPPER DE CONTENIDO (Offset por Header y Sidebar) -->
@@ -2041,6 +2245,13 @@
                     <div class="h-64 bg-white rounded-[3rem] animate-pulse border border-slate-100 mb-10"></div>
                 </div>
             </main>
+
+            <!-- FAB ACCESIBILIDAD: Ajustar Tamaño de Texto -->
+            <button id="textSizeToggle" class="fab-accessibility" onclick="UIHandlers.toggleTextSize()"
+                aria-label="Ajustar tamaño del texto en tablas" title="Ajustar tamaño del texto">
+                <i data-lucide="a-large-small" class="fab-icon"></i>
+                <span id="textSizeLabel" class="fab-label">Normal</span>
+            </button>
 
             <main id="view-contact" class="hidden flex-grow p-6 lg:p-8 lg:pl-16 min-w-0 flex flex-col">
                 <div class="mb-6 animate-fade-in">
@@ -2098,33 +2309,51 @@
                 </div>
             </main>
 
-            <!-- FOOTER GLOBAL UNIFICADO (Fuera del padding del main) -->
-            <footer class="mt-auto border-t border-slate-200 bg-white py-6 px-8">
-                <div class="w-full flex flex-col md:flex-row justify-between items-center gap-8">
-                    <!-- Bloque Izquierdo: Copyright -->
-                    <div class="flex items-center gap-4 text-slate-400">
-                        <img src="img/logo-mundo-homeopatico.webp" alt="Logo"
-                            class="h-8 opacity-40 grayscale hover:grayscale-0 transition-all cursor-pointer">
-                        <div class="text-left">
-                            <p class="text-[11px] font-bold tracking-tight">Mundo Homeopático © 2026</p>
-                            <p class="text-[10px] text-slate-400 hidden md:block">Precios sujetos a cambios.</p>
+            <!-- FOOTER GLOBAL UNIFICADO -->
+            <footer class="mt-auto bg-white border-t border-slate-200 w-full">
+                <div class="py-8 px-8 flex flex-col gap-8">
+                    <div class="w-full flex flex-col md:flex-row justify-between items-center gap-8">
+                        <!-- Bloque Izquierdo: Copyright -->
+                        <div class="flex items-center gap-4 text-slate-400">
+                            <img src="img/logo-mundo-homeopatico.webp" alt="Logo"
+                                class="h-8 opacity-40 grayscale hover:grayscale-0 transition-all cursor-pointer">
+                            <div class="text-left">
+                                <p class="text-[11px] font-bold tracking-tight">Mundo Homeopático © 2026</p>
+                                <p class="text-[10px] text-slate-400 hidden md:block">Precios sujetos a cambios.</p>
+                                <!-- Developer Credit (Moved from Sidebar) -->
+                                <p id="author-credit"
+                                    class="text-[9px] text-slate-300 font-medium mt-1 opacity-0 transition-opacity duration-1000">
+                                    Creado por: <a id="author-link" href="#" target="_blank"
+                                        class="hover:text-emerald-500 transition-colors">Alfredo Pabón</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Bloque Derecho: Redes -->
+                        <div class="flex justify-center gap-6">
+                            <a id="footer-whatsapp-link" href="https://wa.me/573176680750" target="_blank"
+                                title="WhatsApp"
+                                class="text-slate-400 hover:text-emerald-500 transition-colors transform hover:scale-110">
+                                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://www.instagram.com/mundohomeopatico" target="_blank" title="Instagram"
+                                class="text-slate-400 hover:text-pink-500 transition-colors transform hover:scale-110">
+                                <i data-lucide="instagram" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://www.mhmundohomeopatico.com" target="_blank" title="Sitio Web"
+                                class="text-slate-400 hover:text-secondary transition-colors transform hover:scale-110">
+                                <i data-lucide="globe" class="w-5 h-5"></i>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Bloque Derecho: Redes -->
-                    <div class="flex justify-center gap-6">
-                        <a id="footer-whatsapp-link" href="https://wa.me/573176680750" target="_blank" title="WhatsApp"
-                            class="text-slate-400 hover:text-emerald-500 transition-colors transform hover:scale-110">
-                            <i data-lucide="message-circle" class="w-5 h-5"></i>
-                        </a>
-                        <a href="https://www.instagram.com/mundohomeopatico" target="_blank" title="Instagram"
-                            class="text-slate-400 hover:text-pink-500 transition-colors transform hover:scale-110">
-                            <i data-lucide="instagram" class="w-5 h-5"></i>
-                        </a>
-                        <a href="https://www.mhmundohomeopatico.com" target="_blank" title="Sitio Web"
-                            class="text-slate-400 hover:text-secondary transition-colors transform hover:scale-110">
-                            <i data-lucide="globe" class="w-5 h-5"></i>
-                        </a>
+                    <!-- CINTILLO LEGAL INVIMA (Integrado al final) -->
+                    <div class="legal-footer-invima pt-6 border-t border-slate-100 !bg-transparent opacity-80">
+                        <span>Es un medicamento. <strong>No exceder su consumo</strong>.</span>
+                        <span class="hidden md:inline">•</span>
+                        <span>Leer indicaciones y contraindicaciones.</span>
+                        <span class="hidden md:inline">•</span>
+                        <span>Si los síntomas persisten, consultar al médico.</span>
                     </div>
                 </div>
             </footer>
@@ -2135,7 +2364,7 @@
     <!-- //#region 4. LÓGICA DE NEGOCIO (JS) -->
     <!-- MODAL DE ACCESO PROFESIONAL (Distribuidores) -->
     <div id="passwordModal"
-        class="hidden fixed inset-0 z-[2000] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+        class="hidden fixed inset-0 z-[2200] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm animate-fade-in">
         <div class="bg-white rounded-[2rem] p-10 max-w-md w-full shadow-2xl border border-slate-100 mx-4">
             <div class="text-center mb-8">
                 <div
@@ -2180,11 +2409,12 @@
                 PRICES: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1411473006&single=true&output=csv',
                 NAV: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1582460222&single=true&output=csv',
                 AUTH: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1372762576&single=true&output=csv',
-                AUTHOR: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=2047819342&single=true&output=csv',
                 VIDEO: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1360742312&single=true&output=csv',
                 BANNER: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=593525669&single=true&output=csv',
                 FAQ: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1434563192&single=true&output=csv',
-                DIST: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=486540156&single=true&output=csv'
+                DIST: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=486540156&single=true&output=csv',
+                AUTHOR: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=878891571&single=true&output=csv',
+                SEO: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=494400744&single=true&output=csv'
             },
             PROXY: 'https://corsproxy.io/?',
             PROXY_BACKUP: 'https://corsproxy.io/?',
@@ -2253,6 +2483,7 @@
             init() {
                 if (STATE.isPro) document.body.classList.add('professional-mode');
                 this.updateGreeting();
+                this.initTextSize(); // Restaurar preferencia de tamaño de texto
 
                 // Configurar Buscador con Debounce
                 const inp = document.getElementById('mainSearch');
@@ -2292,15 +2523,32 @@
                 const headText = document.getElementById('greetingText');
                 const sideText = document.getElementById('sidebarGreetingText');
 
+                // Lógica de Saludo Dinámico
+                const getGreeting = () => {
+                    const hour = new Date().getHours();
+                    if (hour < 12) return 'Buenos días';
+                    if (hour < 19) return 'Buenas tardes';
+                    return 'Buenas noches';
+                };
+                const greetingTime = getGreeting();
+
                 if (STATE.isPro && STATE.userName) {
                     // Update Texts
+                    // Update Texts
+                    // Header: Nombre directo
                     if (headText) headText.textContent = STATE.userName;
+
+                    // Sidebar: Saludo dinámico + Nombre
                     if (sideText) sideText.textContent = STATE.userName;
+
+                    // Actualizar etiqueta del sidebar (Buenos días/tardes/noches)
+                    const label = document.getElementById('greetingLabel');
+                    if (label) label.textContent = greetingTime;
 
                     // Show Containers (Absolute Force Logic)
                     if (headGreeting) {
-                        // Desktop: Oculto en Móvil (hidden), Flex en Desktop (md:flex)
-                        headGreeting.className = "hidden md:flex items-center text-sm font-medium text-slate-600 animate-fade-in";
+                        // Desktop: Oculto en Móvil (hidden), Flex en Desktop (lg:flex)
+                        headGreeting.className = "hidden lg:flex items-center text-sm font-medium text-slate-600 animate-fade-in";
                     }
 
                     if (sideGreeting) {
@@ -2522,13 +2770,6 @@
                 }
             },
 
-            updateGreeting() {
-                const hour = new Date().getHours();
-                const greet = hour < 12 ? "Buenos días" : hour < 18 ? "Buenas tardes" : "Buenas noches";
-                const gt = document.getElementById('greetingText');
-                if (gt) gt.textContent = `${greet}${STATE.userName ? ', ' + STATE.userName : ''}`;
-                document.getElementById('userGreeting')?.classList.toggle('hidden', !STATE.isPro);
-            },
             toggleSidebar: () => {
                 document.getElementById('mainSidebar').classList.toggle('is-open');
                 document.getElementById('mobileOverlay').classList.toggle('show');
@@ -2578,9 +2819,59 @@
                 localStorage.setItem('mh_banner_closed', 'true');
                 document.body.classList.remove('has-banner');
             },
+
+            // ACCESIBILIDAD: Control de tamaño de texto en tablas
+            textSizeIndex: 0,
+            textSizeTimeout: null,
+            textSizes: [
+                { scale: 1, label: 'Normal' },
+                { scale: 1.25, label: 'Grande' },
+                { scale: 1.5, label: 'Muy grande' }
+            ],
+            toggleTextSize() {
+                // Ciclar al siguiente tamaño
+                this.textSizeIndex = (this.textSizeIndex + 1) % this.textSizes.length;
+                const current = this.textSizes[this.textSizeIndex];
+
+                // Actualizar variable CSS centralizada
+                document.documentElement.style.setProperty('--table-font-scale', current.scale);
+
+                // Actualizar etiqueta del botón
+                const label = document.getElementById('textSizeLabel');
+                const fab = document.getElementById('textSizeToggle');
+                if (label) label.textContent = current.label;
+
+                // Expandir FAB temporalmente para mostrar el cambio
+                if (fab) {
+                    fab.classList.add('is-expanded');
+                    clearTimeout(this.textSizeTimeout);
+                    this.textSizeTimeout = setTimeout(() => {
+                        fab.classList.remove('is-expanded');
+                    }, 2000); // Colapsar después de 2 segundos
+                }
+
+                // Persistir preferencia
+                localStorage.setItem('mh_text_size_index', this.textSizeIndex);
+            },
+            initTextSize() {
+                const saved = localStorage.getItem('mh_text_size_index');
+                if (saved !== null) {
+                    this.textSizeIndex = parseInt(saved);
+                    const current = this.textSizes[this.textSizeIndex];
+                    document.documentElement.style.setProperty('--table-font-scale', current.scale);
+                    const label = document.getElementById('textSizeLabel');
+                    if (label) label.textContent = current.label;
+                }
+            },
             showPasswordModal: () => {
                 const modal = document.getElementById('passwordModal');
                 if (!modal) return;
+
+                // En móvil: Cerrar sidebar primero para UX limpia (Patrón: Salir menú → Login)
+                const sidebar = document.getElementById('mainSidebar');
+                if (sidebar && sidebar.classList.contains('is-open')) {
+                    UIHandlers.toggleSidebar();
+                }
 
                 // Técnica de Blindaje: Remover hidden y forzar display flex
                 modal.classList.remove('hidden');
@@ -2598,10 +2889,15 @@
             },
             validateLogin: async () => {
                 const passInput = document.getElementById('professionalPassword');
-                const pass = passInput.value.trim();
+                const pass = passInput?.value.trim();
+
+                // Validación inicial
+                if (!pass) {
+                    alert("Por favor ingrese una contraseña");
+                    return;
+                }
 
                 // Feedback de carga
-                // FIX: El botón NO está dentro del parentElement del input, debemos buscarlo en el modal completo
                 const modal = document.getElementById('passwordModal');
                 const btn = modal.querySelector('button[onclick*="validateLogin"]');
                 const originalText = btn ? btn.innerHTML : '';
@@ -2613,10 +2909,14 @@
 
                     // Si por alguna razón no cargó al inicio, intentamos cargarla ahora
                     if (!auth || auth.length === 0) {
+                        console.log("⚙️ Cargando datos de autenticación...");
                         try {
                             auth = await DataService.fetchCSV(APP_CONFIG.SHEETS.AUTH);
                             STATE.auth = auth; // Guardar para futuro
-                        } catch (err) { console.warn("Fallo carga auth on-demand", err); }
+                            console.log("✅ Datos de autenticación cargados:", auth.length, "usuarios");
+                        } catch (err) {
+                            console.warn("⚠️ Fallo carga auth on-demand", err);
+                        }
                     }
 
                     // ESCENARIO 1: Modo Offline / Bloqueo Local / Base Vacía
@@ -2628,8 +2928,8 @@
                             localStorage.setItem('mh_user_v2', 'Administrador Offline');
                             location.reload();
                         } else {
-                            alert("MODO OFFLINE: Conexión limitada. Por favor use la clave maestra o recargue la página cuando tenga mejor señal.");
-                            btn.innerHTML = originalText;
+                            alert("MODO OFFLINE: Conexión limitada.\n\nUse la clave maestra (MH2026) o recargue la página cuando tenga mejor señal.");
+                            if (btn) btn.innerHTML = originalText;
                         }
                         return;
                     }
@@ -2643,13 +2943,14 @@
                     });
 
                     if (user || pass === 'MH2026') {
+                        console.log("✅ Login exitoso:", user?.nombre || 'Administrador');
                         localStorage.setItem('mh_pro_v2', 'true');
                         localStorage.setItem('mh_user_v2', user?.nombre || user?.usuario || 'Administrador');
                         location.reload();
                     } else {
                         // Pequeño delay artificial para deterred fuerza bruta y dar peso a la UI
                         setTimeout(() => {
-                            alert("La contraseña ingresada no es válida.");
+                            alert("❌ La contraseña ingresada no es válida.\n\nVerifique e intente nuevamente.");
                             if (btn) btn.innerHTML = originalText;
                             passInput.value = "";
                             passInput.focus();
@@ -2657,8 +2958,8 @@
                     }
 
                 } catch (e) {
-                    console.error("Error Auth Crítico:", e);
-                    alert("Error verificando credenciales. Intente nuevamente.");
+                    console.error("❌ Error Auth Crítico:", e);
+                    alert("Error verificando credenciales.\n\nIntente nuevamente o recargue la página.");
                     if (btn) btn.innerHTML = originalText;
                 }
             },
@@ -2851,30 +3152,31 @@
         const DataService = {
             // Lista de Proxies para Failover (Rotación optimizada)
             proxies: [
-                url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`, // INTENTO 1: CodeTabs (Alta disponibilidad)
-                url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, // INTENTO 2: AllOrigins
-                url => `https://corsproxy.io/?${encodeURIComponent(url)}`, // INTENTO 3: CORSProxy.io
-                url => url, // INTENTO 4: Directo (Backup)
+                url => url, // INTENTO 1: Directo (Google Sheets soporta CORS en CSV públicos)
+                url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`, // INTENTO 2: CodeTabs
+                url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, // INTENTO 3: AllOrigins
+                url => `https://corsproxy.io/?${encodeURIComponent(url)}`, // INTENTO 4: CORSProxy.io
                 url => `https://thingproxy.freeboard.io/fetch/${url}` // INTENTO 5: ThingProxy
             ],
 
             async fetchCSV(url) {
-                // Añadir Cache-Busting para evitar Error 400 de Google por peticiones repetidas
+                // Generar URL con Cache-Busting SOLO para proxies (Google Sheets /pub no lo soporta)
                 const separator = url.includes('?') ? '&' : '?';
-                const freshUrl = `${url}${separator}cb=${Date.now()}`;
+                const cb = `${separator}cb=${Date.now()}`;
 
                 for (let i = 0; i < this.proxies.length; i++) {
                     const proxyFn = this.proxies[i];
-                    const fetchUrl = proxyFn(freshUrl);
+
+                    // Solo añadir cache-busting si no es el intento directo (Intento 1)
+                    const fetchUrl = (i === 0) ? url : proxyFn(`${url}${cb}`);
 
                     try {
                         const controller = new AbortController();
-                        // Aumentado a 15s para dar margen a conexiones lentas
-                        const timeoutId = setTimeout(() => controller.abort(), 15000);
+                        const timeoutId = setTimeout(() => controller.abort(), 12000); // 12s timeout
 
                         const response = await fetch(fetchUrl, {
                             signal: controller.signal,
-                            cache: 'no-store' // Forzar al navegador a no usar caché
+                            cache: 'no-store'
                         });
                         clearTimeout(timeoutId);
 
@@ -2882,32 +3184,34 @@
 
                         const text = await response.text();
 
-                        // Validación de integridad
+                        // Validación básica de integridad del CSV
                         if (!text || text.length < 5 || text.includes('<!DOCTYPE html>')) {
-                            throw new Error('Respuesta inválida o bloqueada');
+                            throw new Error('Contenido inválido');
                         }
 
+                        console.log(`✅ Conexión exitosa via: ${i === 0 ? 'Directo' : 'Proxy ' + i}`);
                         return this.parseCSV(text);
 
                     } catch (error) {
-                        const errorMsg = error.name === 'AbortError' ? 'Timeout (15s)' : error.message;
-                        console.warn(`⚠️ Intento ${i + 1} falló: ${errorMsg}. Probando alternativa...`);
+                        const errorMsg = error.name === 'AbortError' ? 'Timeout' : error.message;
+                        console.warn(`⚠️ Intento ${i + 1} (${i === 0 ? 'Directo' : 'Proxy'}) falló: ${errorMsg}.`);
 
+                        // Si es el último intento y todo falló, reportar error final
                         if (i === this.proxies.length - 1) {
-                            console.error('❌ Error Crítico: No se pudo conectar con la base de datos.');
-
-                            // UX: Detectar si el usuario abrió el archivo directamente
-                            if (window.location.protocol === 'file:') {
-                                alert("🛑 ERROR DE CONEXIÓN\n\nEstás abriendo el archivo directamente (Protocolo file://).\nPor seguridad, el navegador bloquea la descarga de datos.\n\nSOLUCIÓN:\nAbre una terminal en esta carpeta y ejecuta:\nnpx serve\n\nLuego abre: http://localhost:3000");
+                            if (!STATE.prices || STATE.prices.length === 0) {
+                                if (window.location.protocol === 'file:') {
+                                    alert("🛑 ERROR DE CONEXIÓN\n\nEstás abriendo el archivo directamente.\nUsa un servidor local (npm run dev o similar).");
+                                } else {
+                                    alert("⚠️ No se pudo conectar con la base de datos.");
+                                }
                             } else {
-                                alert("⚠️ No se pudo conectar con la base de datos.\nVerifica tu conexión a internet o intenta recargar.");
+                                console.warn("📦 Sincronización fallida. Operando con datos de respaldo (Caché).");
                             }
-
-                            return [];
                         }
+                        // CONTINUAR EL LOOP (No usar return [] aquí para permitir que pruebe el siguiente proxy)
                     }
                 }
-                return [];
+                return []; // Solo llega aquí si ALL proxies fallan
             },
 
             parseCSV(str) {
@@ -2980,6 +3284,14 @@
                 this.renderCatalog();
                 this.renderContactItems();
                 this.renderFAQ();
+
+                // TAREA 2.1: Generación de Schema Dinámico
+                if (typeof SchemaManager !== 'undefined') {
+                    SchemaManager.buildLocalBusiness();
+                    SchemaManager.buildFAQPage();
+                    SchemaManager.buildOfferCatalog();
+                }
+
                 if (window.lucide) window.lucide.createIcons();
             },
             renderCatalog() {
@@ -3211,7 +3523,7 @@
                         if (!activeSection.subtitleMap.has(sub)) {
                             const subtitleNode = {
                                 type: 'subtitle',
-                                title: sub,
+                                title: row.subtitulo_titulo || sub,
                                 desc: row.subtitulo_descripcion || '',
                                 groupMap: new Map(), // Para rastrear grupos únicos dentro de este subtítulo
                                 children: []        // Para mantener el orden de inserción de grupos/items
@@ -3234,7 +3546,7 @@
                         if (!containerMap.has(agp)) {
                             const groupNode = {
                                 type: 'group',
-                                title: agp,
+                                title: row.agrupador_titulo || agp,
                                 desc: row.agrupador_descripcion || '',
                                 items: [],
                                 itemSet: new Set() // Para evitar productos duplicados exactos en el mismo grupo
@@ -3266,7 +3578,25 @@
                     }
 
                     const rawId = context ? `${context}-${identifier}` : identifier;
-                    const cleanId = DataService.slugify(rawId);
+                    let cleanId = DataService.slugify(rawId);
+
+                    // TAREA 3.1: Reescritura de URLs Internas (Friendly Anchors)
+                    // Convertimos términos genéricos en keywords ricas para SEO
+                    const seoMap = {
+                        "catalogo": "productos-homeopaticos",
+                        "homeopatia": "medicamentos-homeopaticos",
+                        "esencias": "esencias-florales",
+                        "sales": "sales-schussler",
+                        "organoterap": "organoterapia",
+                        "nosodes": "nosodes-homeopaticos"
+                    };
+
+                    // Si el ID contiene alguna key genérica, la enriquecemos
+                    for (const [key, replacement] of Object.entries(seoMap)) {
+                        if (cleanId.includes(key) && !cleanId.includes(replacement)) {
+                            cleanId = cleanId.replace(key, replacement);
+                        }
+                    }
 
                     const itemNode = {
                         type: 'item',
@@ -3375,9 +3705,9 @@
                         <table class="data-grid">
                             <thead>
                                 <tr>
-                                    <th class="pl-4">Presentación</th>
-                                    <th class="text-right professional-only text-emerald-600">Precio farmacia</th>
-                                    <th class="text-right pr-4">Precio público</th>
+                                    <th class="pl-4 th-hidden-text">Presentación</th>
+                                    <th class="text-right professional-only text-emerald-600">Precio Farmacia</th>
+                                    <th class="text-right pr-4">Precio Público</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -3639,6 +3969,166 @@
 
 
 
+        const SchemaManager = {
+            // TAREA 2.1: Motor JSON-LD para Sedes (LocalBusiness)
+            buildLocalBusiness() {
+                if (!STATE.dist || !STATE.dist.length) return;
+
+                const nodes = STATE.dist.map(d => {
+                    const name = d.sede || d.nombre_distribuidor || "Punto de Venta";
+                    // Fallback para ciudad/departamento
+                    const region = d.departamento || "Colombia";
+
+                    // Limpieza básica de teléfonos para formato E.164
+                    const rawPhone = d.whatsapp_1 || d.movil_1 || d.telefono_fijo_1;
+                    const phone = rawPhone ? Formatters.whatsapp(rawPhone) : "573176680750";
+
+                    return {
+                        "@type": "Pharmacy",
+                        "name": `Mundo Homeopático - ${name}`,
+                        "image": "https://mundohomeopatico.com/img/logo-mundo-homeopatico.webp",
+                        "telephone": `+${phone}`,
+                        "address": {
+                            "@type": "PostalAddress",
+                            "streetAddress": d.direccion || "Dirección por confirmar",
+                            "addressLocality": region,
+                            "addressCountry": "CO"
+                        },
+                        "url": "https://mundohomeopatico.com",
+                        "priceRange": "$$",
+                        "openingHoursSpecification": {
+                            "@type": "OpeningHoursSpecification",
+                            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                            "opens": "08:00",
+                            "closes": "18:00"
+                        }
+                    };
+                });
+
+                this.inject("local-business-graph", {
+                    "@context": "https://schema.org",
+                    "@graph": nodes
+                });
+            },
+
+            // TAREA 2.2: Motor JSON-LD para FAQ (FAQPage)
+            buildFAQPage() {
+                if (!STATE.faq || !STATE.faq.length) return;
+
+                const entities = STATE.faq.map(f => {
+                    const keys = Object.keys(f);
+                    const qKey = keys.find(k => k.toLowerCase().includes('pregunta')) || 'pregunta';
+                    const aKey = keys.find(k => k.toLowerCase().includes('respuesta') || k.toLowerCase().includes('answer')) || 'respuesta';
+                    const q = f[qKey];
+                    const a = f[aKey];
+
+                    if (!q || !a) return null;
+
+                    return {
+                        "@type": "Question",
+                        "name": q,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": a
+                        }
+                    };
+                }).filter(item => item !== null);
+
+                if (entities.length > 0) {
+                    this.inject("faq-page-graph", {
+                        "@context": "https://schema.org",
+                        "@type": "FAQPage",
+                        "mainEntity": entities
+                    });
+                }
+            },
+
+            // TAREA 2.3: Marcado de Producto (OfferCatalog)
+            buildOfferCatalog() {
+                if (!STATE.prices || !STATE.prices.length) return;
+
+                // Limitamos a los primeros 200 items para no saturar el DOM y respetar límites de Google
+                // Priorizamos productos con precio público visible
+                const products = STATE.prices.slice(0, 200).map(p => {
+                    const priceRaw = p.precio_publico;
+                    if (!priceRaw || priceRaw === '-') return null;
+
+                    const price = parseInt(String(priceRaw).replace(/\D/g, '')) || 0;
+                    if (price === 0) return null;
+
+                    return {
+                        "@type": "Product",
+                        "name": `${p.producto} - ${p.presentacion}`,
+                        "category": p.nivel_1 || "Homeopatía",
+                        "offers": {
+                            "@type": "Offer",
+                            "price": price,
+                            "priceCurrency": "COP",
+                            "availability": "https://schema.org/InStock",
+                            "url": "https://mundohomeopatico.com"
+                        }
+                    };
+                }).filter(item => item !== null);
+
+                if (products.length > 0) {
+                    this.inject("offer-catalog-graph", {
+                        "@context": "https://schema.org",
+                        "@type": "OfferCatalog",
+                        "name": "Catálogo General 2026",
+                        "itemListElement": products.map((prod, index) => ({
+                            "@type": "ListItem",
+                            "position": index + 1,
+                            "item": prod
+                        }))
+                    });
+                }
+            },
+
+            // TAREA 3.2: Optimización de Video (VideoObject)
+            buildVideoObject(videoData) {
+                if (!videoData) return;
+
+                // Extraer datos del objeto crudo (flexible con nombres de columnas)
+                const keys = Object.keys(videoData);
+                const title = videoData.titulo || videoData.title || "Video Institucional Mundo Homeopático";
+                const desc = videoData.descripcion || videoData.description || "Conozca nuestros procesos de calidad y elaboración de medicamentos homeopáticos.";
+                const url = Object.values(videoData).find(v => v && typeof v === 'string' && (v.includes('youtube.com') || v.includes('youtu.be')));
+
+                if (!url) return;
+
+                const match = url.match(/(?:v=|\/embed\/|youtu\.be\/|\/v\/|\/e\/|watch\?v%3D|watch\?v=)([^#\&\?]*).*/);
+                const videoId = match && match[1] ? match[1] : null;
+
+                if (!videoId) return;
+
+                this.inject("video-object-graph", {
+                    "@context": "https://schema.org",
+                    "@type": "VideoObject",
+                    "name": title,
+                    "description": desc,
+                    "thumbnailUrl": [
+                        `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+                        `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+                    ],
+                    "uploadDate": "2024-01-01T08:00:00-05:00",
+                    "embedUrl": `https://www.youtube.com/embed/${videoId}`,
+                    "contentUrl": `https://www.youtube.com/watch?v=${videoId}`
+                });
+            },
+
+            // Helper genérico de inyección
+            inject(id, data) {
+                const existing = document.getElementById(id);
+                if (existing) existing.remove();
+
+                const script = document.createElement('script');
+                script.id = id;
+                script.type = 'application/ld+json';
+                script.textContent = JSON.stringify(data);
+                document.head.appendChild(script);
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', async () => {
 
             UIHandlers.init();
@@ -3699,7 +4189,25 @@
                 }
             }).catch(e => console.warn("Banner fetch error", e));
 
-            // 3. Carga diferida de otros recursos no críticos
+            // 3. Carga de SEO Dinámico
+            DataService.fetchCSV(APP_CONFIG.SHEETS.SEO).then(d => {
+                if (d && d[0]) {
+                    const seo = d[0].seo_dinamico || d[0].seo || "";
+                    if (seo) {
+                        // Actualizar título si el SEO contiene algo tipo "Título | Descripción"
+                        if (seo.includes('|')) {
+                            const parts = seo.split('|');
+                            document.title = parts[0].trim();
+                            const metaDesc = document.querySelector('meta[name="description"]');
+                            if (metaDesc) metaDesc.setAttribute('content', parts[1].trim());
+                        } else {
+                            document.title = seo;
+                        }
+                    }
+                }
+            }).catch(e => console.warn("SEO fetch error", e));
+
+            // 4. Carga diferida de otros recursos no críticos
             setTimeout(() => {
                 DataService.fetchCSV(APP_CONFIG.SHEETS.AUTHOR).then(d => {
                     if (d && d[0]) {
@@ -3734,6 +4242,11 @@
                                         onerror="this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'">
                                     <div class="play-button shadow-2xl"></div>
                                 </div>`;
+
+                                // Inyectar Schema de Video
+                                if (typeof SchemaManager !== 'undefined') {
+                                    SchemaManager.buildVideoObject(row);
+                                }
                             }
                         }
                     }
@@ -3778,14 +4291,15 @@
                             RenderEngine.renderAll();
                         }
                     } else if (!hasRenderedFromCache) {
-                        // Solo alertamos si no teníamos nada que mostrar
-                        alert("¡Atención! No se pudieron descargar los datos de Google Sheets. Verifica tu conexión a internet.");
+                        // Registro silencioso en consola en lugar de alert molesto
+                        console.warn('⚠️ No se pudieron cargar datos frescos. Verifica tu conexión a internet.');
                     }
                 } catch (error) {
-                    console.error('Error en sincronización:', error);
+                    console.warn('⚠️ Error en sincronización de datos:', error.message || error);
                     UIHandlers.showLoading(false);
+                    // Si no hay datos en caché, mostrar mensaje discreto en consola
                     if (STATE.prices.length === 0) {
-                        document.getElementById('tables-container').innerHTML = `<div class="p-8 text-center text-red-500 font-bold">Error de conexión. Intente recargar.</div>`;
+                        console.warn('📦 No hay datos disponibles. El catálogo se mostrará cuando haya conexión.');
                     }
                 }
             } else {
