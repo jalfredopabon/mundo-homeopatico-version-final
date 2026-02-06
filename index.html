@@ -2631,8 +2631,8 @@
                     <i data-lucide="menu" aria-hidden="true"></i>
                 </button>
 
-                <!-- CENTRO: Identidad (Logo + Nombre en Desktop, Solo Nombre en Móvil) -->
-                <div class="flex items-center gap-2 md:gap-4 flex-1 md:flex-initial justify-center md:justify-start">
+                <!-- CENTRO: Identidad (Align Left en Móvil) -->
+                <div class="flex items-center gap-2 md:gap-4 flex-1 md:flex-initial justify-start">
                     <!-- Logo Principal (Solo Desktop) -->
                     <a href="#" onclick="Navigation.goTo('catalog')"
                         class="hidden md:flex items-center gap-2 md:gap-3 transition-opacity hover:opacity-80">
@@ -2671,11 +2671,14 @@
         <!-- SIDEBAR FIXED -->
         <aside id="mainSidebar" class="main-sidebar pb-10">
 
-
-
+            <!-- Botón Cerrar (Solo Móvil) -->
+            <button onclick="UIHandlers.toggleSidebar()" aria-label="Cerrar menú"
+                class="md:hidden absolute top-4 right-4 p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-full transition-colors z-50">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
 
             <!-- VISTA: CATÁLOGO -->
-            <div id="sidebar-catalog-view" class="flex flex-col flex-1 animate-fade-in">
+            <div id="sidebar-catalog-view" class="flex flex-col flex-1 animate-fade-in pt-12 md:pt-0">
 
                 <!-- Zona Superior: Buscador y Accesos -->
                 <div class="flex-shrink-0">
@@ -2702,8 +2705,8 @@
                 <nav id="sidebar-menu" class="space-y-1 flex-grow pb-8"></nav>
             </div>
 
-            <!-- VISTA: CONTACTO (CONTEXTUAL) -->
-            <div id="sidebar-contact-view" class="hidden flex-col flex-1 animate-fade-in">
+            <!-- VISTA: CONTACTO & SEDES -->
+            <div id="sidebar-contact-view" class="hidden flex-col flex-1 animate-fade-in overflow-y-auto pt-12 md:pt-0">
                 <!-- Zona Superior: Espacio para nuevos botones -->
                 <div id="sidebar-contact-top-actions" class="flex-shrink-0 mb-6 flex flex-col items-stretch gap-4">
                     <!-- From Uiverse.io by alshahwan -->
