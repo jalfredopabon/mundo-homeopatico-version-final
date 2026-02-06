@@ -121,36 +121,42 @@
 
     <style>
         /* 
-        ==========================================================================
-        ★ SISTEMA DE DISEÑO & ESTANDARIZACIÓN (FUENTE ÚNICA DE VERDAD) ★
-        ==========================================================================
+        ======================================================================================
+        ★ MANIFIESTO ARQUITECTÓNICO & REGLAS SUPREMAS DEL PROYECTO ★
+        (Lectura Obligatoria para cualquier Agente o Desarrollador)
+        ======================================================================================
         
-        IMPORTANTE PARA AGENTES DE IA Y DESARROLLADORES:
-        Este proyecto utiliza un sistema de DESIGN TOKENS definido en :root. 
-        NO utilizes valores "hardcoded" (ej. 24px, #ccc, 10px padding) directamente en las clases.
-        SIEMPRE usa las variables semánticas definidas a continuación.
-        
-        LÓGICA DE VARIABLES:
-        1. Branding & Colores: --primary, --secondary, etc.
-        2. tokens de Componentes (--p-*): Padding específico para Header, Sidebar, Tablas.
-        3. tokens Visuales: --border-*, --radius-*, --shadow-*.
-        4. Tipografía: --fw-*, --lh-*.
+        Para garantizar la estabilidad, escalabilidad y mantenimiento a largo plazo, 
+        este proyecto se rige bajo los siguientes TRES PILARES INQUEBRANTABLES:
 
-        Si necesitas cambiar el espaciado de una tabla, NO edites la clase .data-grid.
-        EDITA la variable --p-table-cell en :root.
-        ==========================================================================
-        
-        ARQUITECTURA & REGLAS DE COHERENCIA:
-        1. SEPARACIÓN DE RESPONSABILIDADES:
-           - HTML: Solo estructura y semántica (ej: .main-header). NO usar utilidades de estilo si existe una clase semántica.
-           - CSS: Controla TODO el aspecto visual y el layout. Responde a estados (.is-open, .active).
-           - JS: Controla la lógica y el estado. Solo añade/quita clases de estado, NO inyecta estilos inline ni clases de utilidad.
-        
-        2. ESTADOS:
-           - Usar .is-open, .is-active, .has-error para variantes.
-           - Evitar style.display = 'none' en JS; usar clases de estado.
-        ==========================================================================
+        1. PRIMER PILAR: DESIGN TOKENS (Fuente de Verdad Visual)
+           - Definidos en :root (CSS Variables).
+           - PROHIBIDO usar "Magic Numbers" o valores hardcoded (ej: #10b981, 14px, 20px) en el código.
+           - SIEMPRE usa las variables semánticas: var(--primary), var(--space-m), var(--radius-lg).
+           - Si quieres cambiar el color verde de todo el sitio, tocas UNA sola línea en :root.
+
+        2. SEGUNDO PILAR: SEPARATION OF CONCERNS (Separación de Responsabilidades)
+           - HTML (El Esqueleto Semántico): Solo define ESTRUCTURA. No contiene estilos inline ni lógica.
+             Usa clases de utilidad (Tailwind) para layout, pero siempre prioriza la semántica.
+           - CSS (La Identidad Global): Define reglas visuales universales, animaciones y tokens.
+             Controla el CÓMO se ve.
+           - JS (El Cerebro Lógico): Controla lógica de negocio y renderizado de datos. 
+             PROHIBIDO inyectar estilos visuales desde JS (ej: div.style.color = 'red'). 
+             JS solo gestiona el ESTADO (añadiendo clases como .is-active o .hidden).
+
+        3. TERCER PILAR: DATA-DRIVEN UI & DATA-FLOW PROTOCOL (Los Datos Mandan)
+           - El Contenido Real NO vive en el HTML. Vive en Google Sheets (Backend).
+           - El HTML estático es solo un "Skeleton".
+           - JS descarga datos -> RenderEngine construye la UI.
+           - PROHIBIDO hardcodear datos de negocio (precios, productos) en HTML/JS.
+             Si cambia un precio, se edita el Excel, JAMÁS el código.
+
+        ======================================================================================
+        CUALQUIER CÓDIGO QUE VIOLE ESTOS PRINCIPIOS DEBE SER RECHAZADO O REFACTORIZADO.
+        ======================================================================================
         */
+
+
 
         /* //#region 2. SISTEMA DE DISEÑO (CSS) */
         :root {
@@ -2837,7 +2843,8 @@
                         <div class="mb-6">
                             <h3 class="text-2xl md:text-3xl font-black text-secondary tracking-tight mb-2">
                                 Excelencia en la elaboración homeopática</h3>
-                            <p class="section-desc-l1 text-left">Procesos secuenciales limpios y fórmulas innovadoras
+                            <p class="text-slate-500 font-medium text-sm leading-relaxed text-left">Procesos
+                                secuenciales limpios y fórmulas innovadoras
                                 bajo estándares farmacéuticos internacionales.</p>
                         </div>
                         <div id="videoContainer"
@@ -2902,7 +2909,7 @@
                                     Mundo<br>Homeopático</h3>
                             </div>
                             <p class="text-emerald-100/80 text-sm leading-relaxed font-medium">
-                                Más de 30 años elaborando productos homeopáticos con los más altos estándares de
+                                Más de 20 años elaborando productos homeopáticos con los más altos estándares de
                                 calidad. Procesos secuenciales limpios y fórmulas innovadoras bajo estándares
                                 farmacéuticos internacionales.
                             </p>
@@ -3170,12 +3177,19 @@
                         // Limpieza final de seguridad
                         matchName = matchName.replace(/§/g, '').trim();
 
+                        // Calcular nombre base del producto (sin badges) para la navegación
+                        let baseProductName = '';
+                        if (p.producto) {
+                            baseProductName = p.producto.includes('§') ? p.producto.split('§')[0].trim() : p.producto.trim();
+                        }
+
                         // Añadir a resultados del dropdown
                         matches.push({
                             id: p.id,
                             name: matchName,
                             section: p.nivel_3 || p.nivel_2 || 'Catálogo',
-                            type: matchType
+                            type: matchType,
+                            targetProduct: baseProductName // Referencia al producto padre para scrollear
                         });
 
                         visibleSections.add(p.id);
@@ -3237,12 +3251,15 @@
                     noResultsMsg?.remove();
                 }
 
-                // 5. Actualizar Dropdown (Deduplicado)
-                // Filtramos duplicados para que el dropdown no muestre 50 veces "Arnica" si hay 50 presentaciones
+                // 5. Actualizar Dropdown (Deduplicado Inteligente)
+                // Permitimos el mismo badge si está en productos diferentes para desambiguación
                 const seen = new Set();
                 const uniqueMatches = [];
                 matches.forEach(m => {
-                    const key = m.name + m.section;
+                    // Clave compuesta: Nombre + Sección + (Producto Padre opcional)
+                    const uniqueContext = m.targetProduct ? `-${m.targetProduct}` : '';
+                    const key = m.name + m.section + uniqueContext;
+
                     if (!seen.has(key)) {
                         seen.add(key);
                         uniqueMatches.push(m);
@@ -3285,8 +3302,17 @@
                     const regex = new RegExp(`(${query})`, 'gi');
                     const highlightedName = item.name.replace(regex, '<span class="search-highlight">$1</span>');
 
-                    return `<div class="search-result-item" onclick="UIHandlers.scrollToElement(this)">
+                    // Contexto: Mostrar producto padre si es diferente al nombre principal (ej: Badges)
+                    let contextHtml = '';
+                    if (item.targetProduct && item.targetProduct !== item.name) {
+                        contextHtml = `<div class="text-[10px] text-emerald-600 font-medium truncate mt-0.5">en ${item.targetProduct}</div>`;
+                    }
+
+                    return `<div class="search-result-item" onclick="UIHandlers.scrollToElement(this)" 
+                        data-target-product="${(item.targetProduct) ? escapeHtml(item.targetProduct) : ''}"
+                        data-item-name="${escapeHtml(item.name)}">
                         <div class="text-[11px] font-bold text-slate-700 leading-tight pointer-events-none">${highlightedName}</div>
+                        ${contextHtml}
                         <div class="hidden item-name">${item.name}</div>
                     </div>`;
                 }).join('');
@@ -3302,34 +3328,74 @@
             },
 
             scrollToElement(sender) {
-                const targetName = sender.querySelector('.item-name')?.textContent;
+                const targetName = sender.getAttribute('data-item-name') || sender.querySelector('.item-name')?.textContent;
+                const targetProductAttr = sender.getAttribute('data-target-product');
+
                 if (!targetName) return;
 
-                // Buscar el elemento en el DOM visible
-                // Preferimos una fila de tabla (tbody tr) que contenga el nombre exacto
-                const rows = Array.from(document.querySelectorAll('tbody tr'));
-                const targetEl = rows.find(r => {
-                    const nameDiv = r.querySelector('.product-name div:first-child');
-                    return nameDiv && nameDiv.textContent === targetName;
-                });
+                // Helper de limpieza y normalización
+                const clean = (txt) => {
+                    return (txt || '').replace(/&amp;/g, '&')
+                        .replace(/&quot;/g, '"')
+                        .replace(/&#039;/g, "'")
+                        .replace(/&lt;/g, '<')
+                        .replace(/&gt;/g, '>')
+                        .toLowerCase()
+                        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                        .trim();
+                };
 
+                const qName = clean(targetName);
+                const qProduct = clean(targetProductAttr);
+
+                const rows = Array.from(document.querySelectorAll('tbody tr'));
+                let targetEl = null;
+
+                // 1. ESTRATEGIA DE ESCANEO: Buscar coincidencias visuales dentro de la fila
+                if (qProduct) {
+                    // NIVEL 1: Coincidencia Doble (Producto Padre Y Badge) - Máxima Precisión
+                    targetEl = rows.find(r => {
+                        const cellText = clean(r.querySelector('.product-name')?.textContent);
+                        // La fila debe "contener" visualmente ambas palabras clave
+                        return cellText.includes(qProduct) && cellText.includes(qName);
+                    });
+
+                    // NIVEL 2: Fallback a solo Producto (si el badge es difícil de leer o está oculto)
+                    if (!targetEl) {
+                        targetEl = rows.find(r => {
+                            const cellText = clean(r.querySelector('.product-name')?.textContent);
+                            return cellText.includes(qProduct);
+                        });
+                    }
+                }
+
+                // NIVEL 3: Búsqueda Libre (solo Badge/Nombre) si falla lo anterior o no hay producto padre
+                if (!targetEl) {
+                    targetEl = rows.find(r => {
+                        const cellText = clean(r.querySelector('.product-name')?.textContent);
+                        return cellText.includes(qName);
+                    });
+                }
+
+                // 2. Ejecutar Navegación
                 if (targetEl) {
                     this.toggleDropdown(false);
                     targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    // Highlight visual
+                    // Highlight Visual
                     targetEl.classList.add('bg-emerald-100');
                     setTimeout(() => targetEl.classList.remove('bg-emerald-100'), 2000);
 
                     if (window.innerWidth < 1024) this.toggleSidebar();
-                } else {
-                    // Fallback: Si es una categoría, buscar el título
-                    const headers = Array.from(document.querySelectorAll('h5'));
-                    const targetHeader = headers.find(h => h.textContent.includes(targetName));
-                    if (targetHeader) {
-                        this.toggleDropdown(false);
-                        targetHeader.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        if (window.innerWidth < 1024) this.toggleSidebar();
-                    }
+                    return;
+                }
+
+                // 3. Fallback Final: Buscar en Títulos de Categoría (H5)
+                const headers = Array.from(document.querySelectorAll('h5'));
+                const targetHeader = headers.find(h => clean(h.textContent).includes(qName));
+                if (targetHeader) {
+                    this.toggleDropdown(false);
+                    targetHeader.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    if (window.innerWidth < 1024) this.toggleSidebar();
                 }
             },
 
@@ -4437,6 +4503,18 @@
                 const showTitle = !!meta.nivel_3;
                 const titleLong = meta.nivel_3_titulo || meta.nivel_3;
 
+                // LÓGICA DE ENCABEZADOS DINÁMICOS (CMS-Driven UI)
+                // Buscamos en los items si hay configuración de títulos personalizados.
+                // Usamos el primer valor no vacío que encontremos en el grupo.
+                const customPres = items.find(i => i.titulo_presentacion)?.titulo_presentacion;
+                const customFarm = items.find(i => i.titulo_precio_farmacia)?.titulo_precio_farmacia;
+                const customPub = items.find(i => i.titulo_precio_publico)?.titulo_precio_publico;
+
+                // Definir textos finales con Fallbacks
+                const headerPres = customPres || "Presentación";
+                const headerFarm = customFarm || "Precio Farmacia";
+                const headerPub = customPub || "Precio Público";
+
                 return `<section class="mb-8">
                     ${showTitle ? `<h5 class="text-xl font-black text-secondary mb-3 section-title-n3">${renderText(titleLong)}</h5>
                                    <p class="text-xs text-slate-400 mb-6 font-normal tracking-tight">${renderText(meta.nivel_3_descripcion)}</p>` : ''}
@@ -4445,9 +4523,9 @@
                         <table class="data-grid">
                             <thead>
                                 <tr>
-                                    <th class="pl-4">Presentación</th>
-                                    <th class="text-right text-emerald-600">Precio Farmacia</th>
-                                    <th class="text-right pr-4">Precio Público</th>
+                                    <th class="pl-4">${renderText(headerPres)}</th>
+                                    <th class="text-right text-emerald-600">${renderText(headerFarm)}</th>
+                                    <th class="text-right pr-4">${renderText(headerPub)}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -4457,8 +4535,8 @@
                                         <div class="font-bold text-slate-800">${this.processBadgesInline(p.producto || '')}</div>
                                         <div class="text-slate-500 font-normal mt-0.5">${this.processBadgesInline(p.presentacion || '')}</div>
                                     </td>
-                                    <td class="text-right font-bold text-emerald-600" data-label="Farmacia">${this.formatPrice(p.precio_farmacia)}</td>
-                                    <td class="text-right font-black text-secondary pr-4" data-label="Público">${this.formatPrice(p.precio_publico)}</td>
+                                    <td class="text-right font-bold text-emerald-600" data-label="${escapeHtml(headerFarm)}">${this.formatPrice(p.precio_farmacia)}</td>
+                                    <td class="text-right font-black text-secondary pr-4" data-label="${escapeHtml(headerPub)}">${this.formatPrice(p.precio_publico)}</td>
                                 </tr>`).join('')}
                             </tbody>
                         </table>
@@ -4907,11 +4985,11 @@
 
             // Sincronización Inteligente: Cargar Caché -> Renderizar -> Fetch Background -> Actualizar
             const keys = {
-                prices: 'mh_cache_prices',
-                nav: 'mh_cache_nav',
-                faq: 'mh_cache_faq',
-                dist: 'mh_cache_dist',
-                banner: 'mh_cache_banner'
+                prices: 'mh_cache_prices_v2', // Forzamos nueva versión para headers dinámicos
+                nav: 'mh_cache_nav_v2',
+                faq: 'mh_cache_faq_v2',
+                dist: 'mh_cache_dist_v2',
+                banner: 'mh_cache_banner_v2'
             };
 
             // Flag para evitar doble render
