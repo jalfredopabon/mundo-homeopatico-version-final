@@ -3707,6 +3707,22 @@
                     allowfullscreen></iframe>`;
             },
 
+            // CARGA DE MAPA INTERACTIVO (Click-to-Load)
+            loadMap(facade) {
+                const container = facade.closest('.map-facade-container');
+                const iframe = container.querySelector('iframe');
+                if (!container || !iframe) return;
+
+                // Transición suave
+                facade.style.opacity = '0';
+                setTimeout(() => {
+                    facade.style.display = 'none';
+                    // Mostrar iframe y cargar source
+                    iframe.style.display = 'block';
+                    iframe.src = iframe.dataset.src;
+                }, 300);
+            },
+
 
 
         };
@@ -4537,7 +4553,7 @@
                                 <div class="relative h-full min-h-[300px] lg:min-h-0 bg-slate-100 border-t lg:border-t-0 lg:border-l border-slate-100 map-facade-container">
                                     <!-- Facade: Imagen estática del mapa (se muestra inicialmente) -->
                                     <div class="map-facade absolute inset-0 cursor-pointer group" 
-                                         onclick="this.closest('.map-facade-container').querySelector('.map-facade').style.display='none'; this.closest('.map-facade-container').querySelector('iframe').src = this.closest('.map-facade-container').querySelector('iframe').dataset.src;">
+                                         onclick="UIHandlers.loadMap(this)">
                                         <!-- Imagen estática usando Google Static Maps API -->
                                         <img 
                                             src="https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent((direccion || 'Medellín, Antioquia'))}&zoom=15&size=640x400&markers=color:green%7C${encodeURIComponent((direccion || 'Medellín, Antioquia'))}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&style=feature:poi%7Cvisibility:off"
@@ -4985,7 +5001,15 @@
                 DataService.fetchCSV(APP_CONFIG.SHEETS.AUTHOR).then(d => {
                     if (d && d[0]) {
                         const l = document.getElementById('author-link');
-                        if (l) { l.textContent = d[0].nombre || ""; l.href = d[0].url || "#"; }
+                        if (l) {
+                            l.textContent = d[0].nombre || "";
+                            let url = d[0].url || "#";
+                            // Corrección automática de protocolo si falta
+                            if (url !== "#" && !url.startsWith('http')) {
+                                url = `https://${url}`;
+                            }
+                            l.href = url;
+                        }
                         document.getElementById('author-credit')?.classList.remove('opacity-0');
                     }
                 }).catch(() => { });
