@@ -114,7 +114,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500;600;700;800&family=DM+Serif+Display:wght@400&display=swap"
         rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- //#endregion -->
@@ -198,6 +198,20 @@
 
             /* Accent - Verde natural */
             --accent: hsl(150, 60%, 35%);
+
+            /* Estados (Alerts - Tokens Semánticos) */
+            --color-success: hsl(150, 100%, 35%);
+            /* Éxito / Confirmación */
+            --color-warning: hsl(40, 95%, 50%);
+            /* Advertencia */
+            --color-error: hsl(0, 85%, 60%);
+            /* Error / Peligro */
+
+            /* Bordes y Separadores */
+            --border-light: hsl(210, 20%, 90%);
+            /* Separadores sutiles */
+            --border-medium: hsl(210, 15%, 80%);
+            /* Bordes de inputs/cards */
             /* Verde natural para destacados */
             --accent-foreground: hsl(0, 0%, 100%);
 
@@ -250,7 +264,8 @@
 
             /* SISTEMA TIPOGRÁFICO (V0 Design: DM Serif + DM Sans) */
             --font-serif: 'DM Serif Display', serif;
-            --font-sans: 'DM Sans', sans-serif;
+            --font-sans: 'Karla', sans-serif;
+            /* Humanista, orgánica, mejor legibilidad */
 
             /* Aplicación semántica */
             --font-heading: var(--font-serif);
@@ -325,6 +340,75 @@
             --shadow-soft: 0 20px 40px -10px rgba(26, 41, 47, 0.08);
             /* Sombra Suave Premium */
         }
+
+        /* ============================================
+           UTILIDADES SEMÁNTICAS (HÍBRIDAS - FASE 2)
+           Puente: Diseño <-> Clases HTML
+           ============================================ */
+
+        /* 1. TEXTO DE MARCA */
+        .text-brand {
+            color: var(--primary);
+        }
+
+        /* Verde Oscuro (Base) */
+        .text-brand-vibrant {
+            color: var(--primary-vibrant);
+        }
+
+        /* Verde Esmeralda (Acción/Precios) */
+        .text-brand-dark {
+            color: var(--secondary);
+        }
+
+        /* Azul Marino (Títulos) */
+        .text-body {
+            color: var(--text-body);
+        }
+
+        /* Gris Cuerpo (Lectura) */
+        .text-muted {
+            color: var(--text-muted);
+        }
+
+        /* Gris Secundario (Metadata) */
+
+        /* 2. SUPERFICIES (FONDOS) */
+        .bg-surface-main {
+            background-color: var(--bg-main);
+        }
+
+        .bg-surface-muted {
+            background-color: var(--bg-muted);
+        }
+
+        /* Reemplaza: bg-surface-muted */
+        .bg-surface-white {
+            background-color: var(--bg-surface);
+        }
+
+        .bg-brand-soft {
+            background-color: var(--primary-light);
+        }
+
+        /* Verde muy suave */
+        .bg-success-soft {
+            background-color: hsl(150, 60%, 95%);
+        }
+
+        /* Éxito suave */
+
+        /* 3. BORDES SEMÁNTICOS */
+        .border-subtle {
+            border-color: var(--border-light);
+        }
+
+        /* Divisores finos */
+        .border-strong {
+            border-color: var(--border-medium);
+        }
+
+        /* Inputs/Cards */
 
         /* ============================================
            ANIMACIONES SUAVES - FASE 3.1
@@ -2679,7 +2763,7 @@
 
             <!-- Botón Cerrar (Solo Móvil) -->
             <button onclick="UIHandlers.toggleSidebar()" aria-label="Cerrar menú"
-                class="md:hidden absolute top-4 right-4 p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-full transition-colors z-50">
+                class="md:hidden absolute top-4 right-4 p-2 text-slate-500 hover:text-slate-800 hover:bg-surface-muted rounded-full transition-colors z-50">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
 
@@ -2692,11 +2776,11 @@
                         <i data-lucide="search"
                             class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 z-10"></i>
                         <input type="text" id="mainSearch" placeholder="Buscar..." aria-label="Buscar productos"
-                            class="search-input w-full pl-9 pr-12 py-3 bg-slate-100 border border-slate-300 rounded-lg text-sm focus:outline-none focus:bg-white transition-all shadow-sm"
+                            class="search-input w-full pl-9 pr-12 py-3 bg-surface-muted border border-strong rounded-lg text-sm focus:outline-none focus:bg-white transition-all shadow-sm"
                             style="/* Estilo de foco personalizado abajo */" autocomplete="off">
                         <!-- Botón Limpiar (X) -->
                         <button id="clearSearchBtn" onclick="UIHandlers.clearSearch()"
-                            class="hidden absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-all"
+                            class="hidden absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 hover:bg-surface-muted rounded-full transition-all"
                             aria-label="Borrar búsqueda">
                             <i data-lucide="x" class="w-3.5 h-3.5"></i>
                         </button>
@@ -2718,7 +2802,7 @@
                     <!-- From Uiverse.io by alshahwan -->
                     <!-- Botón PDF (Estilo Buscador) -->
                     <a href="#" target="_blank"
-                        class="mx-[0.75rem] w-auto flex items-center gap-3 px-4 py-3 bg-slate-100 border border-slate-300 rounded-lg text-sm text-slate-500 font-medium hover:bg-white hover:border-[var(--primary-vibrant)] hover:text-slate-900 transition-all shadow-sm group">
+                        class="mx-[0.75rem] w-auto flex items-center gap-3 px-4 py-3 bg-surface-muted border border-strong rounded-lg text-sm text-slate-500 font-medium hover:bg-white hover:border-[var(--primary-vibrant)] hover:text-slate-900 transition-all shadow-sm group">
                         <i data-lucide="file-text"
                             class="w-4 h-4 text-slate-400 group-hover:text-[var(--primary-vibrant)] transition-colors"></i>
                         PDF
@@ -2804,9 +2888,9 @@
                         <div class="skeleton skeleton-title"></div>
                         <div class="skeleton skeleton-text w-1/2 mb-8"></div>
 
-                        <div class="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                        <div class="border border-subtle rounded-xl overflow-hidden bg-white shadow-sm">
                             <!-- Skeleton Header -->
-                            <div class="flex justify-between p-4 border-b border-slate-100 bg-slate-50">
+                            <div class="flex justify-between p-4 border-b border-subtle bg-slate-50">
                                 <div class="skeleton skeleton-text w-1/4"></div>
                                 <div class="flex gap-4">
                                     <div class="skeleton skeleton-text w-24"></div>
@@ -2831,32 +2915,37 @@
                 <span id="textSizeLabel" class="fab-label">Normal</span>
             </button>
 
-            <main id="view-contact" class="hidden flex-grow p-6 lg:p-8 lg:pl-16 min-w-0 flex flex-col">
-                <div class="mb-6 animate-fade-in">
-                    <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Sedes y contacto
+            <main id="view-contact" class="hidden flex-grow min-w-0 flex flex-col"
+                style="padding: var(--space-l); padding-left: var(--space-xl);">
+                <div class="animate-fade-in" style="margin-bottom: var(--space-l);">
+                    <h2 id="lbl_contact_title"
+                        class="text-4xl md:text-6xl font-black tracking-tighter mb-3 text-secondary">Sedes y contacto
                     </h2>
-                    <p class="text-slate-400 font-medium text-sm">Red nacional de distribución</p>
+                    <p id="lbl_contact_subtitle" class="text-slate-400 font-medium text-sm">Red nacional de distribución
+                    </p>
                 </div>
 
                 <div class="flex-grow">
-                    <section id="videoSection" class="mb-16">
+                    <section id="videoSection" style="margin-bottom: var(--space-xxl);">
                         <div class="mb-6">
-                            <h3 class="text-2xl md:text-3xl font-black text-secondary tracking-tight mb-2">
+                            <h3 id="lbl_video_title"
+                                class="text-2xl md:text-3xl font-black text-secondary tracking-tight mb-2">
                                 Excelencia en la elaboración homeopática</h3>
-                            <p class="text-slate-500 font-medium text-sm leading-relaxed text-left">Procesos
+                            <p id="lbl_video_text" class="text-slate-500 font-medium text-sm leading-relaxed text-left">
+                                Procesos
                                 secuenciales limpios y fórmulas innovadoras
                                 bajo estándares farmacéuticos internacionales.</p>
                         </div>
                         <div id="videoContainer"
                             class="aspect-video w-full rounded-[2rem] bg-slate-200 overflow-hidden shadow-md border-4 border-white animate-fade-in">
                             <!-- Aquí se inyectará el iframe si es necesario, o placeholder -->
-                            <div class="w-full h-full flex items-center justify-center text-slate-400 bg-slate-100">
+                            <div class="w-full h-full flex items-center justify-center text-slate-400 bg-surface-muted">
                                 <i data-lucide="play" class="w-12 h-12 opacity-50"></i>
                             </div>
                         </div>
                     </section>
 
-                    <section id="distributorsSection" class="mb-16">
+                    <section id="distributorsSection" style="margin-bottom: var(--space-xxl);">
                         <h3 class="text-2xl font-black text-secondary mb-8 tracking-tight flex items-center gap-3">
                             <i data-lucide="map-pin" class="w-6 h-6 text-primary flex-shrink-0"></i>
                             <span>Sede principal</span>
@@ -2878,7 +2967,7 @@
                         </div>
                     </section>
 
-                    <section id="faqSection" class="mt-16 mb-16">
+                    <section id="faqSection" style="margin-top: var(--space-xxl); margin-bottom: var(--space-xxl);">
                         <h3 class="text-2xl font-black text-secondary mb-8 tracking-tight">Preguntas
                             frecuentes</h3>
                         <div class="bg-white overflow-hidden">
@@ -2893,7 +2982,7 @@
             <!-- FOOTER GLOBAL UNIFICADO -->
             <!-- FOOTER GLOBAL PREMIUM (Diseño Verde Institucional) -->
             <footer class="mt-auto w-full" style="background-color: var(--primary); color: white;">
-                <div class="px-6 md:px-16 py-12 max-w-7xl mx-auto">
+                <div class="max-w-7xl mx-auto" style="padding: var(--space-xl) var(--space-l);">
 
                     <!-- Flex Principal: 2 Bloques (Marca Izquierda - Redes Derecha) -->
                     <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">
@@ -2905,10 +2994,11 @@
                                     class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[var(--primary)] font-serif font-black text-xl shadow-lg shrink-0">
                                     MH
                                 </div>
-                                <h3 class="font-serif text-2xl font-bold tracking-tight leading-none text-white">
+                                <h3 id="lbl_header_brand"
+                                    class="font-serif text-2xl font-bold tracking-tight leading-none text-white">
                                     Mundo<br>Homeopático</h3>
                             </div>
-                            <p class="text-emerald-100/80 text-sm leading-relaxed font-medium">
+                            <p id="lbl_footer_desc" class="text-emerald-100/80 text-sm leading-relaxed font-medium">
                                 Más de 20 años elaborando productos homeopáticos con los más altos estándares de
                                 calidad. Procesos secuenciales limpios y fórmulas innovadoras bajo estándares
                                 farmacéuticos internacionales.
@@ -2919,19 +3009,19 @@
                         <div class="flex flex-col md:items-end shrink-0 w-full md:w-auto">
                             <h4 class="font-bold text-lg mb-6 text-white tracking-wide md:text-right">Síguenos</h4>
                             <div class="flex gap-4 md:justify-end">
-                                <a href="https://www.instagram.com/mundohomeopatico" target="_blank"
+                                <a id="link_social_ig" href="https://www.instagram.com/mundohomeopatico" target="_blank"
                                     class="w-10 h-10 rounded-full bg-emerald-800/50 flex items-center justify-center hover:bg-white hover:text-[var(--primary)] transition-all duration-300 hover:scale-110 border border-emerald-700 hover:border-white group"
                                     aria-label="Instagram">
                                     <i data-lucide="instagram"
                                         class="w-5 h-5 text-emerald-100 group-hover:text-current"></i>
                                 </a>
-                                <a id="footer-whatsapp-link" href="#" target="_blank"
+                                <a id="link_social_wa" href="#" target="_blank"
                                     class="w-10 h-10 rounded-full bg-emerald-800/50 flex items-center justify-center hover:bg-white hover:text-[var(--primary)] transition-all duration-300 hover:scale-110 border border-emerald-700 hover:border-white group"
                                     aria-label="WhatsApp">
                                     <i data-lucide="message-circle"
                                         class="w-5 h-5 text-emerald-100 group-hover:text-current"></i>
                                 </a>
-                                <a href="https://www.mhmundohomeopatico.com" target="_blank"
+                                <a id="link_social_web" href="https://www.mhmundohomeopatico.com" target="_blank"
                                     class="w-10 h-10 rounded-full bg-emerald-800/50 flex items-center justify-center hover:bg-white hover:text-[var(--primary)] transition-all duration-300 hover:scale-110 border border-emerald-700 hover:border-white group"
                                     aria-label="Website">
                                     <i data-lucide="globe"
@@ -2947,7 +3037,7 @@
 
                         <!-- Izquierda: Copyright -->
                         <div class="md:text-left order-2 md:order-1">
-                            <p>© 2026 Mundo Homeopático. Todos los derechos reservados.</p>
+                            <p id="lbl_footer_copy">© 2026 Mundo Homeopático. Todos los derechos reservados.</p>
                         </div>
 
                         <!-- Centro: Dev Credit -->
@@ -2963,7 +3053,7 @@
 
                         <!-- Derecha: Ubicación -->
                         <div class="md:text-right order-3">
-                            <p>Medellín, Colombia</p>
+                            <p id="lbl_footer_loc">Medellín, Colombia</p>
                         </div>
                     </div>
                 </div>
@@ -2991,7 +3081,8 @@
                 FAQ: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=1434563192&single=true&output=csv',
                 DIST: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=486540156&single=true&output=csv',
                 AUTHOR: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=878891571&single=true&output=csv',
-                SEO: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=494400744&single=true&output=csv'
+                SEO: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=494400744&single=true&output=csv',
+                CONFIG: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRuBTyqnC5oSy0leK7NCf-Bnde5BFfv4URIZckAI78TenSLVx-09IKjTEvO67SPK8DAsc8fdwVABGQC/pub?gid=257526078&single=true&output=csv'
             },
             PROXY: 'https://corsproxy.io/?',
             PROXY_BACKUP: 'https://corsproxy.io/?',
@@ -3060,6 +3151,9 @@
             init() {
                 this.initTextSize(); // Restaurar preferencia de tamaño de texto
 
+                // Nuevo método para centralizar TODO
+                this.initDelegatedEvents();
+
                 // Configurar Buscador con Debounce
                 const inp = document.getElementById('mainSearch');
                 if (inp) {
@@ -3070,7 +3164,7 @@
                         const q = e.target.value.toLowerCase().trim();
                         // Toggle Clear Button
                         const btn = document.getElementById('clearSearchBtn');
-                        if (btn) btn.style.display = q.length > 0 ? 'block' : 'none';
+                        if (btn) q.length > 0 ? btn.classList.remove('hidden') : btn.classList.add('hidden');
 
                         clearTimeout(searchTimeout);
                         searchTimeout = setTimeout(() => {
@@ -3092,6 +3186,47 @@
                 }
             },
 
+            // MÉTODO CENTRALIZADO DE EVENTOS (Delegación)
+            initDelegatedEvents() {
+                document.addEventListener('click', (e) => {
+                    // 1. Acordeones Sidebar
+                    const accordionBtn = e.target.closest('.sidebar-item-accordion');
+                    if (accordionBtn) {
+                        e.preventDefault();
+                        return this.toggleAccordion(accordionBtn);
+                    }
+
+                    // 2. FAQ
+                    const faqBtn = e.target.closest('.faq-trigger');
+                    if (faqBtn) return this.toggleFaq(faqBtn);
+
+                    // 3. Badges Ingredientes
+                    const badgeBtn = e.target.closest('.badge-toggle-btn');
+                    if (badgeBtn) {
+                        // El ID del contenedor está en el padre
+                        const containerId = badgeBtn.parentElement.id || badgeBtn.closest('.ingredients-badges-list')?.id;
+                        try {
+                            const rawData = badgeBtn.dataset.ingredients;
+                            if (rawData && containerId) {
+                                const ingredients = JSON.parse(rawData);
+                                return this.toggleBadges(containerId, ingredients);
+                            }
+                        } catch (err) { console.error('Error parsing badge data', err); }
+                    }
+
+                    // 4. Video YouTube
+                    const videoFacade = e.target.closest('.youtube-facade');
+                    if (videoFacade) return this.loadVideo(videoFacade);
+
+                    // 5. Mapa Google
+                    const mapFacade = e.target.closest('.map-facade');
+                    if (mapFacade) return this.loadMap(mapFacade);
+
+                    // 6. Resultados Búsqueda
+                    const searchItem = e.target.closest('.search-result-item');
+                    if (searchItem) return this.scrollToElement(searchItem);
+                });
+            },
 
 
             // BÚSQUEDA PRO ENFOCADA (Títulos y Productos SOLAMENTE)
@@ -3099,7 +3234,7 @@
                 if (q.length === 0) {
                     // Restaurar todo
                     document.querySelectorAll('.catalog-card').forEach(c => c.classList.remove('hidden'));
-                    document.querySelectorAll('tr').forEach(tr => tr.style.display = '');
+                    document.querySelectorAll('tr').forEach(tr => tr.classList.remove('hidden'));
                     this.toggleDropdown(false);
                     document.getElementById('noResultsMessage')?.remove();
                     return;
@@ -3223,10 +3358,10 @@
                             const isSectionMatch = matches.some(m => m.type === 'Categoría' && sectionTitle.includes(m.name));
 
                             if (isRowMatch || isSectionMatch) {
-                                tr.style.display = '';
+                                tr.classList.remove('hidden');
                                 cardHasVisibleRows = true;
                             } else {
-                                tr.style.display = 'none';
+                                tr.classList.add('hidden');
                             }
                         });
 
@@ -3276,7 +3411,7 @@
                     inp.value = '';
                     inp.focus();
                 }
-                if (btn) btn.style.display = 'none';
+                if (btn) btn.classList.add('hidden');
                 this.search('');
             },
 
@@ -3305,10 +3440,10 @@
                     // Contexto: Mostrar producto padre si es diferente al nombre principal (ej: Badges)
                     let contextHtml = '';
                     if (item.targetProduct && item.targetProduct !== item.name) {
-                        contextHtml = `<div class="text-[10px] text-emerald-600 font-medium truncate mt-0.5">en ${item.targetProduct}</div>`;
+                        contextHtml = `<div class="text-[10px] text-brand-vibrant font-medium truncate mt-0.5">en ${item.targetProduct}</div>`;
                     }
 
-                    return `<div class="search-result-item" onclick="UIHandlers.scrollToElement(this)" 
+                    return `<div class="search-result-item" 
                         data-target-product="${(item.targetProduct) ? escapeHtml(item.targetProduct) : ''}"
                         data-item-name="${escapeHtml(item.name)}">
                         <div class="text-[11px] font-bold text-slate-700 leading-tight pointer-events-none">${highlightedName}</div>
@@ -3318,7 +3453,7 @@
                 }).join('');
 
                 if (items.length > limit) {
-                    html += `<div class="p-2 text-[10px] text-center text-emerald-600 font-bold bg-emerald-50 cursor-default">
+                    html += `<div class="p-2 text-[10px] text-center text-brand-vibrant font-bold bg-emerald-50 cursor-default">
                         +${items.length - limit} resultados más...
                     </div>`;
                 }
@@ -3425,14 +3560,14 @@
                 });
                 document.querySelectorAll('.sidebar-item-accordion').forEach(b => {
                     b.querySelector('.lucide-chevron-down')?.classList.remove('rotate-180');
-                    b.classList.remove('bg-slate-100', 'text-secondary');
+                    b.classList.remove('bg-surface-muted', 'text-secondary');
                 });
 
                 // 2. Si estaba cerrado, abrir SOLO este
                 if (!isOpen) {
                     content.classList.add('is-open');
                     btn.querySelector('.lucide-chevron-down')?.classList.add('rotate-180');
-                    btn.classList.add('bg-slate-100', 'text-secondary');
+                    btn.classList.add('bg-surface-muted', 'text-secondary');
 
                     // Scroll suave eliminado para evitar "pestañeo" visual
                     // La interacción es más natural si el menú no salta bajo el puntero
@@ -3531,7 +3666,7 @@
                     ).join('');
 
                     const remaining = allIngredients.length - visibleCount;
-                    const btnHTML = `<button class=\"badge-toggle-btn\" onclick=\"UIHandlers.toggleBadges('${containerId}', ${JSON.stringify(allIngredients).replace(/"/g, '&quot;')})\">` +
+                    const btnHTML = `<button class=\"badge-toggle-btn\" data-ingredients='${JSON.stringify(allIngredients).replace(/'/g, "&apos;")}' >` +
                         `+${remaining} más` +
                         `<svg class=\"w-3 h-3\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M19 9l-7 7-7-7\"></path></svg>` +
                         `</button>`;
@@ -3543,7 +3678,7 @@
                         `<span class=\"ingredient-badge\">${ing}</span>`
                     ).join('');
 
-                    const btnHTML = `<button class=\"badge-toggle-btn expanded\" onclick=\"UIHandlers.toggleBadges('${containerId}', ${JSON.stringify(allIngredients).replace(/"/g, '&quot;')})\">` +
+                    const btnHTML = `<button class=\"badge-toggle-btn expanded\" data-ingredients='${JSON.stringify(allIngredients).replace(/'/g, "&apos;")}' >` +
                         `Ver menos` +
                         `<svg class=\"w-3 h-3\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M19 9l-7 7-7-7\"></path></svg>` +
                         `</button>`;
@@ -3725,13 +3860,13 @@
 
                 // 1. Cerrar TODOS los items primero
                 document.querySelectorAll('.faq-answer-container').forEach(c => c.classList.add('hidden'));
-                document.querySelectorAll('.faq-trigger [data-lucide="chevron-down"]').forEach(i => i.style.transform = 'rotate(0deg)');
+                document.querySelectorAll('.faq-trigger [data-lucide="chevron-down"]').forEach(i => i.classList.remove('rotate-180'));
                 document.querySelectorAll('.faq-trigger').forEach(b => b.setAttribute('aria-expanded', 'false'));
 
                 // 2. Abrir SOLO el seleccionado si estaba cerrado
                 if (isHidden) {
                     content.classList.remove('hidden');
-                    if (icon) icon.style.transform = 'rotate(180deg)';
+                    if (icon) icon.classList.add('rotate-180');
                     button.setAttribute('aria-expanded', 'true');
                 }
             },
@@ -3783,11 +3918,11 @@
                 if (!container || !iframe) return;
 
                 // Transición suave
-                facade.style.opacity = '0';
+                facade.classList.add('opacity-0');
                 setTimeout(() => {
-                    facade.style.display = 'none';
+                    facade.classList.add('hidden');
                     // Mostrar iframe y cargar source
-                    iframe.style.display = 'block';
+                    iframe.classList.remove('hidden');
                     iframe.src = iframe.dataset.src;
                 }, 300);
             },
@@ -4101,11 +4236,11 @@
                     const isOpen = openGroups.has(node.title);
                     const openClass = isOpen ? 'is-open' : '';
                     const rotateClass = isOpen ? 'rotate-180' : '';
-                    const activeClass = isOpen ? 'bg-slate-100 text-secondary' : '';
+                    const activeClass = isOpen ? 'bg-surface-muted text-secondary' : '';
                     const displayTitle = transformText(node.title);
 
                     fragment += `<div class="mb-1">
-                        <button class="sidebar-item-accordion group ${activeClass}" aria-expanded="${isOpen}" onclick="UIHandlers.toggleAccordion(this)">
+                        <button class="sidebar-item-accordion group ${activeClass}" aria-expanded="${isOpen}">
                             <i data-lucide="chevron-down" class="w-4 h-4 transition-colors ${rotateClass}"></i>
                             <span class="text-left tracking-wide">${displayTitle}</span>
                         </button>
@@ -4196,7 +4331,7 @@
                 if (node.type === 'group') {
                     // CONTENEDOR GRUPO FLUSH-LEFT
                     fragment += `<div class="mb-12 pl-0 ml-0">
-                                    <div class="mb-6 pb-2 border-b border-slate-100 flex items-baseline gap-3 pl-0 ml-0">
+                                    <div class="mb-6 pb-2 border-b border-subtle flex items-baseline gap-3 pl-0 ml-0">
                                         <h3 class="text-xl font-bold text-emerald-800 pl-0 ml-0">${renderText(node.title)}</h3>
                                         <p class="text-sm text-slate-400 font-normal">${renderText(node.desc)}</p>
                                     </div>
@@ -4442,7 +4577,7 @@
 
                 if (hasMore) {
                     const remaining = ingredients.length - visibleCount;
-                    html += `<button class="badge-toggle-btn" onclick="UIHandlers.toggleBadges('${uniqueId}', ${JSON.stringify(ingredients).replace(/"/g, '&quot;')})">`;
+                    html += `<button class="badge-toggle-btn" data-ingredients='${JSON.stringify(ingredients).replace(/'/g, "&apos;")}'>`;
                     html += `+${remaining} más`;
                     html += `<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>`;
                     html += `</button>`;
@@ -4524,18 +4659,18 @@
                             <thead>
                                 <tr>
                                     <th class="pl-4">${renderText(headerPres)}</th>
-                                    <th class="text-right text-emerald-600">${renderText(headerFarm)}</th>
+                                    <th class="text-right text-brand-vibrant">${renderText(headerFarm)}</th>
                                     <th class="text-right pr-4">${renderText(headerPub)}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 ${items.map(p => `
-                                <tr class="hover:bg-slate-100 transition-colors">
+                                <tr class="hover:bg-surface-muted transition-colors">
                                     <td class="py-3 product-name">
                                         <div class="font-bold text-slate-800">${this.processBadgesInline(p.producto || '')}</div>
                                         <div class="text-slate-500 font-normal mt-0.5">${this.processBadgesInline(p.presentacion || '')}</div>
                                     </td>
-                                    <td class="text-right font-bold text-emerald-600" data-label="${escapeHtml(headerFarm)}">${this.formatPrice(p.precio_farmacia)}</td>
+                                    <td class="text-right font-bold text-brand-vibrant" data-label="${escapeHtml(headerFarm)}">${this.formatPrice(p.precio_farmacia)}</td>
                                     <td class="text-right font-black text-secondary pr-4" data-label="${escapeHtml(headerPub)}">${this.formatPrice(p.precio_publico)}</td>
                                 </tr>`).join('')}
                             </tbody>
@@ -4612,7 +4747,7 @@
                                         </div>
                                         <div>
                                             <h3 class="text-2xl font-black text-secondary tracking-tight mb-1">${renderText(sede)}</h3>
-                                            <p class="text-emerald-600 font-bold uppercase tracking-widest text-[11px]">${renderText(departamento)}</p>
+                                            <p class="text-brand-vibrant font-bold uppercase tracking-widest text-[11px]">${renderText(departamento)}</p>
                                         </div>
                                     </div>
                                     <div class="space-y-4 mb-8">
@@ -4631,10 +4766,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="relative h-full min-h-[300px] lg:min-h-0 bg-slate-100 border-t lg:border-t-0 lg:border-l border-slate-100 map-facade-container">
+                                <div class="relative h-full min-h-[300px] lg:min-h-0 bg-surface-muted border-t lg:border-t-0 lg:border-l border-subtle map-facade-container">
                                     <!-- Facade: Imagen estática del mapa (se muestra inicialmente) -->
-                                    <div class="map-facade absolute inset-0 cursor-pointer group" 
-                                         onclick="UIHandlers.loadMap(this)">
+                                    <div class="map-facade absolute inset-0 cursor-pointer group">
                                         <!-- Imagen estática usando Google Static Maps API -->
                                         <img 
                                             src="https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent((direccion || 'Medellín, Antioquia'))}&zoom=15&size=640x400&markers=color:green%7C${encodeURIComponent((direccion || 'Medellín, Antioquia'))}&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&style=feature:poi%7Cvisibility:off"
@@ -4655,21 +4789,20 @@
                                     <iframe 
                                         width="100%" 
                                         height="100%" 
-                                        style="border:0; display:none;" 
                                         loading="lazy" 
                                         importance="low"
                                         allowfullscreen
                                         title="Mapa de ubicación - ${sede}, ${departamento}"
                                         name="mapa-sede-principal"
                                         referrerpolicy="no-referrer-when-downgrade"
-                                        class="absolute inset-0 w-full h-full"
+                                        class="absolute inset-0 w-full h-full hidden"
                                         data-src="https://maps.google.com/maps?q=${encodeURIComponent((direccion || 'Medellín') + ' ' + (departamento || 'Antioquia'))}&t=&z=15&ie=UTF8&iwloc=&output=embed">
                                     </iframe>
                                     
                                     <!-- Botón Flotante 'Cómo Llegar' -->
                                     <a href="${dist.mapa || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((direccion || '') + ', ' + (departamento || ''))}`}" 
                                        target="_blank" 
-                                       class="absolute bottom-4 left-4 right-auto bg-white/90 backdrop-blur-sm border border-slate-200 shadow-lg text-slate-700 hover:text-primary hover:border-primary px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 transition-all duration-300 hover:scale-105">
+                                       class="absolute bottom-4 left-4 right-auto bg-white/90 backdrop-blur-sm border border-subtle shadow-lg text-slate-700 hover:text-primary hover:border-primary px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 transition-all duration-300 hover:scale-105">
                                         <span>Cómo llegar</span>
                                         <i data-lucide="external-link" class="w-4 h-4"></i>
                                     </a>
@@ -4724,10 +4857,10 @@
                     const mov = data[`movil_${i}`];
                     if (mov) {
                         html += `
-                            <div class="dist-tag-phone ${btnExtras}">
+                            <a href="tel:${mov}" class="dist-tag-phone ${btnExtras}">
                                 <i data-lucide="smartphone" class="w-4 h-4"></i>
                                 <span>${Formatters.formatPhone(mov)}</span>
-                            </div>`;
+                            </a>`;
                     }
                 });
 
@@ -4736,10 +4869,10 @@
                     const fij = data[`telefono_fijo_${i}`];
                     if (fij) {
                         html += `
-                            <div class="dist-tag-phone ${btnExtras}">
+                            <a href="tel:${fij}" class="dist-tag-phone ${btnExtras}">
                                 <i data-lucide="phone" class="w-4 h-4"></i>
                                 <span>${renderText(fij)}</span>
-                            </div>`;
+                            </a>`;
                     }
                 });
 
@@ -4764,12 +4897,12 @@
                         const borderBottom = isLast ? 'border-b-2' : 'border-b'; // Último grueso, intermedios delgados
                         const borderClasses = `${borderTop} ${borderBottom} border-slate-900`.trim();
                         return `<div class="${borderClasses} overflow-hidden transition-all duration-200 hover:bg-slate-50">
-                            <button onclick="UIHandlers.toggleFaq(this)" class="faq-trigger w-full flex justify-between items-center p-6 text-left" aria-expanded="false">
+                            <button class="faq-trigger w-full flex justify-between items-center p-6 text-left" aria-expanded="false">
                                 <span class="font-bold text-sm text-slate-900 pr-4">${renderText(q)}</span>
                                 <i data-lucide="chevron-down" class="w-5 h-5 text-slate-300 transition-transform duration-300 flex-shrink-0"></i>
                             </button>
                             <div class="faq-answer-container hidden px-6 pb-6 pt-0">
-                                <div class="text-xs text-slate-600 font-normal leading-relaxed border-t border-slate-100 pt-4 animate-fade-in">
+                                <div class="text-xs text-slate-600 font-normal leading-relaxed border-t border-subtle pt-4 animate-fade-in">
                                     ${renderText(a)}
                                 </div>
                             </div>
@@ -4859,6 +4992,72 @@
                     "@graph": nodes
                 });
             },
+
+            // TAREA 3: Renderizado de Configuración General (Textos Estáticos Dinamizados)
+            renderConfig(configData) {
+                if (!configData || !configData.length) return;
+
+                // Mapeo Clave (Español) -> ID del Elemento HTML
+                const map = {
+                    'nombre_marca': 'lbl_header_brand',
+                    'boton_contacto': 'lbl_header_btn', // Nota: Usaremos 'navButtonText' para el botón complejo
+                    'contacto_titulo': 'lbl_contact_title',
+                    'contacto_subtitulo': 'lbl_contact_subtitle',
+                    'video_titulo': 'lbl_video_title',
+                    'video_descripcion': 'lbl_video_text',
+                    'footer_descripcion': 'lbl_footer_desc',
+                    'footer_copyright': 'lbl_footer_copy',
+                    'footer_ubicacion': 'lbl_footer_loc'
+                };
+
+                // Normalización de claves (Excel a minúsculas)
+                const config = {};
+                configData.forEach(row => {
+                    // Soporte para columna 'clave' o 'CLAVE'
+                    const key = (row.clave || row.CLAVE || row.key || '').toLowerCase().trim();
+                    const val = row.valor || row.VALOR || row.value || '';
+                    if (key) config[key] = val;
+                });
+
+                // 1. Inyección de Textos Simples
+                Object.keys(map).forEach(key => {
+                    if (config[key]) {
+                        const el = document.getElementById(map[key]);
+                        if (el) {
+                            el.textContent = config[key];
+                            el.classList.add('animate-fade-in');
+                        }
+                    }
+                });
+
+                // 2. Casos Especiales
+
+                // Placeholder Buscador
+                if (config['buscador_placeholder']) {
+                    const inp = document.getElementById('mainSearch');
+                    if (inp) inp.setAttribute('placeholder', config['buscador_placeholder']);
+                }
+
+                // Redes Sociales (href)
+                const socialMap = {
+                    'link_instagram': 'link_social_ig',
+                    'link_whatsapp': 'link_social_wa',
+                    'link_web': 'link_social_web'
+                };
+                Object.keys(socialMap).forEach(key => {
+                    if (config[key]) {
+                        const el = document.getElementById(socialMap[key]);
+                        if (el) el.setAttribute('href', config[key]);
+                    }
+                });
+
+                // Botón Navegación Header (Texto interno del span)
+                if (config['boton_contacto']) {
+                    const btnText = document.getElementById('navButtonText');
+                    if (btnText) btnText.textContent = config['boton_contacto'];
+                }
+            },
+
 
             // TAREA 2.2: Motor JSON-LD para FAQ (FAQPage)
             buildFAQPage() {
@@ -5077,6 +5276,16 @@
                 }
             }).catch(e => console.warn("SEO fetch error", e));
 
+            // 3.1 Carga de Configuración General (Textos)
+            DataService.fetchCSV(APP_CONFIG.SHEETS.CONFIG).then(d => {
+                if (d && d.length) {
+                    SchemaManager.renderConfig(d); // Usamos SchemaManager solo por agrupación temporal, idealmente iría en UIHandlers o RenderEngine
+                    // Corrección: Mover renderConfig a UIHandlers o RenderEngine es mejor arquitectura.
+                    // Por ahora lo definí arriba en SchemaManager por proximidad, pero lo invoco desde ahí.
+                    // NOTA: Para mantener orden, en el siguiente paso moveré renderConfig a RenderEngine.
+                }
+            }).catch(e => console.warn("Config fetch error", e));
+
             // 4. Carga diferida de otros recursos no críticos
             setTimeout(() => {
                 DataService.fetchCSV(APP_CONFIG.SHEETS.AUTHOR).then(d => {
@@ -5112,8 +5321,7 @@
                             if (container) {
                                 // Usar data-attributes para evitar problemas de comillas en inline JS
                                 container.innerHTML = `<div class="youtube-facade w-full h-full group" 
-                                    data-video-id="${videoId}"
-                                    onclick="UIHandlers.loadVideo(this)">
+                                    data-video-id="${videoId}">
                                     <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" 
                                         alt="Video de Calidad"
                                         class="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-80"
